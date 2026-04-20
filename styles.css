@@ -490,7 +490,135 @@ button{font-family:inherit}
 }
 .footer-bottom a:hover{color:var(--ash)}
 
+/* NO-CANVAS PAGE BACKGROUND */
+.no-canvas-bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,rgba(200,169,110,0.04) 0%,transparent 70%);
+}
+
+/* ARTICLE CARDS (articles page) */
+.article-card{
+  display:block;position:relative;
+  padding:32px 36px;margin-bottom:3px;
+  border:1px solid var(--gold-line);
+  border-left:2px solid var(--gold);
+  background:transparent;overflow:hidden;
+  transition:background .4s,border-color .4s,transform .35s;
+  color:inherit;
+}
+.article-card:hover{
+  background:var(--gold-glow);
+  border-color:rgba(200,169,110,0.42);
+  border-left-color:var(--gold-bright);
+  transform:translateX(6px);
+}
+.article-date{
+  font-family:'DM Mono',monospace;font-size:.52rem;font-weight:300;
+  color:var(--ember);letter-spacing:.28em;text-transform:uppercase;
+  margin-bottom:10px;
+}
+.article-title{
+  font-family:'Bebas Neue',cursive;font-size:1.65rem;letter-spacing:.08em;
+  color:var(--bone);margin-bottom:10px;line-height:1.05;
+  transition:color .3s;
+}
+.article-card:hover .article-title{color:var(--gold-bright)}
+.article-desc{
+  font-size:1rem;font-style:italic;font-weight:400;
+  color:var(--ash);line-height:1.6;margin-bottom:14px;
+}
+.article-read-more{
+  font-family:'DM Mono',monospace;font-size:.52rem;font-weight:300;
+  color:var(--gold);letter-spacing:.28em;text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:gap .3s;
+}
+.article-card:hover .article-read-more{gap:14px}
+
+/* SEARCH BAR */
+.search-wrap{position:relative;margin:0 0 40px}
+.search-wrap input{
+  width:100%;padding:14px 48px 14px 18px;
+  background:rgba(200,169,110,0.03);border:1px solid var(--gold-line);
+  color:var(--bone);font-family:'DM Mono',monospace;
+  font-size:.72rem;font-weight:300;letter-spacing:.12em;
+  outline:none;transition:border-color .3s;
+}
+.search-wrap input::placeholder{color:var(--ember)}
+.search-wrap input:focus{border-color:rgba(200,169,110,0.5)}
+.search-wrap .search-icon{
+  position:absolute;right:16px;top:50%;transform:translateY(-50%);
+  color:var(--gold);pointer-events:none;
+}
+
+/* INSTAGRAM CTA */
+.ig-cta{
+  position:relative;z-index:10;
+  border-top:1px solid var(--gold-line);
+  padding:42px 40px;text-align:center;
+}
+.ig-cta-label{
+  font-family:'DM Mono',monospace;font-size:.52rem;font-weight:300;
+  color:var(--gold);letter-spacing:.38em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.ig-cta-text{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1.1rem;color:var(--ash);margin-bottom:22px;
+}
+.ig-cta-btn{
+  display:inline-block;padding:10px 28px;
+  border:1px solid var(--gold);color:var(--gold);
+  font-family:'DM Mono',monospace;font-size:.56rem;font-weight:300;
+  letter-spacing:.28em;text-transform:uppercase;
+  transition:background .35s,color .35s;
+}
+.ig-cta-btn:hover{background:var(--gold);color:var(--void)}
+
+/* YOUTUBE CHANNEL CARDS */
+.channel-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:40px 0}
+.channel-card{
+  padding:32px 28px;
+  border:1px solid var(--gold-line);
+  background:rgba(200,169,110,0.02);
+  transition:background .4s,border-color .4s,transform .35s;
+  display:flex;flex-direction:column;gap:12px;
+}
+.channel-card:hover{
+  background:var(--gold-glow);
+  border-color:rgba(200,169,110,0.42);
+  transform:translateY(-4px);
+}
+.channel-name{
+  font-family:'Bebas Neue',cursive;font-size:1.45rem;
+  letter-spacing:.12em;color:var(--bone);
+}
+.channel-desc{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:1rem;color:var(--ash);line-height:1.55;flex:1;
+}
+.channel-btn{
+  display:inline-block;padding:9px 22px;
+  border:1px solid var(--gold);color:var(--gold);
+  font-family:'DM Mono',monospace;font-size:.52rem;font-weight:300;
+  letter-spacing:.24em;text-transform:uppercase;align-self:flex-start;
+  transition:background .35s,color .35s;
+}
+.channel-btn:hover{background:var(--gold);color:var(--void)}
+
+/* COMING SOON LABEL */
+.coming-soon-label{
+  font-family:'DM Mono',monospace;font-size:.58rem;
+  color:var(--ember);letter-spacing:.34em;text-transform:uppercase;
+  text-align:center;padding:40px 0;
+  border:1px solid var(--gold-line);margin-top:20px;
+}
+
 /* RESPONSIVE */
+@media (max-width:600px){
+  .channel-grid{grid-template-columns:1fr}
+  .ig-cta{padding:32px 24px}
+}
 @media (max-width:900px){
   .footer-inner{grid-template-columns:1fr 1fr;gap:34px}
   .footer-brand{grid-column:1 / -1}
