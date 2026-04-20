@@ -176,7 +176,7 @@
 
     // Saturn — two clean elegant rings, small enough to not overlap nearby orbits
     if (p.rings){
-      const ringScales = [1.35, 1.55];
+      const ringScales = [1.22, 1.38];
       const ringTilt   = 0.36;
       for (let i = 0; i < 2; i++){
         const ringRot = t * (0.00022 + i * 0.0001);

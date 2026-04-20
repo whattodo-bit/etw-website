@@ -1,5 +1,6 @@
 RewriteEngine On
 DirectoryIndex index.html
+Options -Indexes
 
 # If the request is for a real file or directory, serve it
 RewriteCond %{REQUEST_FILENAME} -f [OR]
