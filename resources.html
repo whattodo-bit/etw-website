@@ -9,26 +9,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+/* Resources page — teal accent */
+.page{position:relative;z-index:10}
+.status-box{border-left:2px solid #2A5A48 !important}
+.status-box .tag{color:#2A5A48 !important}
+.coming-soon-label{color:#2A5A48 !important}
+.res-arrow svg{transition:transform .3s}
+.res-card{border-left:2px solid #2A5A48}
+</style>
 </head>
 <body>
 
 <div class="grain"></div>
-<div class="no-canvas-bg"></div>
+<canvas id="bg-canvas"></canvas>
 
 <nav class="nav">
-  <a href="index.html" class="nav-wordmark">Explaining<span class="accent"> The World</span></a>
-  <a href="index.html" class="nav-mono"><span>E</span><span class="accent">TW</span></a>
+  <a href="/" class="nav-wordmark">Explaining<span class="accent"> The World</span></a>
+  <a href="/" class="nav-mono"><span>E</span><span class="accent">TW</span></a>
   <ul class="nav-menu">
-    <li><a href="articles.html">Articles</a></li>
-    <li><a href="resources.html" class="active">Resources</a></li>
-    <li><a href="youtube.html">YouTube</a></li>
+    <li><a href="/articles">Articles</a></li>
+    <li><a href="/resources" class="active">Resources</a></li>
+    <li><a href="/youtube">YouTube</a></li>
   </ul>
   <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="drawer">
-  <a href="articles.html">Articles</a>
-  <a href="resources.html">Resources</a>
-  <a href="youtube.html">YouTube</a>
+  <a href="/articles">Articles</a>
+  <a href="/resources">Resources</a>
+  <a href="/youtube">YouTube</a>
 </div>
 
 <main class="page">
@@ -39,7 +48,11 @@
 
   <div class="status-box">
     <div class="tag">In Progress</div>
-    <div class="msg">Every book, documentary, and source used in our content is listed here. Updated every Sunday with each new article.</div>
+    <div class="msg">Every book, documentary, and source used in our content is listed here. Updated every Sunday with each new article.
+      <span class="res-arrow" style="display:inline-flex;align-items:center;margin-left:8px;color:#2A5A48">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </span>
+    </div>
   </div>
 
   <div class="coming-soon-label">Coming Soon</div>
@@ -62,22 +75,110 @@
     <div>
       <h4>Connect</h4>
       <ul>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="collaborations.html">Collaborations</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/collaborations">Collaborations</a></li>
         <li><a href="mailto:contact@explainingtheworld.com"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a></li>
       </ul>
     </div>
-    <div></div>
   </div>
   <div class="footer-bottom">
     <span>&copy; 2026 Explaining The World</span><span class="sep">&middot;</span>
     <span>All Rights Reserved</span><span class="sep">&middot;</span>
-    <a href="privacy.html">Privacy Policy</a><span class="sep">&middot;</span>
-    <a href="terms.html">Terms of Use</a><span class="sep">&middot;</span>
-    <a href="disclaimer.html">Disclaimer</a>
+    <a href="/privacy">Privacy Policy</a><span class="sep">&middot;</span>
+    <a href="/terms">Terms of Use</a><span class="sep">&middot;</span>
+    <a href="/disclaimer">Disclaimer</a>
   </div>
 </footer>
 
 <script src="nav.js"></script>
+
+<script>
+/* Golden wireframe sphere — identical to articles.html */
+(function(){
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const DPR = window.devicePixelRatio || 1;
+  let W, H, CX, CY, R;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth  * DPR;
+    H = canvas.height = window.innerHeight * DPR;
+    canvas.style.width  = window.innerWidth  + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    CX = W * 0.72;
+    CY = H * 0.50;
+    R  = (window.innerHeight * 0.70 * DPR) / 2;
+  }
+
+  function project(lat, lon){
+    const cLat = Math.cos(lat), sLat = Math.sin(lat);
+    const x3 = cLat * Math.sin(lon);
+    return { x: CX + x3*R, y: CY - sLat*R, x3: x3, z: cLat * Math.cos(lon) };
+  }
+  function shade(x3){
+    let a;
+    if (x3 >= 0) a = 0.25 + x3 * 0.25;
+    else         a = 0.25 + x3 * 0.19;
+    if (a < 0.04) a = 0.04;
+    return 'rgba(200,169,110,' + a.toFixed(3) + ')';
+  }
+
+  const LAT_STEPS = 12, LON_STEPS = 24, SEGS = 80;
+
+  function frame(t){
+    ctx.clearRect(0, 0, W, H);
+    const rot = (t / 90000) * Math.PI * 2;
+    ctx.lineWidth = 1 * DPR;
+    ctx.lineCap = 'round';
+
+    for (let i = 1; i < LAT_STEPS; i++){
+      const lat = -Math.PI/2 + (i / LAT_STEPS) * Math.PI;
+      let prev = null;
+      for (let j = 0; j <= SEGS; j++){
+        const lon = -Math.PI + (j / SEGS) * Math.PI * 2 + rot;
+        const p = project(lat, lon);
+        if (prev && prev.z >= 0 && p.z >= 0){
+          ctx.strokeStyle = shade((prev.x3 + p.x3) * 0.5);
+          ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+        }
+        prev = p;
+      }
+    }
+    for (let j = 0; j < LON_STEPS; j++){
+      const lon = (j / LON_STEPS) * Math.PI * 2 + rot;
+      let prev = null;
+      for (let i = 0; i <= SEGS; i++){
+        const lat = -Math.PI/2 + (i / SEGS) * Math.PI;
+        const p = project(lat, lon);
+        if (prev && prev.z >= 0 && p.z >= 0){
+          ctx.strokeStyle = shade((prev.x3 + p.x3) * 0.5);
+          ctx.beginPath(); ctx.moveTo(prev.x, prev.y); ctx.lineTo(p.x, p.y); ctx.stroke();
+        }
+        prev = p;
+      }
+    }
+    ctx.fillStyle = 'rgba(200,169,110,0.30)';
+    for (let i = 1; i < LAT_STEPS; i++){
+      const lat = -Math.PI/2 + (i / LAT_STEPS) * Math.PI;
+      for (let j = 0; j < LON_STEPS; j++){
+        const lon = (j / LON_STEPS) * Math.PI * 2 + rot;
+        const p = project(lat, lon);
+        if (p.z < 0) continue;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 * DPR, 0, Math.PI * 2); ctx.fill();
+      }
+    }
+    const vig = ctx.createRadialGradient(W * 0.28, H * 0.50, 0, W * 0.50, H * 0.50, W * 0.78);
+    vig.addColorStop(0, 'rgba(6,5,8,0)'); vig.addColorStop(1, 'rgba(6,5,8,0.78)');
+    ctx.fillStyle = vig; ctx.fillRect(0, 0, W, H);
+    requestAnimationFrame(frame);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(frame);
+})();
+</script>
+
 </body>
 </html>
