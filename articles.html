@@ -3,460 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Articles — Explaining The World</title>
-<meta name="description" content="Geopolitical analysis published every Sunday by Explaining The World.">
+<title>Archive — ETW Articles</title>
+<meta name="description" content="The full archive of geopolitical analysis from Explaining The World.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-<style>
-/* ============================================
-   Articles page — local overrides
-============================================ */
-.articles-hero{
-  position:relative;z-index:10;
-  max-width:760px;margin:0 auto;
-  padding:120px 40px 20px;
-  text-align:center;
-}
-.articles-hero .page-tag{
-  font-family:'DM Mono',monospace;
-  font-size:.56rem;color:var(--gold);
-  letter-spacing:.34em;text-transform:uppercase;
-  margin-bottom:22px;
-  opacity:0;animation:fadeUp .7s ease .1s both;
-}
-.articles-hero h1{
-  font-family:'Bebas Neue',cursive;
-  font-size:clamp(3rem,7vw,6rem);
-  line-height:.95;letter-spacing:.06em;
-  color:var(--bone);margin-bottom:18px;
-  opacity:0;animation:fadeUp .8s ease .2s both;
-}
-.articles-hero .articles-sub{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-weight:300;
-  font-size:1.1rem;color:var(--ash);
-  line-height:1.7;max-width:560px;margin:0 auto;
-  opacity:0;animation:fadeUp .8s ease .35s both;
-}
-.articles-hero .diamond-rule{
-  margin:36px auto 20px;max-width:380px;
-  opacity:0;animation:fadeIn .8s ease .5s both;
-}
-
-/* SEARCH */
-.articles-search{
-  position:relative;z-index:10;
-  max-width:760px;margin:20px auto 28px;
-  padding:0 40px;
-  opacity:0;animation:fadeUp .7s ease .65s both;
-}
-.articles-search .search-inner{position:relative}
-.articles-search input{
-  width:100%;
-  background:rgba(15,12,20,0.8);
-  border:1px solid var(--gold-line);
-  border-radius:2px;
-  padding:12px 48px 12px 20px;
-  color:var(--bone);
-  font-family:'DM Mono',monospace;
-  font-size:.6rem;font-weight:300;
-  letter-spacing:.18em;
-  outline:none;
-  transition:border-color .3s,background .3s;
-}
-.articles-search input::placeholder{
-  color:var(--ember);letter-spacing:.18em;
-}
-.articles-search input:focus{
-  border-color:rgba(200,169,110,0.42);
-  background:rgba(15,12,20,0.92);
-}
-.articles-search .icon{
-  position:absolute;right:16px;top:50%;transform:translateY(-50%);
-  color:var(--gold);pointer-events:none;display:flex;
-}
-
-/* ARTICLES GRID */
-.articles-grid{
-  position:relative;z-index:10;
-  max-width:760px;margin:0 auto;
-  padding:0 40px 120px;
-}
-.art-card{
-  position:relative;display:block;
-  background:rgba(10,8,14,0.85);
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  border:1px solid var(--gold-line);
-  border-left:2px solid #C8A96E;
-  border-radius:2px;
-  padding:28px 32px;margin-bottom:8px;
-  color:inherit;overflow:hidden;
-  transition:background .4s,border-color .4s,transform .4s;
-  opacity:0;animation:fadeUp .6s ease var(--delay,.8s) both;
-}
-.art-card::before{
-  content:'';position:absolute;
-  left:-2px;top:0;bottom:0;width:2px;
-  background:#C8A96E;
-  transform:scaleY(0);transform-origin:top;
-  transition:transform .55s cubic-bezier(.25,.46,.45,.94);
-}
-.art-card:hover::before{transform:scaleY(1)}
-.art-card:hover{
-  background:rgba(200,169,110,0.06);
-  border-color:rgba(200,169,110,0.3);
-  transform:translateX(4px);
-}
-.art-date{
-  font-family:'DM Mono',monospace;
-  font-size:.54rem;font-weight:300;
-  color:var(--ember);letter-spacing:.2em;
-  text-transform:uppercase;margin-bottom:12px;
-}
-.art-title{
-  font-family:'Bebas Neue',cursive;
-  font-size:1.8rem;letter-spacing:.06em;
-  color:var(--bone);line-height:1.08;
-  margin-bottom:12px;
-  transition:color .3s;
-}
-.art-card:hover .art-title{color:var(--gold-bright)}
-.art-desc{
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;font-size:.95rem;
-  color:var(--ash);line-height:1.7;
-  margin-bottom:16px;
-}
-.art-more{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:'DM Mono',monospace;
-  font-size:.58rem;font-weight:300;
-  color:var(--gold);letter-spacing:.15em;
-  text-transform:uppercase;
-  transition:gap .3s;
-}
-.art-more svg{transition:transform .3s}
-.art-card:hover .art-more{gap:14px}
-.art-card:hover .art-more svg{transform:translateX(3px)}
-
-.no-results{
-  text-align:center;padding:40px 0;
-  font-family:'Cormorant Garamond',serif;
-  font-style:italic;color:var(--ember);
-  font-size:1rem;display:none;
-}
-.no-results.show{display:block}
-
-@media (max-width:768px){
-  .articles-hero{padding:100px 24px 16px}
-  .articles-search{padding:0 24px;margin:16px auto 22px}
-  .articles-grid{padding:0 24px 80px}
-  .art-card{padding:24px 22px}
-  .art-title{font-size:1.5rem}
-}
-</style>
 </head>
 <body>
 
-<div class="grain"></div>
-<canvas id="bg-canvas"></canvas>
-
-<!-- NAV -->
 <nav class="nav">
-  <a href="/" class="nav-wordmark">Explaining<span class="accent"> The World</span></a>
-  <a href="/" class="nav-mono"><span>E</span><span class="accent">TW</span></a>
-  <ul class="nav-menu">
-    <li><a href="/articles" class="active">Articles</a></li>
-    <li><a href="/resources">Resources</a></li>
-    <li><a href="/youtube">YouTube</a></li>
-  </ul>
-  <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="drawer">
-  <a href="/articles">Articles</a>
-  <a href="/resources">Resources</a>
-  <a href="/youtube">YouTube</a>
-</div>
-
-<!-- HERO -->
-<header class="articles-hero">
-  <h1>Articles</h1>
-  <p class="articles-sub">Geopolitical analysis. Every Sunday.</p>
-  <div class="diamond-rule"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
-</header>
-
-<!-- SEARCH -->
-<section class="articles-search">
-  <div class="search-inner">
-    <input type="text" id="article-search" placeholder="Search articles..." autocomplete="off" spellcheck="false">
-    <span class="icon">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    </span>
+  <a href="index.html" class="nav-brand">ETW<span class="accent"> Articles</span></a>
+  <div class="nav-links">
+    <a href="index.html#about">About</a>
+    <a href="articles.html" class="active">Archive</a>
+    <a href="mailto:contact@explainingtheworld.com">Contact</a>
   </div>
-</section>
+</nav>
 
-<!-- ARTICLES -->
-<section class="articles-grid" id="articles-grid">
+<main>
+  <section class="container fade">
+    <h1 class="page-title">Archive</h1>
+    <p class="page-sub">Every article, newest first.</p>
 
-  <a class="art-card" href="turkey-article.html" style="--delay:.75s">
-    <div class="art-date">May 25, 2025</div>
-    <div class="art-title">Why Turkey Is The Most Important Country In The World Right Now</div>
-    <div class="art-desc">Turkey sits at the intersection of Europe, Asia, and the Middle East &mdash; in NATO yet buying Russian weapons, controlling the Bosphorus, and playing every global power simultaneously. This is the story of the world's most strategically important nation.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+    <div class="search">
+      <input type="text" id="archive-search" placeholder="Search the archive..." autocomplete="off" spellcheck="false">
+      <span class="icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </span>
+    </div>
 
-  <a class="art-card" href="#" style="--delay:.8s">
-    <div class="art-date">May 18, 2025</div>
-    <div class="art-title">Why Iran Will Not Start A War In 2025</div>
-    <div class="art-desc">The most dangerous country in the Middle East is not the one firing missiles. It is the one that has decided to wait. Understanding Iranian strategic patience is understanding the future of the entire region.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+    <div class="archive-list" id="archive-list">
 
-  <a class="art-card" href="#" style="--delay:.85s">
-    <div class="art-date">May 11, 2025</div>
-    <div class="art-title">The New Silk Road &mdash; How China Bought Half The World</div>
-    <div class="art-desc">China did not need an army to build an empire. It needed a cheque book and patience. The Belt and Road Initiative is the most ambitious geopolitical project in human history.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="turkey.html">
+        <div class="date">May 25, 2025</div>
+        <div class="title">Why Turkey Is The Most Important Country In The World Right Now</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:.9s">
-    <div class="art-date">May 4, 2025</div>
-    <div class="art-title">Why China Will Not Invade Taiwan Before 2028</div>
-    <div class="art-desc">Every analyst is asking when China will move on Taiwan. The better question is why it cannot &mdash; and what that restraint tells us about the true state of Chinese power.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">May 18, 2025</div>
+        <div class="title">Why Iran Will Not Start A War In 2025</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:.95s">
-    <div class="art-date">April 27, 2025</div>
-    <div class="art-title">The NATO Crisis Nobody Wants To Admit</div>
-    <div class="art-desc">NATO has not faced a threat this serious since the Cold War. But the greatest danger is not Russia. It is the fractures forming within the alliance itself.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">May 11, 2025</div>
+        <div class="title">The New Silk Road &mdash; How China Bought Half The World</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:1s">
-    <div class="art-date">April 20, 2025</div>
-    <div class="art-title">How Saudi Arabia Is Quietly Becoming The Most Powerful Country In The Middle East</div>
-    <div class="art-desc">While the world watches Gaza and Iran, Saudi Arabia is executing the most ambitious geopolitical pivot in its history. Vision 2030 is not an economic plan. It is a power play.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">May 4, 2025</div>
+        <div class="title">Why China Will Not Invade Taiwan Before 2028</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:1.05s">
-    <div class="art-date">April 13, 2025</div>
-    <div class="art-title">Why Russia Is Winning The Information War While Losing The Real One</div>
-    <div class="art-desc">On the battlefield, Russia is losing ground. In the information space, it is winning everywhere. Understanding this gap is understanding modern warfare.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">April 27, 2025</div>
+        <div class="title">The NATO Crisis Nobody Wants To Admit</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:1.1s">
-    <div class="art-date">April 6, 2025</div>
-    <div class="art-title">The Collapse Nobody Is Talking About &mdash; Pakistan In 2025</div>
-    <div class="art-desc">Pakistan is facing simultaneous economic collapse, political instability, and a military establishment that no longer knows which direction to point. This is what a failing nuclear state looks like.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">April 20, 2025</div>
+        <div class="title">How Saudi Arabia Is Quietly Becoming The Most Powerful Country In The Middle East</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:1.15s">
-    <div class="art-date">March 30, 2025</div>
-    <div class="art-title">Why Africa Will Decide The Next World Order</div>
-    <div class="art-desc">The great powers are all in Africa. China is building ports. Russia is sending mercenaries. America is losing influence. The continent that was ignored for a century is now the most contested space on Earth.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">April 13, 2025</div>
+        <div class="title">Why Russia Is Winning The Information War While Losing The Real One</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <a class="art-card" href="#" style="--delay:1.2s">
-    <div class="art-date">March 23, 2025</div>
-    <div class="art-title">The Israel Question &mdash; What Comes After Gaza</div>
-    <div class="art-desc">The war in Gaza will end. What replaces it will define Middle Eastern geopolitics for the next generation. Three scenarios &mdash; and only one leads to stability.</div>
-    <span class="art-more">Read More <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-  </a>
+      <a class="archive-row" href="#">
+        <div class="date">April 6, 2025</div>
+        <div class="title">The Collapse Nobody Is Talking About &mdash; Pakistan In 2025</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-  <div class="no-results" id="no-results">No articles match your search.</div>
-</section>
+      <a class="archive-row" href="#">
+        <div class="date">March 30, 2025</div>
+        <div class="title">Why Africa Will Decide The Next World Order</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
 
-<!-- FOOTER (identical to index.html) -->
+      <a class="archive-row" href="#">
+        <div class="date">March 23, 2025</div>
+        <div class="title">The Israel Question &mdash; What Comes After Gaza</div>
+        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </a>
+
+      <div class="no-results" id="no-results">No articles match your search.</div>
+    </div>
+  </section>
+</main>
+
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="wordmark">Explaining<span class="accent"> The World</span></div>
-      <p>Learning from history. Creating in the present. Preparing for the future.</p>
+    <div class="footer-brand">ETW<span class="accent"> Articles</span></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/etw.articles" aria-label="Instagram" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="https://x.com/etw_articles" aria-label="X" target="_blank" rel="noopener"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg></a>
     </div>
-    <div>
-      <h4>Follow</h4>
-      <div class="footer-social">
-        <a href="https://youtube.com/@etw_articles" aria-label="YouTube" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/etw.articles" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://x.com/etw_articles" aria-label="X" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div>
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/collaborations">Collaborations</a></li>
-        <li><a href="mailto:contact@explainingtheworld.com">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email
-        </a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2026 Explaining The World</span>
-    <span class="sep">&middot;</span>
-    <span>All Rights Reserved</span>
-    <span class="sep">&middot;</span>
-    <a href="/privacy">Privacy Policy</a>
-    <span class="sep">&middot;</span>
-    <a href="/terms">Terms of Use</a>
-    <span class="sep">&middot;</span>
-    <a href="/disclaimer">Disclaimer</a>
+    <div>&copy; 2026 ETW Articles</div>
   </div>
 </footer>
 
-<script src="nav.js"></script>
-
 <script>
-/* ============================================
-   Golden wireframe sphere — Voyager-record style
-   Dark void background, gold latitude/longitude grid.
-   Right side (lit) bright, left side (shadow) fades out.
-   Dots at every line intersection. 90s per rotation.
-============================================ */
 (function(){
-  const canvas = document.getElementById('bg-canvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const DPR = window.devicePixelRatio || 1;
-  let W, H, CX, CY, R;
-
-  function resize(){
-    W = canvas.width  = window.innerWidth  * DPR;
-    H = canvas.height = window.innerHeight * DPR;
-    canvas.style.width  = window.innerWidth  + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-    CX = W * 0.72;
-    CY = H * 0.50;
-    R  = (window.innerHeight * 0.70 * DPR) / 2;
-  }
-
-  function project(lat, lon){
-    const cLat = Math.cos(lat), sLat = Math.sin(lat);
-    const x3 = cLat * Math.sin(lon);
-    const y3 = sLat;
-    const z3 = cLat * Math.cos(lon);
-    return { x: CX + x3*R, y: CY - y3*R, x3: x3, z: z3 };
-  }
-
-  /* Shade an edge by its midpoint x3:
-     x3 = +1 (right / lit)   -> 0.50
-     x3 =  0 (terminator)    -> 0.25
-     x3 = -1 (left / shadow) -> 0.06                            */
-  function shade(x3){
-    let a;
-    if (x3 >= 0) a = 0.25 + x3 * 0.25;
-    else         a = 0.25 + x3 * 0.19;
-    if (a < 0.04) a = 0.04;
-    return 'rgba(200,169,110,' + a.toFixed(3) + ')';
-  }
-
-  const LAT_STEPS = 12;   /* parallels (excluding poles) */
-  const LON_STEPS = 24;   /* meridians */
-  const SEGS      = 80;   /* segments per line for smoothness */
-
-  function frame(t){
-    ctx.clearRect(0, 0, W, H);
-    const rot = (t / 90000) * Math.PI * 2;
-    ctx.lineWidth = 1 * DPR;
-    ctx.lineCap = 'round';
-
-    /* --- Parallels (latitude circles) --- */
-    for (let i = 1; i < LAT_STEPS; i++){
-      const lat = -Math.PI/2 + (i / LAT_STEPS) * Math.PI;
-      let prev = null;
-      for (let j = 0; j <= SEGS; j++){
-        const lon = -Math.PI + (j / SEGS) * Math.PI * 2 + rot;
-        const p = project(lat, lon);
-        if (prev && prev.z >= 0 && p.z >= 0){
-          ctx.strokeStyle = shade((prev.x3 + p.x3) * 0.5);
-          ctx.beginPath();
-          ctx.moveTo(prev.x, prev.y);
-          ctx.lineTo(p.x, p.y);
-          ctx.stroke();
-        }
-        prev = p;
-      }
-    }
-
-    /* --- Meridians (longitude lines) --- */
-    for (let j = 0; j < LON_STEPS; j++){
-      const lon = (j / LON_STEPS) * Math.PI * 2 + rot;
-      let prev = null;
-      for (let i = 0; i <= SEGS; i++){
-        const lat = -Math.PI/2 + (i / SEGS) * Math.PI;
-        const p = project(lat, lon);
-        if (prev && prev.z >= 0 && p.z >= 0){
-          ctx.strokeStyle = shade((prev.x3 + p.x3) * 0.5);
-          ctx.beginPath();
-          ctx.moveTo(prev.x, prev.y);
-          ctx.lineTo(p.x, p.y);
-          ctx.stroke();
-        }
-        prev = p;
-      }
-    }
-
-    /* --- Intersection dots --- */
-    ctx.fillStyle = 'rgba(200,169,110,0.30)';
-    for (let i = 1; i < LAT_STEPS; i++){
-      const lat = -Math.PI/2 + (i / LAT_STEPS) * Math.PI;
-      for (let j = 0; j < LON_STEPS; j++){
-        const lon = (j / LON_STEPS) * Math.PI * 2 + rot;
-        const p = project(lat, lon);
-        if (p.z < 0) continue;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.4 * DPR, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    /* Page-side vignette — keeps left text readable */
-    const vig = ctx.createRadialGradient(W * 0.28, H * 0.50, 0, W * 0.50, H * 0.50, W * 0.78);
-    vig.addColorStop(0, 'rgba(6,5,8,0)');
-    vig.addColorStop(1, 'rgba(6,5,8,0.78)');
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, W, H);
-
-    requestAnimationFrame(frame);
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  requestAnimationFrame(frame);
-})();
-</script>
-
-<script>
-/* ============================================
-   Article search — relevance-sorted filter
-   Score = title matches x 3 + description matches.
-   Zero-match cards hide completely; remaining cards
-   reorder so highest score appears first.
-============================================ */
-(function(){
-  const input = document.getElementById('article-search');
-  const grid  = document.getElementById('articles-grid');
+  const input = document.getElementById('archive-search');
+  const list  = document.getElementById('archive-list');
+  const rows  = Array.from(list.querySelectorAll('.archive-row'));
   const noRes = document.getElementById('no-results');
-  if (!input || !grid) return;
-
-  const cards    = Array.from(grid.querySelectorAll('.art-card'));
-  const original = cards.slice();
+  if (!input) return;
+  const original = rows.slice();
 
   function count(text, term){
     if (!term) return 0;
@@ -464,41 +126,27 @@
     while ((i = text.indexOf(term, i)) !== -1){ n++; i += term.length; }
     return n;
   }
-
   function restore(){
-    original.forEach(function(c){
-      c.style.display = '';
-      grid.insertBefore(c, noRes);
-    });
+    original.forEach(r => { r.style.display = ''; list.insertBefore(r, noRes); });
     noRes.classList.remove('show');
   }
-
   function filter(){
     const q = input.value.toLowerCase().trim();
-    if (q === ''){ restore(); return; }
-
-    const scored = cards.map(function(card){
-      const title = (card.querySelector('.art-title') ? card.querySelector('.art-title').textContent : '').toLowerCase();
-      const desc  = (card.querySelector('.art-desc')  ? card.querySelector('.art-desc').textContent  : '').toLowerCase();
-      return { card: card, score: count(title, q) * 3 + count(desc, q) };
+    if (!q){ restore(); return; }
+    const scored = rows.map(r => {
+      const title = (r.querySelector('.title')?.textContent || '').toLowerCase();
+      const date  = (r.querySelector('.date')?.textContent  || '').toLowerCase();
+      return { r, score: count(title, q) * 3 + count(date, q) };
     });
-    scored.sort(function(a, b){ return b.score - a.score; });
-
+    scored.sort((a, b) => b.score - a.score);
     let shown = 0;
-    scored.forEach(function(s){
-      if (s.score > 0){
-        s.card.style.display = '';
-        grid.insertBefore(s.card, noRes);
-        shown++;
-      } else {
-        s.card.style.display = 'none';
-      }
+    scored.forEach(({ r, score }) => {
+      if (score > 0){ r.style.display = ''; list.insertBefore(r, noRes); shown++; }
+      else r.style.display = 'none';
     });
     noRes.classList.toggle('show', shown === 0);
   }
-
   input.addEventListener('input', filter);
-  input.addEventListener('keyup', filter);
 })();
 </script>
 

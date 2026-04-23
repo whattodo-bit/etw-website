@@ -3,145 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Explaining The World — History & Geopolitics</title>
-<meta name="description" content="Explaining The World. Learning from history. Creating in the present. Preparing for the future.">
+<title>ETW Articles — Explaining The World</title>
+<meta name="description" content="Geopolitical analysis for the reader who deserves to understand the world in full. Published every Sunday.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="grain"></div>
-<canvas id="bg-canvas"></canvas>
-
-<!-- NAV -->
 <nav class="nav">
-  <a href="/" class="nav-wordmark">Explaining<span class="accent"> The World</span></a>
-  <a href="/" class="nav-mono"><span>E</span><span class="accent">TW</span></a>
-  <ul class="nav-menu">
-    <li><a href="/articles">Articles</a></li>
-    <li><a href="/resources">Resources</a></li>
-    <li><a href="/youtube">YouTube</a></li>
-  </ul>
-  <button class="burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <a href="index.html" class="nav-brand">ETW<span class="accent"> Articles</span></a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="articles.html">Archive</a>
+    <a href="mailto:contact@explainingtheworld.com">Contact</a>
+  </div>
 </nav>
-<div class="drawer">
-  <a href="/articles">Articles</a>
-  <a href="/resources">Resources</a>
-  <a href="/youtube">YouTube</a>
-</div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-tag">History &middot; Geopolitics</div>
-  <h1 class="hero-headline">
-    <span class="line1">Explaining</span>
-    <span class="line2">The World</span>
-  </h1>
-  <div class="diamond-rule"><span class="line"></span><span class="diamond"></span><span class="line"></span></div>
-  <div class="hero-sub">
-    Learning from history.<br>
-    Creating in the present.<br>
-    Preparing for the future.
-  </div>
-  <button class="hero-explore" id="heroExplore" aria-label="Explore">
-    <span class="label">Explore</span>
-    <span class="stem"></span>
-  </button>
-</section>
-
-<!-- CARDS -->
-<section class="content" id="content">
-  <div class="content-header">
-    <span class="bar"></span>
-    <span class="label">What We Cover</span>
-    <span class="bar"></span>
-  </div>
-
-  <a href="/articles" class="card" style="--accent:#4A6FA5;--delay:2.2s">
-    <div class="card-body">
-      <div class="card-index">01 &mdash; Written Analysis</div>
-      <div class="card-title">Articles</div>
-      <div class="card-desc">Geopolitical analysis &mdash; the forces, decisions, and power that shape our world.</div>
+<main>
+  <section class="container">
+    <div class="hero fade">
+      <h1>Explaining The World</h1>
+      <p class="sub">Geopolitical analysis for the reader who deserves to understand the world in full. Published every Sunday.</p>
+      <hr class="gold-rule">
     </div>
-    <span class="card-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-  </a>
 
-  <a href="/resources" class="card" style="--accent:#4A8A6E;--delay:2.35s">
-    <div class="card-body">
-      <div class="card-index">02 &mdash; Reference Library</div>
-      <div class="card-title">Resources</div>
-      <div class="card-desc">Books, documentaries, and sources &mdash; every reference we use, reviewed and referred.</div>
+    <a href="turkey.html" class="featured fade-2">
+      <div class="tag">Featured &middot; May 25, 2025</div>
+      <h2>Why Turkey Is The Most Important Country In The World Right Now</h2>
+      <p>Turkey sits at the intersection of Europe, Asia, and the Middle East &mdash; a NATO member that buys Russian weapons, controls the Bosphorus, and plays every global power simultaneously. This is the story of the world's most strategically important nation.</p>
+      <span class="more">Read the article <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <div class="section-head fade-3">
+      <span class="label">Recent Articles</span>
+      <span class="line"></span>
     </div>
-    <span class="card-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-  </a>
 
-  <a href="/youtube" class="card" style="--accent:#8A4A4A;--delay:2.5s">
-    <div class="card-body">
-      <div class="card-index">03 &mdash; Video Channel</div>
-      <div class="card-title">YouTube</div>
-      <div class="card-desc">History &mdash; told through deep research, narrative storytelling, and the lessons civilisations leave behind.</div>
+    <div class="grid fade-3">
+      <a class="card" href="articles.html">
+        <div class="date">May 18, 2025</div>
+        <h3>Why Iran Will Not Start A War In 2025</h3>
+        <p>The most dangerous country in the Middle East is not the one firing missiles. It is the one that has decided to wait.</p>
+      </a>
+      <a class="card" href="articles.html">
+        <div class="date">May 11, 2025</div>
+        <h3>The New Silk Road &mdash; How China Bought Half The World</h3>
+        <p>China did not need an army to build an empire. It needed a cheque book and patience. The Belt and Road Initiative is the most ambitious geopolitical project in human history.</p>
+      </a>
+      <a class="card" href="articles.html">
+        <div class="date">May 4, 2025</div>
+        <h3>Why China Will Not Invade Taiwan Before 2028</h3>
+        <p>Every analyst is asking when China will move on Taiwan. The better question is why it cannot &mdash; and what that restraint tells us about the true state of Chinese power.</p>
+      </a>
+      <a class="card" href="articles.html">
+        <div class="date">April 27, 2025</div>
+        <h3>The NATO Crisis Nobody Wants To Admit</h3>
+        <p>NATO has not faced a threat this serious since the Cold War. But the greatest danger is not Russia. It is the fractures forming within the alliance itself.</p>
+      </a>
     </div>
-    <span class="card-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
-  </a>
-</section>
+  </section>
+</main>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="wordmark">Explaining<span class="accent"> The World</span></div>
-      <p>Learning from history. Creating in the present. Preparing for the future.</p>
+    <div class="footer-brand">ETW<span class="accent"> Articles</span></div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/etw.articles" aria-label="Instagram" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a href="https://x.com/etw_articles" aria-label="X" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg>
+      </a>
     </div>
-    <div>
-      <h4>Follow</h4>
-      <div class="footer-social">
-        <a href="https://youtube.com/@explaining_theworld" aria-label="YouTube" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/etw.articles" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </a>
-        <a href="https://x.com/etw_articles" aria-label="X" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg>
-        </a>
-      </div>
-    </div>
-    <div>
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/collaborations">Collaborations</a></li>
-        <li><a href="mailto:contact@explainingtheworld.com">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          Email
-        </a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>Legal</h4>
-      <ul>
-        <li><a href="/privacy">Privacy Policy</a></li>
-        <li><a href="/terms">Terms of Use</a></li>
-        <li><a href="/disclaimer">Disclaimer</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>&copy; 2026 Explaining The World</span>
-    <span class="sep">&middot;</span>
-    <span>All Rights Reserved</span>
-    <span class="sep">&middot;</span>
-    <a href="/privacy">Privacy Policy</a>
-    <span class="sep">&middot;</span>
-    <a href="/terms">Terms of Use</a>
-    <span class="sep">&middot;</span>
-    <a href="/disclaimer">Disclaimer</a>
+    <div>&copy; 2026 ETW Articles</div>
   </div>
 </footer>
 
-<script src="solar.js"></script>
-<script src="nav.js"></script>
 </body>
 </html>
