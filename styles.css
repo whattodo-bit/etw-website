@@ -3,11 +3,11 @@
    Light, breathable, Financial Times × Foreign Affairs
 ========================================================== */
 :root{
-  --bg:#F8F5EF;
+  --bg:#FAFAF8;
   --text:#1A1612;
-  --gold:#B8860B;
-  --gold-light:rgba(184,134,11,0.15);
-  --border:rgba(184,134,11,0.20);
+  --gold:#8B6914;
+  --gold-light:rgba(139,105,20,0.15);
+  --border:rgba(139,105,20,0.20);
   --muted:#6B6358;
   --white:#FFFFFF;
 }
