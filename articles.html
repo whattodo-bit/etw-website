@@ -1,176 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Archive — Explaining The World</title>
-<meta name="description" content="The complete archive of geopolitical analysis from Explaining The World.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Articles — Explaining The World</title>
+  <meta name="description" content="All articles from ETW Editorial — independent geopolitical analysis published every Sunday.">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="topbar">
-  <span id="topbar-date"></span>
-  <span class="tag">Geopolitical analysis. Every Sunday.</span>
-</div>
-
+<!-- NAVIGATION -->
 <nav class="nav">
-  <a href="index.html" class="nav-brand">
-    <span class="title">Explaining <span class="accent">The World</span></span>
-    <span class="sub">ETW Articles</span>
-  </a>
-  <div class="nav-links">
-    <a href="articles.html" class="active">Archive</a>
-    <a href="about.html">About</a>
-    <a href="faq.html">FAQ</a>
-    <a href="collaborations.html">Collaborate</a>
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">Explaining <span>The World</span></a>
+    <div class="nav__links">
+      <a href="articles.html" class="active">Articles</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="collaborations.html">Collaborations</a>
+    </div>
   </div>
 </nav>
 
-<main>
-  <section class="container fade">
-    <header class="page-header">
-      <div class="label">All Articles</div>
-      <h1>Archive</h1>
-      <p class="sub">Every piece of analysis published by Explaining The World &mdash; newest first.</p>
-    </header>
+<!-- ARCHIVE HEADER -->
+<div class="container">
+  <div class="archive-header">
+    <p class="hero__eyebrow" style="margin-bottom:12px;">ETW Editorial</p>
+    <h1>Articles</h1>
+    <p>Independent geopolitical analysis &mdash; published every Sunday.</p>
+  </div>
 
-    <div class="search">
-      <input type="text" id="archive-search" placeholder="Search by topic, country, or keyword" autocomplete="off" spellcheck="false">
-      <span class="icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <input type="text" id="archive-search" placeholder="Search articles by topic, region, or keyword&hellip;" autocomplete="off" spellcheck="false">
+    <span class="search-bar__icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+  </div>
+
+  <!-- ARCHIVE GRID -->
+  <div class="archive-grid">
+
+    <a class="archive-card" href="turkey.html">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">ETW Editorial</span>
+      </div>
+      <h2 class="archive-card__title">Why Turkey Is The Most Important Country In The World Right Now</h2>
+      <p class="archive-card__excerpt">Turkey occupies a uniquely irreplaceable position in global geopolitics — straddling Europe and Asia, controlling the Bosphorus, balancing between NATO and Russia, and wielding influence from the Balkans to Central Asia.</p>
+      <span class="archive-card__link">
+        Read Article
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </span>
+    </a>
+
+    <div class="archive-card" style="opacity:0.50; pointer-events:none;">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">Coming Soon</span>
+      </div>
+      <h2 class="archive-card__title">The China Question: Why Taiwan Is Not the Real Flashpoint</h2>
+      <p class="archive-card__excerpt">The next major confrontation in the Pacific may not happen where most analysts are looking. The real flashpoint is elsewhere — and hiding in plain sight.</p>
+      <span class="archive-card__link">Publishing Soon</span>
     </div>
 
-    <div class="archive-list" id="archive-list">
-
-      <a class="archive-row" href="turkey.html">
-        <div class="date">May 25, 2025</div>
-        <div class="title">Why Turkey Is The Most Important Country In The World Right Now</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">May 18, 2025</div>
-        <div class="title">Why Iran Will Not Start A War In 2025</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">May 11, 2025</div>
-        <div class="title">The New Silk Road &mdash; How China Bought Half The World</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">May 4, 2025</div>
-        <div class="title">Why China Will Not Invade Taiwan Before 2028</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">April 27, 2025</div>
-        <div class="title">The NATO Crisis Nobody Wants To Admit</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">April 20, 2025</div>
-        <div class="title">How Saudi Arabia Is Quietly Becoming The Most Powerful Country In The Middle East</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">April 13, 2025</div>
-        <div class="title">Why Russia Is Winning The Information War While Losing The Real One</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">April 6, 2025</div>
-        <div class="title">The Collapse Nobody Is Talking About &mdash; Pakistan In 2025</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">March 30, 2025</div>
-        <div class="title">Why Africa Will Decide The Next World Order</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <a class="archive-row" href="coming-soon.html">
-        <div class="date">March 23, 2025</div>
-        <div class="title">The Israel Question &mdash; What Comes After Gaza</div>
-        <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-      </a>
-
-      <div class="no-results" id="no-results">No articles match your search.</div>
+    <div class="archive-card" style="opacity:0.50; pointer-events:none;">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">Coming Soon</span>
+      </div>
+      <h2 class="archive-card__title">Why the Middle East Is Being Redrawn From the Inside Out</h2>
+      <p class="archive-card__excerpt">The region's old borders are holding, but the power underneath them has shifted decisively. The new map is invisible on paper but increasingly visible in practice.</p>
+      <span class="archive-card__link">Publishing Soon</span>
     </div>
-  </section>
-</main>
 
+    <div class="archive-card" style="opacity:0.50; pointer-events:none;">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">Coming Soon</span>
+      </div>
+      <h2 class="archive-card__title">Russia After Ukraine: What Comes Next for the Eurasian Giant</h2>
+      <p class="archive-card__excerpt">The war has transformed Russia's position in the world. Understanding what comes next requires separating the noise from the structural realities that will persist regardless of outcome.</p>
+      <span class="archive-card__link">Publishing Soon</span>
+    </div>
+
+    <div class="archive-card" style="opacity:0.50; pointer-events:none;">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">Coming Soon</span>
+      </div>
+      <h2 class="archive-card__title">The Dollar's Long Decline and What It Means for World Order</h2>
+      <p class="archive-card__excerpt">The dollar is not dying. But its unchallenged supremacy is eroding — slowly, unevenly, and with consequences that most analysts are not yet taking seriously enough.</p>
+      <span class="archive-card__link">Publishing Soon</span>
+    </div>
+
+    <div class="archive-card" style="opacity:0.50; pointer-events:none;">
+      <div class="archive-card__meta">
+        <span class="archive-card__tag">Geopolitics</span>
+        <span class="archive-card__date">Coming Soon</span>
+      </div>
+      <h2 class="archive-card__title">Why Africa Will Define the 21st Century</h2>
+      <p class="archive-card__excerpt">By 2050, one in four people on Earth will be African. The geopolitical implications of that demographic reality are only beginning to materialise.</p>
+      <span class="archive-card__link">Publishing Soon</span>
+    </div>
+
+  </div>
+
+  <div id="no-results" class="no-results">No articles match your search. Try a different keyword.</div>
+</div>
+
+<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-inner">
+  <div class="footer__main">
     <div>
-      <div class="brand">Explaining <span class="accent">The World</span></div>
-      <p class="tagline">Geopolitical analysis.<br>Every Sunday.</p>
-      <div class="footer-social">
-        <button class="social-trigger" aria-label="Instagram" data-articles-url="https://www.instagram.com/etw.articles" data-official-url="https://www.instagram.com/explainingtheworld">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <div class="footer__brand-name">Explaining <span>The World</span></div>
+      <p class="footer__tagline">Independent geopolitical analysis for a global audience.</p>
+      <div class="footer__social">
+        <button class="footer__social-btn" data-popup="Instagram" aria-label="Follow on Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
         </button>
-        <button class="social-trigger" aria-label="X" data-articles-url="https://x.com/etw_articles" data-official-url="https://x.com/explainingtheworld">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg>
+        <button class="footer__social-btn" data-popup="X" aria-label="Follow on X">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </button>
-        <button class="social-trigger" aria-label="YouTube" data-articles-url="https://youtube.com/@etw_articles" data-official-url="https://youtube.com/@explaining_theworld">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+        <button class="footer__social-btn" data-popup="YouTube" aria-label="Follow on YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </button>
       </div>
     </div>
     <div>
-      <h4>Navigate</h4>
-      <ul>
-        <li><a href="articles.html">Archive</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-        <li><a href="collaborations.html">Collaborate</a></li>
-      </ul>
+      <div class="footer__col-title">Quick Links</div>
+      <nav class="footer__links">
+        <a href="articles.html">Articles</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="collaborations.html">Collaborations</a>
+        <a href="legal.html">Legal</a>
+      </nav>
     </div>
     <div>
-      <h4>Contact</h4>
-      <ul><li><a href="mailto:contact@explainingtheworld.com">contact@explainingtheworld.com</a></li></ul>
-    </div>
-    <div>
-      <h4>Legal</h4>
-      <ul>
-        <li><a href="legal.html#privacy">Privacy Policy</a></li>
-        <li><a href="legal.html#terms">Terms</a></li>
-        <li><a href="legal.html#disclaimer">Disclaimer</a></li>
-      </ul>
+      <div class="footer__col-title">Publication</div>
+      <nav class="footer__links">
+        <a href="turkey.html">Latest Article</a>
+        <a href="coming-soon.html">Coming Soon</a>
+        <a href="collaborations.html">Work With Us</a>
+      </nav>
     </div>
   </div>
-  <div class="footer-disclaimer">
-    All articles represent independent analysis and personal opinion. They are not professional advice of any kind.
-  </div>
-  <div class="footer-bottom" style="max-width:1180px;margin:0 auto">
-    <span>&copy; 2026 Explaining The World</span>
-    <span>All Rights Reserved</span>
+  <div style="border-top:1px solid rgba(255,255,255,0.08);">
+    <div class="footer__bottom" style="max-width:1200px;margin:0 auto;">
+      <p class="footer__disclaimer">All articles reflect editorial analysis only.</p>
+      <p class="footer__copy">&copy; 2025 Explaining The World. All rights reserved.</p>
+    </div>
   </div>
 </footer>
 
-<div class="popup-overlay" id="social-popup" role="dialog" aria-modal="true" aria-hidden="true">
+<!-- SOCIAL POPUP -->
+<div id="social-popup" class="popup-overlay" role="dialog" aria-modal="true">
   <div class="popup">
-    <button class="close" aria-label="Close">&times;</button>
-    <h3>Choose a Channel</h3>
-    <div class="choices">
-      <a class="choice" id="popup-articles" href="#" target="_blank" rel="noopener">ETW Articles <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a class="choice" id="popup-official" href="#" target="_blank" rel="noopener">ETW Official <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-    </div>
+    <button class="popup__close" aria-label="Close">&times;</button>
+    <p class="popup__platform"></p>
+    <h2 class="popup__heading"></h2>
+    <div class="popup__options"></div>
   </div>
 </div>
 
-<script src="etw.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

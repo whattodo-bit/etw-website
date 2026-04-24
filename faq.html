@@ -1,160 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FAQ — Explaining The World</title>
-<meta name="description" content="Frequently asked questions about Explaining The World.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Explaining The World</title>
+  <meta name="description" content="Frequently asked questions about Explaining The World and ETW Editorial.">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<div class="topbar">
-  <span id="topbar-date"></span>
-  <span class="tag">Geopolitical analysis. Every Sunday.</span>
-</div>
-
+<!-- NAVIGATION -->
 <nav class="nav">
-  <a href="index.html" class="nav-brand">
-    <span class="title">Explaining <span class="accent">The World</span></span>
-    <span class="sub">ETW Articles</span>
-  </a>
-  <div class="nav-links">
-    <a href="articles.html">Archive</a>
-    <a href="about.html">About</a>
-    <a href="faq.html" class="active">FAQ</a>
-    <a href="collaborations.html">Collaborate</a>
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo">Explaining <span>The World</span></a>
+    <div class="nav__links">
+      <a href="articles.html">Articles</a>
+      <a href="about.html">About</a>
+      <a href="faq.html" class="active">FAQ</a>
+      <a href="collaborations.html">Collaborations</a>
+    </div>
   </div>
 </nav>
 
-<main>
-  <section class="container narrow fade">
-    <header class="page-header">
-      <div class="label">Help</div>
-      <h1>Frequently Asked Questions</h1>
-      <p class="sub">Answers to the questions we receive most often about the publication, our process, and working with us.</p>
-    </header>
-
-    <div class="search">
-      <input type="text" id="faq-search" placeholder="Search questions" autocomplete="off" spellcheck="false">
-      <span class="icon">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </span>
-    </div>
-
-    <div id="faq-list">
-      <div class="faq-cat">About ETW</div>
-
-      <div class="faq-item">
-        <button class="faq-q">What is Explaining The World?<span class="chev">+</span></button>
-        <div class="faq-a"><p>ETW is an independent geopolitical publication that produces original long-form analysis every Sunday. We focus on the structural forces &mdash; geography, economics, demography &mdash; that shape global affairs over the long term.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Who writes the articles?<span class="chev">+</span></button>
-        <div class="faq-a"><p>All articles are produced by the ETW Editorial desk. We publish under a single editorial voice rather than individual bylines to keep the analysis focused on the argument, not the author.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Is ETW affiliated with any political party or organisation?<span class="chev">+</span></button>
-        <div class="faq-a"><p>No. ETW is fully independent. We accept no political funding, no sponsor influence, and no advertising that shapes editorial direction.</p></div>
-      </div>
-
-      <div class="faq-cat">Articles</div>
-
-      <div class="faq-item">
-        <button class="faq-q">How often do you publish?<span class="chev">+</span></button>
-        <div class="faq-a"><p>One article every Sunday. We prioritise depth and accuracy over volume.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">How long are the articles?<span class="chev">+</span></button>
-        <div class="faq-a"><p>Most pieces run between 2,000 and 4,000 words &mdash; roughly an 8 to 15 minute read. Length is dictated by the subject, never padded.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Do you cover breaking news?<span class="chev">+</span></button>
-        <div class="faq-a"><p>No. Our work is deliberately slow. We write about forces and trajectories, not the story of the week.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Can I republish your articles?<span class="chev">+</span></button>
-        <div class="faq-a"><p>Please contact us before republishing. Short excerpts with attribution and a link back to the original are generally fine.</p></div>
-      </div>
-
-      <div class="faq-cat">Collaboration</div>
-
-      <div class="faq-item">
-        <button class="faq-q">Do you accept guest contributors?<span class="chev">+</span></button>
-        <div class="faq-a"><p>Occasionally, for specialist subjects. See our Collaborate page for the current criteria.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Do you offer interviews or media appearances?<span class="chev">+</span></button>
-        <div class="faq-a"><p>Yes, on a selective basis. Please email contact@explainingtheworld.com with the outlet, topic, and timeline.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">Can we commission custom analysis?<span class="chev">+</span></button>
-        <div class="faq-a"><p>We take on a limited number of private research briefs each quarter. Details are on the Collaborate page.</p></div>
-      </div>
-
-      <div class="faq-cat">Legal</div>
-
-      <div class="faq-item">
-        <button class="faq-q">Is ETW content investment or legal advice?<span class="chev">+</span></button>
-        <div class="faq-a"><p>No. Everything we publish is independent analysis and personal opinion. It is not professional advice of any kind and should not be relied on as such.</p></div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-q">How do you handle corrections?<span class="chev">+</span></button>
-        <div class="faq-a"><p>We correct factual errors promptly and transparently. Please email contact@explainingtheworld.com with the specific article, paragraph, and source of the correction.</p></div>
-      </div>
-
-      <div class="no-results" id="faq-no-results">No questions match your search.</div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <div class="brand">Explaining <span class="accent">The World</span></div>
-      <p class="tagline">Geopolitical analysis.<br>Every Sunday.</p>
-      <div class="footer-social">
-        <button class="social-trigger" aria-label="Instagram" data-articles-url="https://www.instagram.com/etw.articles" data-official-url="https://www.instagram.com/explainingtheworld">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-        </button>
-        <button class="social-trigger" aria-label="X" data-articles-url="https://x.com/etw_articles" data-official-url="https://x.com/explainingtheworld">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.2 2H21.5l-7.2 8.2L22.8 22h-6.7l-5.2-6.8L4.9 22H1.6l7.7-8.8L1.1 2h6.9l4.7 6.2L18.2 2zm-1.2 18h1.9L7.1 4H5.1L17 20z"/></svg>
-        </button>
-        <button class="social-trigger" aria-label="YouTube" data-articles-url="https://youtube.com/@etw_articles" data-official-url="https://youtube.com/@explaining_theworld">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
-        </button>
-      </div>
-    </div>
-    <div><h4>Navigate</h4><ul><li><a href="articles.html">Archive</a></li><li><a href="about.html">About</a></li><li><a href="faq.html">FAQ</a></li><li><a href="collaborations.html">Collaborate</a></li></ul></div>
-    <div><h4>Contact</h4><ul><li><a href="mailto:contact@explainingtheworld.com">contact@explainingtheworld.com</a></li></ul></div>
-    <div><h4>Legal</h4><ul><li><a href="legal.html#privacy">Privacy Policy</a></li><li><a href="legal.html#terms">Terms</a></li><li><a href="legal.html#disclaimer">Disclaimer</a></li></ul></div>
+<!-- FAQ HEADER -->
+<div class="container">
+  <div class="faq-header">
+    <p class="hero__eyebrow" style="margin-bottom:12px;">Help Centre</p>
+    <h1>Frequently Asked Questions</h1>
+    <p>Answers to common questions about the publication and how we work.</p>
   </div>
-  <div class="footer-disclaimer">All articles represent independent analysis and personal opinion. They are not professional advice of any kind.</div>
-  <div class="footer-bottom" style="max-width:1180px;margin:0 auto"><span>&copy; 2026 Explaining The World</span><span>All Rights Reserved</span></div>
-</footer>
 
-<div class="popup-overlay" id="social-popup" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="popup">
-    <button class="close" aria-label="Close">&times;</button>
-    <h3>Choose a Channel</h3>
-    <div class="choices">
-      <a class="choice" id="popup-articles" href="#" target="_blank" rel="noopener">ETW Articles <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
-      <a class="choice" id="popup-official" href="#" target="_blank" rel="noopener">ETW Official <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  <!-- SEARCH -->
+  <div class="search-bar" style="margin-bottom:40px;">
+    <input type="text" id="faq-search" placeholder="Search questions&hellip;" autocomplete="off" spellcheck="false">
+    <span class="search-bar__icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </span>
+  </div>
+
+  <!-- FAQ LIST -->
+  <div class="faq-list" style="max-width:720px; padding-bottom:96px;">
+
+    <div class="faq-item">
+      <button class="faq-question">
+        What is Explaining The World?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          Explaining The World is an independent geopolitical publication producing original long-form analysis every Sunday. We focus on the structural forces — geography, economics, history — that shape global events, written for a global English-speaking audience.
+        </div>
+      </div>
     </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Who writes the articles?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          All analysis is published under the ETW Editorial byline. We do not publish under individual names — this is a deliberate editorial choice that keeps the focus on the quality of the argument rather than on the author's identity or background.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is ETW affiliated with any government, institution, or political party?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          No. ETW Editorial is fully independent. We have no affiliation with any government, political party, think tank, or commercial sponsor. Every article published here reflects independent editorial judgement.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How often do you publish?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          We publish one long-form analysis every Sunday. We prioritise depth and quality over frequency — each piece is researched, written, and edited to a high standard before publication.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Can I republish or cite ETW articles?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          Short excerpts may be cited with clear attribution to "ETW Editorial / Explaining The World" and a link to the original article. Full republication requires prior written permission. For editorial partnerships and syndication arrangements, please use the Collaborations page.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        How do I get in touch for a collaboration or media inquiry?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          Use the contact form on the <a href="collaborations.html" style="color:var(--indigo);text-decoration:underline;">Collaborations page</a>. We review all serious inquiries and respond to those that are a good fit. We do not publish a direct email address to avoid spam.
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question">
+        Is the analysis on ETW professional advice?
+        <span class="faq-question__icon">+</span>
+      </button>
+      <div class="faq-answer">
+        <div class="faq-answer__inner">
+          No. All content on this website is independent editorial analysis and does not constitute professional, financial, legal, or political advice. Please see our full disclaimer on the <a href="legal.html" style="color:var(--indigo);text-decoration:underline;">Legal page</a>.
+        </div>
+      </div>
+    </div>
+
+    <div id="faq-no-results" class="no-results" style="grid-column:auto;">No questions match your search.</div>
+
   </div>
 </div>
 
-<script src="etw.js"></script>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__main">
+    <div>
+      <div class="footer__brand-name">Explaining <span>The World</span></div>
+      <p class="footer__tagline">Independent geopolitical analysis for a global audience.</p>
+      <div class="footer__social">
+        <button class="footer__social-btn" data-popup="Instagram" aria-label="Follow on Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        </button>
+        <button class="footer__social-btn" data-popup="X" aria-label="Follow on X">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </button>
+        <button class="footer__social-btn" data-popup="YouTube" aria-label="Follow on YouTube">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </button>
+      </div>
+    </div>
+    <div>
+      <div class="footer__col-title">Quick Links</div>
+      <nav class="footer__links">
+        <a href="articles.html">Articles</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="collaborations.html">Collaborations</a>
+        <a href="legal.html">Legal</a>
+      </nav>
+    </div>
+    <div>
+      <div class="footer__col-title">Publication</div>
+      <nav class="footer__links">
+        <a href="turkey.html">Latest Article</a>
+        <a href="coming-soon.html">Coming Soon</a>
+        <a href="collaborations.html">Work With Us</a>
+      </nav>
+    </div>
+  </div>
+  <div style="border-top:1px solid rgba(255,255,255,0.08);">
+    <div class="footer__bottom" style="max-width:1200px;margin:0 auto;">
+      <p class="footer__disclaimer">For queries not answered here, use the Collaborations page.</p>
+      <p class="footer__copy">&copy; 2025 Explaining The World. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- SOCIAL POPUP -->
+<div id="social-popup" class="popup-overlay" role="dialog" aria-modal="true">
+  <div class="popup">
+    <button class="popup__close" aria-label="Close">&times;</button>
+    <p class="popup__platform"></p>
+    <h2 class="popup__heading"></h2>
+    <div class="popup__options"></div>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
 </body>
 </html>
