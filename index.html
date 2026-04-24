@@ -12,7 +12,7 @@
 <!-- NAVIGATION -->
 <nav class="nav">
   <div class="nav__inner">
-    <a href="index.html" class="nav__logo">Explaining <span>The World</span></a>
+    <a href="/" class="nav__logo">Explaining <span>The World</span></a>
     <div class="nav__links">
       <a href="articles.html">Articles</a>
       <a href="about.html">About</a>
@@ -25,7 +25,6 @@
 <!-- HERO -->
 <section class="hero">
   <div class="container">
-    <p class="hero__eyebrow">ETW Editorial &mdash; Geopolitics</p>
     <h1 class="hero__headline">Understanding the world through geopolitics.</h1>
     <hr class="hero__rule">
   </div>
@@ -40,14 +39,14 @@
         <span class="featured__tag">Geopolitics</span>
         <div class="featured__date">Published by ETW Editorial</div>
         <h2 class="featured__title">Why Turkey Is The Most Important Country In The World Right Now</h2>
-        <p class="featured__excerpt">Turkey occupies a uniquely irreplaceable position in global geopolitics — straddling Europe and Asia, controlling the Bosphorus, balancing between NATO and Russia, and wielding influence from the Balkans to Central Asia. No other country is indispensable to so many competing powers at once.</p>
+        <p class="featured__excerpt">Turkey is simultaneously the most difficult NATO ally and the one no one can afford to lose.</p>
         <span class="btn btn--primary">
           Read Article
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </span>
       </div>
       <div class="featured__visual" aria-hidden="true">
-        <div class="featured__visual-text">TURKEY</div>
+        <img src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=1200&q=80" alt="Istanbul, Turkey">
       </div>
     </a>
   </div>
@@ -60,8 +59,7 @@
     <span class="section-label">Recent Analysis</span>
     <h2 class="section-title">More from ETW Editorial</h2>
 
-    <div class="articles-grid">
-
+    <div class="articles-grid" style="grid-template-columns: repeat(1, minmax(0, 480px));">
       <a class="article-card" href="turkey.html">
         <div class="article-card__tag">Geopolitics</div>
         <div class="article-card__date">ETW Editorial</div>
@@ -72,27 +70,6 @@
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </span>
       </a>
-
-      <div class="article-card" style="opacity:0.55; cursor:default;">
-        <div class="article-card__tag">Geopolitics</div>
-        <div class="article-card__date">Coming Soon</div>
-        <h3 class="article-card__title">The China Question: Why Taiwan Is Not the Real Flashpoint</h3>
-        <p class="article-card__excerpt">The next major confrontation in the Pacific may not happen where most analysts are looking. Here is what they are missing.</p>
-        <span class="article-card__read">
-          Coming Soon
-        </span>
-      </div>
-
-      <div class="article-card" style="opacity:0.55; cursor:default;">
-        <div class="article-card__tag">Geopolitics</div>
-        <div class="article-card__date">Coming Soon</div>
-        <h3 class="article-card__title">Why the Middle East Is Being Redrawn From the Inside Out</h3>
-        <p class="article-card__excerpt">The region's old borders are holding, but the power underneath them has shifted decisively. The new map is invisible on paper.</p>
-        <span class="article-card__read">
-          Coming Soon
-        </span>
-      </div>
-
     </div>
 
     <div style="text-align:center; padding-bottom:80px;">
@@ -120,6 +97,9 @@
         <button class="footer__social-btn" data-popup="YouTube" aria-label="Follow on YouTube">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </button>
+        <a class="footer__social-btn" href="mailto:contact@explainingtheworld.com" aria-label="Email us">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+        </a>
       </div>
     </div>
     <div>
@@ -136,7 +116,7 @@
       <div class="footer__col-title">Publication</div>
       <nav class="footer__links">
         <a href="turkey.html">Latest Article</a>
-        <a href="coming-soon.html">Coming Soon</a>
+        <a href="coming-soon.html" style="transition:none;">Coming Soon</a>
         <a href="collaborations.html">Work With Us</a>
       </nav>
     </div>

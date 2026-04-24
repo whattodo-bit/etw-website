@@ -65,8 +65,8 @@
       var options  = [];
       if (platform === 'Instagram') {
         options = [
-          { label: 'ETW Articles', handle: '@etw.articles',        url: 'https://www.instagram.com/etw.articles' },
-          { label: 'ETW Official', handle: '@explaining_theworld', url: 'https://www.instagram.com/explainingtheworld' }
+          { label: 'ETW Articles', handle: '@etw.articles',        url: 'https://instagram.com/etw.articles' },
+          { label: 'ETW Official', handle: '@explaining_theworld', url: 'https://instagram.com/explaining_theworld' }
         ];
       } else if (platform === 'X') {
         options = [
