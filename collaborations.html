@@ -19,6 +19,9 @@
       <a href="faq.html">FAQ</a>
       <a href="collaborations.html" class="active">Collaborations</a>
     </div>
+    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
@@ -62,8 +65,9 @@
         <h3>Send an Inquiry</h3>
 
         <!-- SUCCESS MESSAGE -->
-        <div class="form-success" id="collab-success">
+        <div class="form-success" id="collab-success" style="display:none;">
           <p>Your inquiry has been received. We will be in touch.</p>
+          <button id="collab-reset" class="btn btn--outline" style="margin-top:20px;">Send Another Inquiry</button>
         </div>
 
         <!-- WEB3FORMS FORM -->
@@ -75,6 +79,11 @@
           <div class="form-group">
             <label for="name">Your Name *</label>
             <input type="text" id="name" name="name" required placeholder="Full name" autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label for="org">Organisation <span style="font-weight:400;opacity:0.65;">(optional)</span></label>
+            <input type="text" id="org" name="organisation" placeholder="Company, institution, or publication" autocomplete="organization">
           </div>
 
           <div class="form-group">
@@ -176,9 +185,19 @@
     var form = document.getElementById('collab-form');
     var msg  = document.getElementById('collab-success');
     if (form) form.style.display = 'none';
-    if (msg)  msg.classList.add('visible');
+    if (msg)  msg.style.display = 'block';
     // Clean URL without reloading
     history.replaceState(null, '', window.location.pathname);
+  }
+  // Reset button
+  var resetBtn = document.getElementById('collab-reset');
+  if (resetBtn) {
+    resetBtn.addEventListener('click', function () {
+      var form = document.getElementById('collab-form');
+      var msg  = document.getElementById('collab-success');
+      if (msg)  msg.style.display = 'none';
+      if (form) { form.style.display = ''; form.reset(); }
+    });
   }
 </script>
 </body>

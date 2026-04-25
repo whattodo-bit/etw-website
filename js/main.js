@@ -7,6 +7,31 @@
 
   /* ── Topbar date (unused in new design but kept for compatibility) ── */
 
+  /* ── Mobile nav hamburger ── */
+  var hamburger = document.querySelector('.nav__hamburger');
+  var navLinks  = document.querySelector('.nav__links');
+  if (hamburger && navLinks) {
+    hamburger.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('is-open');
+      hamburger.classList.toggle('is-open', isOpen);
+      hamburger.setAttribute('aria-expanded', String(isOpen));
+    });
+    navLinks.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        navLinks.classList.remove('is-open');
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('is-open');
+        hamburger.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
   /* ── Social popup ── */
   var overlay  = document.getElementById('social-popup');
   var popupEl  = overlay ? overlay.querySelector('.popup') : null;
@@ -27,6 +52,7 @@
         a.target = '_blank';
         a.rel    = 'noopener noreferrer';
         a.className = 'popup__option';
+        if (opt.dimmed) a.classList.add('popup__option--dimmed');
         a.innerHTML =
           '<div class="popup__option-left">' +
             '<span>' + opt.label + '</span>' +
@@ -65,16 +91,19 @@
       var options  = [];
       if (platform === 'Instagram') {
         options = [
-          { label: 'ETW Articles', handle: '@etw.articles',        url: 'https://instagram.com/etw.articles' },
-          { label: 'ETW Official', handle: '@explaining_theworld', url: 'https://instagram.com/explaining_theworld' }
+          { label: 'ETW Articles', handle: '@etw.articles',         url: 'https://instagram.com/etw.articles' },
+          { label: 'ETW Official', handle: '@explaining_the.world', url: 'https://instagram.com/explaining_the.world' }
         ];
       } else if (platform === 'X') {
         options = [
-          { label: 'ETW Articles', handle: '@etw_articles', url: 'https://x.com/etw_articles' }
+          { label: 'ETW Articles', handle: '@etw_articles',    url: 'https://x.com/etw_articles' },
+          { label: 'ETW Official', handle: '@explaning_world', url: 'https://x.com/explaning_world' }
         ];
       } else if (platform === 'YouTube') {
         options = [
-          { label: 'ETW Articles', handle: '@etw_articles', url: '#' }
+          { label: 'ETW Articles',              handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
+          { label: 'ETW Official',              handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
+          { label: 'ETW History \u2014 Coming Soon', handle: '@etw_history',   url: 'https://youtube.com/@etw_history', dimmed: true }
         ];
       }
       openPopup(platform, options);
