@@ -28,25 +28,31 @@
 <!-- COMING SOON -->
 <section class="coming-soon">
   <div class="coming-soon__inner">
-    <p class="coming-soon__eyebrow">ETW Editorial</p>
-    <h1 class="coming-soon__headline">Something is coming.</h1>
-    <p class="coming-soon__domain">explainingtheworld.com</p>
 
-    <!-- SUCCESS MESSAGE -->
-    <div id="notify-success" style="display:none; margin-bottom:16px;">
-      <p style="font-family:var(--font-display);font-size:1rem;color:var(--indigo);font-weight:600;">You're on the list. We'll notify you at launch.</p>
+    <p class="coming-soon__eyebrow">ETW Editorial</p>
+    <h1 class="coming-soon__headline">Something Is Coming.</h1>
+    <p class="coming-soon__sub">Independent geopolitical analysis for a global audience.<br>Launching soon.</p>
+
+    <!-- SUCCESS STATE -->
+    <div id="notify-success" style="display:none;">
+      <div class="coming-soon__success">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 16px;display:block;"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+        <p style="font-family:var(--font-display);font-size:1.1rem;font-weight:700;color:var(--indigo);margin-bottom:8px;">You're on the list.</p>
+        <p style="font-size:0.95rem;color:var(--text-muted);">We'll notify you at launch.</p>
+      </div>
     </div>
 
-    <!-- WEB3FORMS SIGNUP -->
+    <!-- SIGNUP FORM -->
     <form id="notify-form" class="coming-soon__form" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="cd486e45-9e46-494d-8a5d-94fca8325f0a">
-      <input type="hidden" name="subject" value="ETW Notify Signup">
+      <input type="hidden" name="subject" value="ETW Launch Notification Signup">
       <input type="hidden" name="redirect" value="https://explainingtheworld.com/coming-soon.html?signed=true">
       <input type="email" name="email" required placeholder="Enter your email address" aria-label="Email address">
       <button type="submit">Notify Me</button>
     </form>
 
-    <p class="coming-soon__note">No spam. We publish once a week. You can unsubscribe at any time.</p>
+    <p class="coming-soon__note">No spam. One article per week. Unsubscribe at any time.</p>
+
   </div>
 </section>
 
@@ -109,14 +115,17 @@
 
 <script src="js/main.js"></script>
 <script>
-  // Show success message if redirected back after signup
-  if (window.location.search.indexOf('signed=true') !== -1) {
-    var form = document.getElementById('notify-form');
-    var msg  = document.getElementById('notify-success');
-    if (form) form.style.display = 'none';
-    if (msg)  msg.style.display  = 'block';
-    history.replaceState(null, '', window.location.pathname);
-  }
+  (function () {
+    if (window.location.search.indexOf('signed=true') !== -1) {
+      var form = document.getElementById('notify-form');
+      var note = form ? form.nextElementSibling : null;
+      var msg  = document.getElementById('notify-success');
+      if (form) form.style.display = 'none';
+      if (note && note.classList.contains('coming-soon__note')) note.style.display = 'none';
+      if (msg)  msg.style.display  = 'block';
+      history.replaceState(null, '', window.location.pathname);
+    }
+  })();
 </script>
 </body>
 </html>

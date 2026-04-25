@@ -92,18 +92,20 @@
       if (platform === 'Instagram') {
         options = [
           { label: 'ETW Articles', handle: '@etw.articles',         url: 'https://instagram.com/etw.articles' },
-          { label: 'ETW Official', handle: '@explaining_the.world', url: 'https://instagram.com/explaining_the.world' }
+          { label: 'ETW Official', handle: '@explaining_the.world', url: 'https://instagram.com/explaining_the.world' },
+          { label: 'ETW History',  handle: '@etw_history',          url: 'https://instagram.com/etw_history' }
         ];
       } else if (platform === 'X') {
         options = [
           { label: 'ETW Articles', handle: '@etw_articles',    url: 'https://x.com/etw_articles' },
-          { label: 'ETW Official', handle: '@explaning_world', url: 'https://x.com/explaning_world' }
+          { label: 'ETW Official', handle: '@explaning_world', url: 'https://x.com/explaning_world' },
+          { label: 'ETW History',  handle: '@etw_history',     url: 'https://x.com/etw_history' }
         ];
       } else if (platform === 'YouTube') {
         options = [
-          { label: 'ETW Articles',              handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
-          { label: 'ETW Official',              handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
-          { label: 'ETW History \u2014 Coming Soon', handle: '@etw_history',   url: 'https://youtube.com/@etw_history', dimmed: true }
+          { label: 'ETW Articles', handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
+          { label: 'ETW Official', handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
+          { label: 'ETW History',  handle: '@etw_history',         url: 'https://youtube.com/@etw_history' }
         ];
       }
       openPopup(platform, options);
@@ -164,17 +166,52 @@
   wireSearch('archive-search', '.archive-grid', '.archive-card', 'no-results');
   wireSearch('faq-search',     '.faq-list',     '.faq-item',     'faq-no-results');
 
-  /* ── Collaborations form (prevent default, show confirmation) ── */
-  var collabForm = document.getElementById('collab-form');
-  if (collabForm) {
-    collabForm.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var btn = collabForm.querySelector('[type="submit"]');
-      if (btn) {
-        btn.textContent = 'Message sent — we\'ll be in touch.';
-        btn.disabled = true;
+  /* ── Scroll reveal (IntersectionObserver) ── */
+  var srTargets = [
+    '.archive-card', '.article-card', '.principle-item',
+    '.faq-item', '.contact-form-box', '.collab-info > h2',
+    '.collab-info > p', '.collab-info > ul', '.legal-section'
+  ].join(',');
+
+  var srEls = document.querySelectorAll(srTargets);
+  srEls.forEach(function (el, i) {
+    el.classList.add('sr');
+    var delayClasses = ['', 'd1', 'd2', 'd3'];
+    var sibIdx = 0;
+    var sib = el.previousElementSibling;
+    while (sib) { sibIdx++; sib = sib.previousElementSibling; }
+    var dc = delayClasses[sibIdx % 4];
+    if (dc) el.classList.add(dc);
+  });
+
+  if ('IntersectionObserver' in window && srEls.length) {
+    var srObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          el.classList.add('in');
+          srObserver.unobserve(el);
+          el.addEventListener('transitionend', function () {
+            el.classList.remove('sr', 'in', 'd1', 'd2', 'd3');
+          }, { once: true });
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    srEls.forEach(function (el) { srObserver.observe(el); });
+  } else {
+    /* fallback: show all immediately */
+    srEls.forEach(function (el) { el.classList.remove('sr'); });
+  }
+
+  /* ── Reading progress bar (article pages) ── */
+  var progressBar = document.querySelector('.reading-progress');
+  if (progressBar) {
+    window.addEventListener('scroll', function () {
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0) {
+        progressBar.style.width = Math.min(100, (window.scrollY / total) * 100) + '%';
       }
-    });
+    }, { passive: true });
   }
 
 })();

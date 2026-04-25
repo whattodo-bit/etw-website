@@ -49,7 +49,7 @@ ul, ol { list-style: none; }
 button { cursor: pointer; border: none; background: none; font: inherit; }
 
 /* ── Utility ── */
-.container { max-width: var(--max-w); margin: 0 auto; padding: 0 40px; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 40px; }
 .reading    { max-width: var(--reading-w); margin: 0 auto; padding: 0 40px; }
 .sr-only    { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
 
@@ -862,8 +862,8 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 }
 .collab-body {
   display: grid;
-  grid-template-columns: 1fr 400px;
-  gap: 80px;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 48px;
   padding-bottom: 96px;
   align-items: start;
 }
@@ -1006,6 +1006,23 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   color: var(--text-muted);
   letter-spacing: 0.08em;
   margin-bottom: 48px;
+}
+.coming-soon__sub {
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin-bottom: 48px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.coming-soon__success {
+  background: rgba(196,147,42,0.06);
+  border: 1.5px solid rgba(196,147,42,0.25);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px;
+  margin-bottom: 0;
+  text-align: center;
 }
 .coming-soon__form {
   display: flex;
@@ -1603,4 +1620,190 @@ a.footer__social-btn {
 
   /* Footer bottom row */
   .footer__bottom { padding: 14px 16px; gap: 4px; }
+}
+
+/* ============================================================
+   ANIMATIONS & LIFE
+============================================================ */
+
+/* ── Keyframes ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes ruleGrow {
+  from { width: 0; opacity: 0; }
+  to   { width: 64px; opacity: 1; }
+}
+@keyframes heroPulse {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+@keyframes popupIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes progressFill {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Page fade-in ── */
+body { animation: fadeIn 0.3s ease both; }
+
+/* ── Hero entrance sequence ── */
+.hero {
+  background: linear-gradient(135deg, #FAFBFF 0%, #f0f2ff 50%, #FAFBFF 100%);
+  background-size: 300% 300%;
+  animation: heroPulse 12s ease-in-out infinite;
+}
+.hero__eyebrow  { animation: fadeInUp 0.5s ease both; }
+.hero__headline { animation: fadeInUp 0.65s 0.1s ease both; }
+.hero__rule     { animation: ruleGrow 0.8s 0.5s ease both; }
+
+/* ── Section labels ── */
+.section-label { animation: fadeInUp 0.5s ease both; }
+.section-title  { animation: fadeInUp 0.55s 0.1s ease both; }
+
+/* ── Page headers ── */
+.archive-header  { animation: fadeInUp 0.6s 0.05s ease both; }
+.about-hero      { animation: fadeInUp 0.6s 0.05s ease both; }
+.faq-header      { animation: fadeInUp 0.6s 0.05s ease both; }
+.legal-header    { animation: fadeInUp 0.6s 0.05s ease both; }
+.collab-header   { animation: fadeInUp 0.6s 0.05s ease both; }
+.coming-soon__inner { animation: fadeInUp 0.7s 0.1s ease both; }
+
+/* ── Article page entrance ── */
+.article-hero__breadcrumb { animation: fadeInUp 0.5s 0.05s ease both; }
+.article-hero__tag        { animation: fadeInUp 0.5s 0.15s ease both; }
+.article-hero__title      { animation: fadeInUp 0.6s 0.22s ease both; }
+.article-hero__byline     { animation: fadeInUp 0.5s 0.38s ease both; }
+
+/* ── Scroll reveal classes (applied via JS) ── */
+.sr {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  will-change: opacity, transform;
+}
+.sr.in { opacity: 1; transform: translateY(0); }
+.sr.d1 { transition-delay: 0.10s; }
+.sr.d2 { transition-delay: 0.20s; }
+.sr.d3 { transition-delay: 0.30s; }
+
+/* ── Enhanced card hovers ── */
+.featured__card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.featured__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 24px 64px rgba(26,31,94,0.14);
+}
+.featured__visual { overflow: hidden; }
+.featured__visual img { transition: transform 0.48s ease; }
+.featured__card:hover .featured__visual img { transform: scale(1.06); }
+
+/* Archive card slide */
+a.archive-card {
+  transition: transform 0.28s ease, border-left-color 0.28s ease, box-shadow 0.28s ease;
+}
+a.archive-card:hover { transform: translateX(5px); }
+
+/* Article card lift */
+.article-card {
+  transition: transform 0.28s ease, border-top-color 0.28s ease, box-shadow 0.28s ease;
+}
+.article-card:hover { transform: translateY(-4px); }
+
+/* ── Button shimmer ── */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.18) 50%, transparent 65%);
+  transform: translateX(-110%);
+  transition: transform 0.55s ease;
+  pointer-events: none;
+}
+.btn:hover::after { transform: translateX(110%); }
+
+/* ── Footer social spring ── */
+.footer__social-btn {
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
+}
+.footer__social-btn:hover { transform: scale(1.2); }
+
+/* ── Nav logo ── */
+.nav__logo { transition: opacity 0.22s ease; }
+.nav__logo:hover { opacity: 0.75; }
+
+/* ── FAQ question nudge ── */
+.faq-question {
+  transition: color 0.22s ease, padding-left 0.22s ease;
+}
+.faq-question:hover { padding-left: 5px; }
+
+/* ── Popup spring entrance ── */
+.popup { transform: translateY(16px) scale(0.96); }
+.popup-overlay.is-open .popup {
+  transform: none;
+  animation: popupIn 0.32s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+/* ── Popup option hover ── */
+.popup__option {
+  transition: all 0.2s ease;
+}
+.popup__option:hover {
+  transform: translateX(3px);
+  border-color: var(--indigo);
+  background: var(--bg);
+}
+
+/* ── Reading progress bar (turkey.html) ── */
+.reading-progress {
+  position: fixed;
+  top: 72px;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  z-index: 200;
+  transition: width 0.08s linear;
+  pointer-events: none;
+  animation: progressFill 0.3s 0.5s ease both;
+}
+
+/* ── Gold rule pulse on hover ── */
+.hero__rule {
+  transition: box-shadow 0.3s ease;
+  cursor: default;
+}
+.hero__rule:hover { box-shadow: 0 0 14px rgba(196,147,42,0.45); }
+
+/* ── Search bar ── */
+.search-bar input:focus {
+  box-shadow: 0 0 0 3px rgba(26,31,94,0.07);
+}
+
+/* ── Collab form box ── */
+.contact-form-box {
+  transition: box-shadow 0.3s ease;
+}
+.contact-form-box:hover {
+  box-shadow: 0 8px 32px rgba(26,31,94,0.08);
+}
+
+/* ── Form inputs focus ── */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  box-shadow: 0 0 0 3px rgba(26,31,94,0.07);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
