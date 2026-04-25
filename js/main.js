@@ -92,20 +92,18 @@
       if (platform === 'Instagram') {
         options = [
           { label: 'ETW Articles', handle: '@etw.articles',         url: 'https://instagram.com/etw.articles' },
-          { label: 'ETW Official', handle: '@explaining_the.world', url: 'https://instagram.com/explaining_the.world' },
-          { label: 'ETW History',  handle: '@etw_history',          url: 'https://instagram.com/etw_history' }
+          { label: 'ETW Official', handle: '@explaining_the.world', url: 'https://instagram.com/explaining_the.world' }
         ];
       } else if (platform === 'X') {
         options = [
           { label: 'ETW Articles', handle: '@etw_articles',    url: 'https://x.com/etw_articles' },
-          { label: 'ETW Official', handle: '@explaning_world', url: 'https://x.com/explaning_world' },
-          { label: 'ETW History',  handle: '@etw_history',     url: 'https://x.com/etw_history' }
+          { label: 'ETW Official', handle: '@explaning_world', url: 'https://x.com/explaning_world' }
         ];
       } else if (platform === 'YouTube') {
         options = [
-          { label: 'ETW Articles', handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
-          { label: 'ETW Official', handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
-          { label: 'ETW History',  handle: '@etw_history',         url: 'https://youtube.com/@etw_history' }
+          { label: 'ETW Articles',                    handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
+          { label: 'ETW Official',                    handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
+          { label: 'ETW History \u2014 Coming Soon',  handle: '@etw_history',         url: 'https://youtube.com/@etw_history', dimmed: true }
         ];
       }
       openPopup(platform, options);
@@ -163,7 +161,7 @@
     });
   }
 
-  wireSearch('archive-search', '.archive-grid', '.archive-card', 'no-results');
+  wireSearch('archive-search', '.archive-grid--single, .archive-grid', '.archive-card', 'no-results');
   wireSearch('faq-search',     '.faq-list',     '.faq-item',     'faq-no-results');
 
   /* ── Scroll reveal (IntersectionObserver) ── */

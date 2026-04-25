@@ -92,6 +92,18 @@
           </div>
 
           <div class="form-group">
+            <label for="type">Type of Collaboration *</label>
+            <select id="type" name="collaboration_type" required>
+              <option value="" disabled selected>Select a type</option>
+              <option value="Editorial Partnership">Editorial Partnership</option>
+              <option value="Sponsored Analysis">Sponsored Analysis</option>
+              <option value="Media Collaboration">Media Collaboration</option>
+              <option value="Research Inquiry">Research Inquiry</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label for="message">Message *</label>
             <textarea id="message" name="message" required placeholder="Describe your proposal..." rows="6"></textarea>
           </div>
@@ -100,7 +112,7 @@
             Send Inquiry
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
-          <p class="form-note">Required fields: Name, Email, Message. We review all serious inquiries and reply to those that are a good fit.</p>
+          <p class="form-note">Fields marked * are required. We review all serious inquiries and reply to those that are a good fit.</p>
         </form>
       </div>
     </div>
