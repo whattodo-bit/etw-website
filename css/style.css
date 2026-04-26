@@ -260,14 +260,17 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--white);
-  background: var(--indigo);
+  color: #FFFFFF;
+  background: #1A1F5E;
   padding: 4px 10px;
   border-radius: 2px;
   display: inline-block;
-  margin-bottom: 20px;
+  width: auto;
+  max-width: fit-content;
   align-self: flex-start;
-  width: max-content;
+  flex-shrink: 0;
+  margin-bottom: 20px;
+  box-sizing: content-box;
 }
 .featured__date {
   font-family: var(--font-mono);
@@ -370,14 +373,17 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--white);
-  background: var(--indigo);
+  color: #FFFFFF;
+  background: #1A1F5E;
   padding: 4px 10px;
   border-radius: 2px;
   display: inline-block;
-  margin-bottom: 12px;
+  width: auto;
+  max-width: fit-content;
   align-self: flex-start;
-  width: max-content;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+  box-sizing: content-box;
 }
 .article-card__date {
   font-family: var(--font-mono);
@@ -511,11 +517,16 @@ a.archive-card:hover {
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--white);
-  background: var(--indigo);
+  color: #FFFFFF;
+  background: #1A1F5E;
   padding: 4px 10px;
   border-radius: 2px;
-  width: max-content;
+  display: inline-block;
+  width: auto;
+  max-width: fit-content;
+  align-self: flex-start;
+  flex-shrink: 0;
+  box-sizing: content-box;
 }
 .archive-card__date {
   font-family: var(--font-mono);
@@ -612,13 +623,17 @@ a.archive-card:hover .archive-card__link { color: var(--gold); }
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--white);
-  background: var(--indigo);
+  color: #FFFFFF;
+  background: #1A1F5E;
   padding: 4px 10px;
   border-radius: 2px;
   display: inline-block;
+  width: auto;
+  max-width: fit-content;
+  align-self: flex-start;
+  flex-shrink: 0;
   margin-bottom: 20px;
-  width: max-content;
+  box-sizing: content-box;
   animation: fadeInUp 0.5s 0.15s ease both;
 }
 .article-hero__title {
@@ -1221,7 +1236,7 @@ a.archive-card:hover .archive-card__link { color: var(--gold); }
   color: rgba(255,255,255,0.60);
   transition: color var(--transition);
 }
-.footer__links a:hover { color: var(--gold); }
+.footer__links a:hover { color: #C4932A; }
 .footer__bottom {
   padding: 20px 40px;
   max-width: var(--max-w);
@@ -1327,11 +1342,11 @@ a.archive-card:hover .archive-card__link { color: var(--gold); }
   letter-spacing: 0.04em;
   width: 100%;
   text-decoration: none;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
 .popup__option:hover {
-  background: var(--gold);
-  color: var(--navy);
+  background: #C4932A;
+  color: #0D0F2E;
   transform: translateX(3px);
 }
 .popup__option--dimmed { opacity: 0.55; }
