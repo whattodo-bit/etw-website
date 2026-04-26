@@ -101,9 +101,8 @@
         ];
       } else if (platform === 'YouTube') {
         options = [
-          { label: 'ETW Articles',                    handle: '@etw_articles',       url: 'https://youtube.com/@etw_articles' },
-          { label: 'ETW Official',                    handle: '@explaining_theworld', url: 'https://youtube.com/@explaining_theworld' },
-          { label: 'ETW History',                   handle: '@etw_history',         url: 'https://youtube.com/@etw_history' }
+          { label: 'ETW Articles', handle: '@etw_articles',        url: 'https://youtube.com/@etw_articles' },
+          { label: 'ETW Official', handle: '@explaining_theworld',  url: 'https://youtube.com/@explaining_theworld' }
         ];
       }
       openPopup(platform, options);
