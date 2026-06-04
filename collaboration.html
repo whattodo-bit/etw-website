@@ -16,19 +16,19 @@
     <div class="nav__right">
       <div class="nav__links">
         <a href="history.html" class="nav__link">History</a>
-        <span class="nav__link nav__link--dim">Science</span>
+        <a href="science.html" class="nav__link">Science</a>
         <a href="about.html"   class="nav__link">About</a>
       </div>
       <div class="nav__socials">
-        <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="nav__social" aria-label="YouTube">
+        <button class="nav__social" data-popup="yt" aria-label="YouTube">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-        </a>
-        <button class="nav__social" data-insta-trigger aria-label="Instagram">
+        </button>
+        <button class="nav__social" data-popup="ig" aria-label="Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
         </button>
-        <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="nav__social" aria-label="X">
+        <button class="nav__social" data-popup="x" aria-label="X">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        </a>
+        </button>
       </div>
     </div>
     <button class="nav__hamburger" id="navHamburger" aria-label="Open menu">
@@ -41,19 +41,37 @@
   <button class="nav-overlay__close" id="navOverlayClose">&times;</button>
   <nav class="nav-overlay__links">
     <a href="history.html" class="nav-overlay__link">History</a>
-    <span class="nav-overlay__link nav-overlay__link--dim">Science</span>
+    <a href="science.html" class="nav-overlay__link">Science</a>
     <a href="about.html"   class="nav-overlay__link">About</a>
   </nav>
   <div class="nav-overlay__socials">
-    <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="nav-overlay__social"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-    <button class="nav-overlay__social" data-insta-trigger><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></button>
-    <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="nav-overlay__social"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    <button class="nav-overlay__social" data-popup="yt" aria-label="YouTube">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </button>
+    <button class="nav-overlay__social" data-popup="ig" aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+    </button>
+    <button class="nav-overlay__social" data-popup="x" aria-label="X">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </button>
   </div>
 </div>
 
-<div class="insta-popup" id="instaPopup">
-  <a href="https://instagram.com/explaining_the.world" target="_blank" rel="noopener">ETW Main</a>
-  <a href="https://instagram.com/etw_history"          target="_blank" rel="noopener">ETW History</a>
+<!-- ═══ SOCIAL POPUPS ═══ -->
+<div class="social-popup" id="social-popup-yt">
+  <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
+  <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
+  <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
+</div>
+<div class="social-popup" id="social-popup-ig">
+  <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
+  <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
+  <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
+</div>
+<div class="social-popup" id="social-popup-x">
+  <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
+  <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
+  <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
 </div>
 
 <!-- ═══ CONTENT ═══ -->
@@ -98,16 +116,16 @@
     </div>
     <nav class="footer__nav">
       <a href="history.html"       class="footer__nav-link">History</a>
-      <span class="footer__nav-link" style="opacity:0.25;cursor:default;">Science</span>
+      <a href="science.html" class="footer__nav-link">Science</a>
       <a href="about.html"         class="footer__nav-link">About</a>
       <a href="faq.html"           class="footer__nav-link">FAQ</a>
       <a href="collaboration.html" class="footer__nav-link">Collaboration</a>
       <a href="legal.html"         class="footer__nav-link">Legal</a>
     </nav>
     <div class="footer__socials">
-      <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="footer__social"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
-      <button class="footer__social" data-insta-trigger><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></button>
-      <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="footer__social"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+      <button class="footer__social" data-popup="yt"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></button>
+      <button class="footer__social" data-popup="ig"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg></button>
+      <button class="footer__social" data-popup="x"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
     </div>
   </div>
   <div class="footer__bottom">

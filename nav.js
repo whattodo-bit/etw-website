@@ -1,23 +1,19 @@
 /* ============================================================
    nav.js — Shared navbar behaviour for all ETW pages
-   Handles: scroll effect | hamburger overlay | Instagram popup
+   Handles: scroll | hamburger overlay | social popups (YT/IG/X)
 ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ── Scroll: transparent → solid ── */
+  /* ── Scroll: transparent → solid #0A0A0A ── */
   var nav = document.getElementById('mainNav');
   function onScroll() {
     if (!nav) return;
-    if (window.scrollY > 40) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
-    }
+    nav.classList.toggle('scrolled', window.scrollY > 40);
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll(); // run on load
+  onScroll();
 
   /* ── Mobile hamburger / full-screen overlay ── */
   var hamburger = document.getElementById('navHamburger');
@@ -36,49 +32,54 @@
     if (hamburger) hamburger.classList.remove('open');
     document.body.style.overflow = '';
   }
-
   if (hamburger) hamburger.addEventListener('click', openOverlay);
   if (closeBtn)  closeBtn.addEventListener('click', closeOverlay);
-
-  /* Close overlay on Escape */
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') closeOverlay();
+    if (e.key === 'Escape') { closeOverlay(); closeAllPopups(); }
   });
 
-  /* ── Instagram popup ── */
-  var instaPopup = document.getElementById('instaPopup');
+  /* ── Social popups: YouTube / Instagram / X ── */
+  var POPUP_IDS = { yt: 'social-popup-yt', ig: 'social-popup-ig', x: 'social-popup-x' };
+  var popups = {};
+  Object.keys(POPUP_IDS).forEach(function (k) {
+    popups[k] = document.getElementById(POPUP_IDS[k]);
+  });
 
-  function positionAndOpen(triggerEl) {
-    if (!instaPopup) return;
+  function closeAllPopups() {
+    Object.keys(popups).forEach(function (k) {
+      if (popups[k]) popups[k].classList.remove('open');
+    });
+  }
+
+  function openPopup(triggerEl, type) {
+    var popup = popups[type];
+    if (!popup) return;
     var rect = triggerEl.getBoundingClientRect();
-    /* Appear above the trigger */
-    instaPopup.style.top    = 'auto';
-    instaPopup.style.left   = 'auto';
-    instaPopup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
-    instaPopup.style.right  = (window.innerWidth  - rect.right + 0) + 'px';
-    instaPopup.classList.add('open');
+    /* Position above trigger, right-aligned */
+    popup.style.bottom = (window.innerHeight - rect.top + 10) + 'px';
+    popup.style.right  = (window.innerWidth - rect.right) + 'px';
+    popup.style.top    = 'auto';
+    popup.style.left   = 'auto';
+    popup.classList.add('open');
   }
 
-  function closeInsta() {
-    if (instaPopup) instaPopup.classList.remove('open');
-  }
-
-  /* Bind to every element with data-insta-trigger */
-  document.querySelectorAll('[data-insta-trigger]').forEach(function (el) {
-    el.addEventListener('click', function (e) {
+  /* Bind all buttons with data-popup="yt|ig|x" */
+  document.querySelectorAll('[data-popup]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (instaPopup && instaPopup.classList.contains('open')) {
-        closeInsta();
-      } else {
-        positionAndOpen(el);
-      }
+      var type = btn.dataset.popup;
+      var isOpen = popups[type] && popups[type].classList.contains('open');
+      closeAllPopups();
+      if (!isOpen) openPopup(btn, type);
     });
   });
 
-  /* Click outside closes popup */
-  document.addEventListener('click', closeInsta);
-  if (instaPopup) {
-    instaPopup.addEventListener('click', function (e) { e.stopPropagation(); });
-  }
+  /* Click outside closes any open popup */
+  document.addEventListener('click', closeAllPopups);
+  Object.keys(popups).forEach(function (k) {
+    if (popups[k]) {
+      popups[k].addEventListener('click', function (e) { e.stopPropagation(); });
+    }
+  });
 
 })();

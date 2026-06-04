@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ETW History — Explaining The World</title>
-  <meta name="description" content="Every empire fell. Every war started. Every leader chose. We go back to find out why.">
+  <title>ETW Science — Explaining The World</title>
+  <meta name="description" content="How the world behaves. How humans respond to it. ETW Science — launching soon.">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-history">
+<body class="bg-science">
 
-<!-- ═══ GLOBE CANVAS ═══ -->
-<canvas id="globe-canvas" aria-hidden="true"></canvas>
+<!-- ═══ PARTICLE CANVAS ═══ -->
+<canvas id="sci-canvas" aria-hidden="true"></canvas>
 
 <!-- ═══ NAVBAR ═══ -->
 <nav class="nav" id="mainNav">
@@ -78,64 +78,28 @@
   <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
 </div>
 
-<!-- ═══ HISTORY HERO ═══ -->
-<section class="history-hero">
-  <span class="history-hero__label">ETW</span>
-  <div class="history-hero__line"></div>
-  <h1 class="history-hero__title">HISTORY</h1>
-  <p class="history-hero__sub">Every empire fell. Every war started. Every leader chose.</p>
-  <p class="history-hero__body">We go back to find out why — and what it reveals about how power actually works.</p>
-</section>
+<!-- ═══ HERO ═══ -->
+<section class="science-hero">
+  <span class="science-hero__label">ETW</span>
+  <div class="science-hero__line"></div>
+  <h1 class="science-hero__title">SCIENCE</h1>
+  <p class="science-hero__sub">How the world behaves. How humans respond to it.</p>
+  <p class="science-hero__body">We're currently splitting atoms.<br>This channel launches soon.</p>
+  <span class="science-hero__badge">LAUNCHING SOON</span>
 
-<!-- ═══ VIDEOS SECTION ═══ -->
-<!-- Replace video IDs and titles here when uploading -->
-<section class="videos-section">
-  <div class="videos-grid">
-
-    <div class="video-card">
-      <div class="video-ratio">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Coming Soon"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
-      </div>
-      <p class="video-title">Coming Soon</p>
+  <!-- Email notification form -->
+  <form class="notify-form" id="sci-notify">
+    <span class="notify-form__label">Get Notified on Launch</span>
+    <div class="notify-form__row">
+      <input type="email" class="notify-form__input" placeholder="your@email.com" required>
+      <button type="submit" class="notify-form__btn">Notify Me</button>
     </div>
-
-    <div class="video-card">
-      <div class="video-ratio">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Coming Soon"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
-      </div>
-      <p class="video-title">Coming Soon</p>
-    </div>
-
-    <div class="video-card">
-      <div class="video-ratio">
-        <iframe
-          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-          title="Coming Soon"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          loading="lazy">
-        </iframe>
-      </div>
-      <p class="video-title">Coming Soon</p>
-    </div>
-
-  </div>
+    <span class="notify-form__success" id="sci-notify-ok">You'll be the first to know.</span>
+  </form>
 </section>
 
 <!-- ═══ FOOTER ═══ -->
-<footer class="footer footer--history">
+<footer class="footer footer--science">
   <div class="footer__grid">
     <div>
       <div class="footer__brand-name">ETW</div>
@@ -143,7 +107,7 @@
     </div>
     <nav class="footer__nav">
       <a href="history.html"       class="footer__nav-link">History</a>
-      <a href="science.html" class="footer__nav-link">Science</a>
+      <a href="science.html"       class="footer__nav-link">Science</a>
       <a href="about.html"         class="footer__nav-link">About</a>
       <a href="faq.html"           class="footer__nav-link">FAQ</a>
       <a href="collaboration.html" class="footer__nav-link">Collaboration</a>
@@ -168,134 +132,136 @@
 
 <script src="nav.js"></script>
 <script>
-/* ============================================================
-   GLOBE — Orthographic world map, continent outlines only
-   No country/political borders. Slow rotation 120s/rev.
-============================================================ */
+/* Particle background */
 (function () {
-  var canvas = document.getElementById('globe-canvas');
+  var canvas = document.getElementById('sci-canvas');
   if (!canvas) return;
   var ctx = canvas.getContext('2d');
-  var W, H, cx, cy, R;
+  var W, H;
 
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    cx = W / 2; cy = H / 2;
-    R  = Math.min(W, H) * 0.45;
   }
   window.addEventListener('resize', resize);
   resize();
 
-  var DEG = Math.PI / 180;
-  var PI2 = Math.PI * 2;
-  var ROT = PI2 / (120 * 60); // one full rotation per 120s at ~60fps
-  var rot = 0;
+  var COUNT = 40;
+  var MAX_DIST = 120;
+  var GREEN = '#2ECC71';
 
-  /* Simplified continent outlines [lat, lon] */
-  var CONTINENTS = [
-    /* North America */
-    [[71,-132],[70,-115],[67,-140],[65,-168],[60,-163],[55,-132],[48,-125],
-     [38,-123],[30,-115],[22,-106],[20,-87],[15,-85],[8,-77],[8,-80],[10,-75],
-     [20,-92],[28,-97],[30,-80],[35,-76],[41,-70],[44,-67],[47,-53],[50,-55],
-     [63,-65],[70,-85],[71,-132]],
-    /* South America */
-    [[10,-62],[8,-60],[5,-60],[3,-51],[0,-50],[-5,-35],[-10,-37],[-15,-40],
-     [-23,-44],[-30,-51],[-33,-52],[-35,-57],[-38,-57],[-42,-63],[-48,-66],
-     [-52,-69],[-55,-70],[-55,-67],[-52,-74],[-47,-75],[-42,-74],[-35,-73],
-     [-30,-72],[-22,-70],[-15,-76],[-10,-78],[-3,-80],[0,-78],[5,-77],[10,-62]],
-    /* Europe */
-    [[71,28],[70,25],[65,14],[60,5],[51,2],[50,-4],[44,-9],[36,-9],[36,-5],
-     [37,0],[40,3],[43,3],[44,12],[40,18],[37,15],[37,25],[41,29],[42,28],
-     [45,30],[47,38],[47,42],[60,30],[65,24],[70,30],[71,28]],
-    /* Africa */
-    [[37,-5],[37,10],[31,32],[22,37],[11,43],[11,51],[5,45],[0,42],[-5,40],
-     [-10,40],[-17,36],[-26,34],[-34,26],[-35,19],[-30,17],[-26,15],[-22,14],
-     [-18,12],[-11,14],[-5,10],[0,10],[4,2],[5,2],[10,2],[10,-15],[13,-17],
-     [15,-17],[21,-17],[27,-13],[30,-10],[37,-5]],
-    /* Asia */
-    [[77,68],[77,100],[73,130],[68,180],[62,175],[60,163],[55,160],[52,141],
-     [48,141],[43,132],[38,121],[25,121],[22,113],[18,108],[10,104],[1,104],
-     [-5,105],[-8,115],[-8,130],[-5,105],[0,100],[5,93],[10,80],[8,77],
-     [22,88],[22,91],[27,88],[28,84],[35,68],[30,60],[26,57],[22,58],[22,55],
-     [25,55],[30,49],[38,36],[42,44],[47,40],[47,51],[52,60],[55,65],[60,68],
-     [65,60],[68,58],[68,68],[72,68],[77,68]],
-    /* Australia */
-    [[-17,122],[-15,130],[-12,136],[-12,141],[-17,146],[-25,153],[-33,151],
-     [-38,146],[-39,147],[-38,140],[-35,137],[-32,134],[-34,115],[-22,114],
-     [-20,119],[-17,122]],
-    /* Antarctica */
-    [[-68,-180],[-65,-150],[-72,-120],[-65,-90],[-72,-60],[-65,-30],
-     [-72,0],[-65,30],[-72,60],[-65,90],[-72,120],[-65,150],[-72,180],[-68,-180]]
-  ];
-
-  /* Major historical cities [lat, lon] */
-  var CITIES = [
-    [51.5,-0.1],[40.7,-74],[55.8,37.6],[39.9,116.4],[28.6,77.2],
-    [30,31.2],[41.9,12.5],[41,29],[33.3,44.4],[36.9,10.3]
-  ];
-
-  function proj(lat, lon) {
-    var phi = lat * DEG;
-    var lam = lon * DEG + rot;
-    var cosP = Math.cos(phi);
-    return { x: cx + R * cosP * Math.sin(lam),
-             y: cy - R * Math.sin(phi),
-             z: cosP * Math.cos(lam) };
+  function mkParticle(isOrbiter) {
+    var p = {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: (Math.random() - 0.5) * 0.6,
+      r: 3 + Math.random() * 5,
+      alpha: 0.15 + Math.random() * 0.10,
+      flash: 0,
+      orbiting: isOrbiter || false,
+      angle: Math.random() * Math.PI * 2,
+      orbitR: 60 + Math.random() * 120,
+      orbitSpd: (Math.random() - 0.5) * 0.008
+    };
+    return p;
   }
 
-  function drawContinent(coords) {
-    ctx.beginPath();
-    var prev = false;
-    for (var i = 0; i < coords.length; i++) {
-      var p = proj(coords[i][0], coords[i][1]);
-      if (p.z > 0) {
-        if (!prev) ctx.moveTo(p.x, p.y);
-        else       ctx.lineTo(p.x, p.y);
-        prev = true;
-      } else { prev = false; }
-    }
-    ctx.fillStyle   = '#1A1200';
-    ctx.globalAlpha = 0.8;
-    ctx.fill();
-    ctx.strokeStyle = '#C4932A';
-    ctx.globalAlpha = 0.5;
-    ctx.lineWidth   = 1;
-    ctx.stroke();
-    ctx.globalAlpha = 1;
+  var particles = [];
+  for (var i = 0; i < COUNT; i++) {
+    particles.push(mkParticle(i < 8)); // 8 orbiters
   }
 
-  function frame() {
+  var cx = W / 2, cy = H / 2;
+  window.addEventListener('resize', function () { cx = W / 2; cy = H / 2; });
+
+  function tick() {
     ctx.clearRect(0, 0, W, H);
 
-    /* Globe outline */
-    ctx.beginPath();
-    ctx.arc(cx, cy, R, 0, PI2);
-    ctx.strokeStyle = '#C4932A';
-    ctx.globalAlpha = 0.05;
-    ctx.lineWidth   = 1;
-    ctx.stroke();
-    ctx.globalAlpha = 1;
-
-    CONTINENTS.forEach(drawContinent);
-
-    /* City dots */
-    for (var i = 0; i < CITIES.length; i++) {
-      var p = proj(CITIES[i][0], CITIES[i][1]);
-      if (p.z < 0) continue;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, 3, 0, PI2);
-      ctx.fillStyle   = '#C4932A';
-      ctx.globalAlpha = 0.50;
-      ctx.fill();
-      ctx.globalAlpha = 1;
+    /* Update positions */
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      if (p.orbiting) {
+        p.angle += p.orbitSpd;
+        p.x = cx + Math.cos(p.angle) * p.orbitR;
+        p.y = cy + Math.sin(p.angle) * p.orbitR;
+      } else {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1;
+        if (p.y < 0 || p.y > H) p.vy *= -1;
+      }
+      if (p.flash > 0) p.flash--;
     }
 
-    rot += ROT;
-    if (rot > PI2) rot -= PI2;
-    requestAnimationFrame(frame);
+    /* Check collisions → flash */
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < particles[i].r + particles[j].r + 4) {
+          particles[i].flash = 12;
+          particles[j].flash = 12;
+        }
+      }
+    }
+
+    /* Draw connections */
+    ctx.strokeStyle = GREEN;
+    ctx.lineWidth = 0.5;
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var d = Math.sqrt(dx*dx + dy*dy);
+        if (d < MAX_DIST) {
+          ctx.globalAlpha = (1 - d / MAX_DIST) * 0.06;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* Draw particles */
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      var a = p.flash > 0 ? Math.min(0.9, p.alpha * 4) : p.alpha;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.flash > 0 ? p.r * 1.6 : p.r, 0, Math.PI * 2);
+      ctx.fillStyle = GREEN;
+      ctx.globalAlpha = a;
+      ctx.fill();
+    }
+
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(tick);
   }
-  frame();
+  tick();
+})();
+
+/* Email notification form */
+(function () {
+  var form = document.getElementById('sci-notify');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = form.querySelector('input[type="email"]').value;
+    var fd = new FormData();
+    fd.append('access_key', 'cd486e45-9e46-494d-8a5d-94fca8325f0a');
+    fd.append('subject', 'ETW Science Launch Notification');
+    fd.append('email', email);
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (r.success) {
+          form.querySelector('.notify-form__row').style.display = 'none';
+          form.querySelector('.notify-form__label').style.display = 'none';
+          document.getElementById('sci-notify-ok').style.display = 'block';
+        }
+      }).catch(function () {});
+  });
 })();
 </script>
 </body>
