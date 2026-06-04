@@ -5,120 +5,442 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Explaining The World</title>
   <meta name="description" content="Learning from history. Creating in the present. Preparing for the future.">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="bg-home">
 
-<!-- NAVIGATION -->
-<nav class="nav">
+<!-- ═══ CANVAS BACKGROUND ═══ -->
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav class="nav" id="mainNav">
   <div class="nav__inner">
-
-    <a href="index.html" class="nav__logo">Explaining The World</a>
-
-    <!-- Desktop right -->
+    <a href="index.html" class="nav__logo">ETW</a>
     <div class="nav__right">
       <div class="nav__links">
         <a href="history.html" class="nav__link">History</a>
-        <a href="javascript:void(0)" class="nav__link">Science</a>
+        <span class="nav__link nav__link--dim">Science</span>
+        <a href="about.html"   class="nav__link">About</a>
       </div>
       <div class="nav__socials">
         <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="nav__social" aria-label="YouTube">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
         </a>
-        <a href="https://instagram.com/explaining_the.world" target="_blank" rel="noopener" class="nav__social" aria-label="Instagram">
+        <button class="nav__social" data-insta-trigger aria-label="Instagram">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-        </a>
+        </button>
         <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="nav__social" aria-label="X">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
       </div>
     </div>
-
-    <!-- Mobile hamburger -->
-    <button class="nav__hamburger" aria-label="Open menu" aria-expanded="false">
+    <button class="nav__hamburger" id="navHamburger" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
+  </div>
+</nav>
+
+<!-- ═══ MOBILE FULL-SCREEN OVERLAY ═══ -->
+<div class="nav-overlay" id="navOverlay">
+  <button class="nav-overlay__close" id="navOverlayClose">&times;</button>
+  <nav class="nav-overlay__links">
+    <a href="history.html" class="nav-overlay__link">History</a>
+    <span class="nav-overlay__link nav-overlay__link--dim">Science</span>
+    <a href="about.html"   class="nav-overlay__link">About</a>
+  </nav>
+  <div class="nav-overlay__socials">
+    <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="nav-overlay__social" aria-label="YouTube">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+    <button class="nav-overlay__social" data-insta-trigger aria-label="Instagram">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+    </button>
+    <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="nav-overlay__social" aria-label="X">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ INSTAGRAM POPUP ═══ -->
+<div class="insta-popup" id="instaPopup">
+  <a href="https://instagram.com/explaining_the.world" target="_blank" rel="noopener">ETW Main</a>
+  <a href="https://instagram.com/etw_history"          target="_blank" rel="noopener">ETW History</a>
+</div>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main class="home-main">
+
+  <!-- HERO -->
+  <section class="home-hero">
+    <div class="home-hero__inner">
+      <span class="home-hero__label">Explaining The World</span>
+      <h1 class="home-hero__title">ETW</h1>
+      <hr class="home-hero__rule">
+      <p class="home-hero__tagline">Learning from history. Creating in the present.<br>Preparing for the future.</p>
+      <div class="home-hero__socials">
+        <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="home-hero__social" aria-label="YouTube">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </a>
+        <button class="home-hero__social" data-insta-trigger aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        </button>
+        <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="home-hero__social" aria-label="X">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHANNEL PANELS -->
+  <div class="panels">
+
+    <!-- HISTORY -->
+    <a href="history.html" class="panel panel--history" aria-label="ETW History channel">
+      <span class="panel__etw">ETW</span>
+      <div class="panel__line panel__line--gold"></div>
+      <span class="panel__name">HISTORY</span>
+      <p class="panel__desc">Decoding the decisions of history's most powerful figures.</p>
+    </a>
+
+    <!-- SCIENCE -->
+    <div class="panel panel--science" aria-label="ETW Science — coming soon">
+      <canvas class="science-canvas" id="scienceCanvas" aria-hidden="true"></canvas>
+      <span class="panel__badge">LAUNCHING SOON</span>
+      <span class="panel__etw">ETW</span>
+      <div class="panel__line panel__line--green"></div>
+      <span class="panel__name">SCIENCE</span>
+      <p class="panel__desc">How the world behaves. How humans respond to it.</p>
+    </div>
 
   </div>
 
-  <!-- Mobile dropdown -->
-  <div class="nav__mobile">
-    <a href="history.html" class="nav__link">History</a>
-    <a href="javascript:void(0)" class="nav__link">Science</a>
-    <div class="nav__socials">
-      <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="nav__social" aria-label="YouTube">
+</main>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div>
+      <div class="footer__brand-name">ETW</div>
+      <div class="footer__brand-sub">Explaining The World</div>
+    </div>
+    <nav class="footer__nav">
+      <a href="history.html"      class="footer__nav-link">History</a>
+      <span class="footer__nav-link" style="opacity:0.25;cursor:default;">Science</span>
+      <a href="about.html"        class="footer__nav-link">About</a>
+      <a href="faq.html"          class="footer__nav-link">FAQ</a>
+      <a href="collaboration.html" class="footer__nav-link">Collaboration</a>
+      <a href="legal.html"        class="footer__nav-link">Legal</a>
+    </nav>
+    <div class="footer__socials">
+      <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="footer__social" aria-label="YouTube">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
       </a>
-      <a href="https://instagram.com/explaining_the.world" target="_blank" rel="noopener" class="nav__social" aria-label="Instagram">
+      <button class="footer__social" data-insta-trigger aria-label="Instagram">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-      </a>
-      <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="nav__social" aria-label="X">
+      </button>
+      <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="footer__social" aria-label="X">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       </a>
     </div>
   </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <h1 class="hero__headline">Explaining The World</h1>
-  <p class="hero__sub">Learning from history. Creating in the present. Preparing for the future.</p>
-</section>
-
-<!-- CHANNEL CARDS -->
-<section class="channels">
-  <div class="channels__grid">
-
-    <!-- HISTORY -->
-    <div class="channel">
-      <a href="history.html" class="channel__card">
-        <span class="channel__etw">ETW</span>
-        <div class="channel__line channel__line--gold"></div>
-        <span class="channel__name">HISTORY</span>
-      </a>
-      <p class="channel__desc">Decoding the decisions of history's most powerful figures.</p>
-    </div>
-
-    <!-- SCIENCE -->
-    <div class="channel">
-      <div class="channel__card channel__card--science">
-        <span class="channel__etw">ETW</span>
-        <div class="channel__line channel__line--green"></div>
-        <span class="channel__name channel__name--white">SCIENCE</span>
-      </div>
-      <p class="channel__desc">We're currently splitting atoms. Check back soon.</p>
-    </div>
-
+  <div class="footer__bottom">
+    <p class="footer__copy">&copy; 2026 Explaining The World. All rights reserved.</p>
   </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer__socials">
-    <a href="https://youtube.com/@explaining_theworld" target="_blank" rel="noopener" class="footer__social" aria-label="YouTube">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-    </a>
-    <a href="https://instagram.com/explaining_the.world" target="_blank" rel="noopener" class="footer__social" aria-label="Instagram">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
-    </a>
-    <a href="https://x.com/explaning_world" target="_blank" rel="noopener" class="footer__social" aria-label="X">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    </a>
-  </div>
-  <p class="footer__copy">&copy; 2025 Explaining The World</p>
 </footer>
 
+<!-- ═══ SCRIPTS ═══ -->
+<script src="nav.js"></script>
 <script>
-  (function () {
-    var btn  = document.querySelector('.nav__hamburger');
-    var menu = document.querySelector('.nav__mobile');
-    if (!btn || !menu) return;
-    btn.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      btn.classList.toggle('open', open);
-      btn.setAttribute('aria-expanded', open);
+/* ============================================================
+   WEAPON EVOLUTION CANVAS — background animation
+   Gold (#C4932A) line-art silhouettes at opacity 0.06–0.10
+============================================================ */
+(function () {
+  var canvas = document.getElementById('bg-canvas');
+  var ctx    = canvas.getContext('2d');
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  /* ── Weapon drawing functions (centered at 0,0) ── */
+  function drawSpear(c) {
+    c.moveTo(-85, 0); c.lineTo(50, 0);
+    c.moveTo(-85, -6); c.lineTo(-85, 6);
+    c.moveTo(50, -12); c.lineTo(82, 0); c.lineTo(50, 12); c.lineTo(50, -12);
+  }
+  function drawSword(c) {
+    c.moveTo(-65, 0); c.lineTo(72, 0);
+    c.moveTo(-18, -20); c.lineTo(-18, 20);
+    c.moveTo(-18, -9); c.lineTo(72, 0);
+    c.moveTo(-18,  9); c.lineTo(72, 0);
+    c.moveTo(-65, -7); c.lineTo(-65, 7);
+    c.moveTo(-64, 0); c.arc(-64, 0, 7, 0, Math.PI * 2);
+  }
+  function drawBow(c) {
+    c.moveTo(-12, -68);
+    c.bezierCurveTo(32, -28, 32, 28, -12, 68);
+    c.moveTo(-12, -68); c.lineTo(-12, 68);
+    c.moveTo(-68, 0); c.lineTo(65, 0);
+    c.moveTo(65, 0); c.lineTo(52, -8);
+    c.moveTo(65, 0); c.lineTo(52,  8);
+    c.moveTo(-68, 0); c.lineTo(-57, -10);
+    c.moveTo(-68, 0); c.lineTo(-57,  10);
+  }
+  function drawCannon(c) {
+    c.moveTo(-55, -12); c.lineTo(42, -12); c.lineTo(42, 12); c.lineTo(-55, 12); c.lineTo(-55, -12);
+    c.moveTo(42, -16); c.lineTo(54, -16); c.lineTo(54, 16); c.lineTo(42, 16);
+    c.moveTo(-60, 12); c.lineTo(50, 12); c.lineTo(46, 22); c.lineTo(-56, 22); c.lineTo(-60, 12);
+    c.moveTo(-33 + 18, 30); c.arc(-33, 30, 18, 0, Math.PI * 2);
+    c.moveTo(22 + 18, 30); c.arc(22, 30, 18, 0, Math.PI * 2);
+  }
+  function drawMusket(c) {
+    c.moveTo(-88, -5); c.lineTo(82, -5); c.lineTo(82, 5); c.lineTo(-88, 5);
+    c.moveTo(-22, -5); c.lineTo(-22, -18); c.lineTo(8, -18); c.lineTo(8, -5);
+    c.moveTo(-18, 5); c.bezierCurveTo(-18, 22, 5, 22, 5, 5);
+    c.moveTo(-88, 5); c.bezierCurveTo(-88, 5, -96, 16, -92, 30);
+    c.moveTo(-92, 30); c.lineTo(-66, 30); c.lineTo(-52, 5);
+  }
+  function drawRevolver(c) {
+    c.moveTo(-12, -7); c.lineTo(72, -7); c.lineTo(72, 7); c.lineTo(-12, 7); c.lineTo(-12, -7);
+    c.moveTo(-12 + 22, 0); c.arc(-12, 0, 22, 0, Math.PI * 2);
+    c.moveTo(-34, 7); c.lineTo(-34, 44); c.bezierCurveTo(-34, 52, -22, 52, -22, 44); c.lineTo(-22, 7);
+    c.moveTo(-20, 7); c.bezierCurveTo(-20, 24, 5, 24, 5, 7);
+    c.moveTo(-32, -7); c.lineTo(-40, -24); c.lineTo(-30, -24); c.lineTo(-25, -7);
+  }
+  function drawMachinegun(c) {
+    c.moveTo(-62, -10); c.lineTo(82, -10); c.lineTo(82, 10); c.lineTo(-62, 10); c.lineTo(-62, -10);
+    for (var x = -28; x < 82; x += 10) { c.moveTo(x, -10); c.lineTo(x, -17); }
+    c.moveTo(-30, 10); c.lineTo(-30, 48); c.lineTo(-10, 48); c.lineTo(-10, 10);
+    c.moveTo(52, 10); c.lineTo(40, 40); c.moveTo(52, 10); c.lineTo(64, 40);
+    c.moveTo(-56, 10); c.lineTo(-56, 34); c.lineTo(-40, 34); c.lineTo(-40, 10);
+  }
+  function drawGrenade(c) {
+    c.moveTo(28, 12); c.ellipse(0, 12, 28, 36, 0, 0, Math.PI * 2);
+    c.moveTo(-12, -24); c.lineTo(12, -24); c.lineTo(12, -18); c.lineTo(-12, -18); c.lineTo(-12, -24);
+    c.moveTo(-12, -21); c.lineTo(-26, -21); c.lineTo(-23, -10);
+    c.moveTo(0, -24); c.lineTo(0, -40);
+    c.moveTo(6, -40); c.arc(0, -40, 6, 0, Math.PI * 2);
+    c.moveTo(-28, 12); c.lineTo(28, 12);
+    c.moveTo(-26, -8); c.lineTo(26, -8);
+  }
+  function drawTank(c) {
+    c.moveTo(-72, 16); c.lineTo(-72, -4); c.lineTo(-52, -24); c.lineTo(52, -24); c.lineTo(72, -4); c.lineTo(72, 16); c.lineTo(-72, 16);
+    c.moveTo(-30, -24); c.lineTo(-30, -44); c.lineTo(28, -44); c.lineTo(28, -24);
+    c.moveTo(28, -34); c.lineTo(92, -34);
+    c.moveTo(76, 28); c.ellipse(0, 28, 76, 16, 0, 0, Math.PI * 2);
+    for (var tx = -50; tx <= 50; tx += 25) { c.moveTo(tx + 10, 28); c.arc(tx, 28, 10, 0, Math.PI * 2); }
+  }
+  function drawBazooka(c) {
+    c.moveTo(-92, -8); c.lineTo(80, -8); c.lineTo(80, 8); c.lineTo(-92, 8); c.lineTo(-92, -8);
+    c.moveTo(80, 0); c.lineTo(100, -6); c.lineTo(116, 0); c.lineTo(100, 6); c.lineTo(80, 0);
+    c.moveTo(-16, -8); c.lineTo(-16, -24); c.lineTo(16, -24); c.lineTo(16, -8);
+    c.moveTo(-62, 8); c.lineTo(-62, 24); c.lineTo(-37, 24);
+    c.moveTo(-26, 8); c.lineTo(-26, 30); c.lineTo(-10, 30); c.lineTo(-10, 8);
+    c.moveTo(-92, -13); c.lineTo(-104, -13); c.lineTo(-104, 13); c.lineTo(-92, 13);
+  }
+  function drawMissile(c) {
+    c.moveTo(-10, 65); c.lineTo(10, 65); c.lineTo(10, -30); c.lineTo(0, -68); c.lineTo(-10, -30); c.lineTo(-10, 65);
+    c.moveTo(-10, 42); c.lineTo(-36, 68); c.lineTo(-10, 56);
+    c.moveTo(10,  42); c.lineTo( 36, 68); c.lineTo( 10, 56);
+    c.moveTo(-10, 10); c.lineTo(10, 10);
+    c.moveTo(-10,-12); c.lineTo(10,-12);
+    c.moveTo(-10,-30); c.lineTo(10,-30);
+  }
+  function drawMushroom(c) {
+    c.moveTo(-18, 78); c.bezierCurveTo(-24, 18, -6, 2, 0, -16);
+    c.moveTo( 18, 78); c.bezierCurveTo( 24, 18,  6, 2, 0, -16);
+    c.moveTo(-18, 78); c.lineTo(18, 78);
+    c.moveTo(-58, -28);
+    c.bezierCurveTo(-82, -60, -66, -94, -26, -84);
+    c.bezierCurveTo(-14, -98,  14, -98,  26, -84);
+    c.bezierCurveTo( 66, -94,  82, -60,  58, -28);
+    c.bezierCurveTo( 36, -12, -36, -12, -58, -28);
+    c.moveTo(-52, -28);
+    c.bezierCurveTo(-65, -4, 65, -4, 52, -28);
+  }
+
+  var WEAPONS = [
+    drawSpear, drawSword, drawBow, drawCannon, drawMusket,
+    drawRevolver, drawMachinegun, drawGrenade, drawTank,
+    drawBazooka, drawMissile, drawMushroom
+  ];
+
+  /* ── Silhouette particle class ── */
+  function Silhouette(type, x, y, initialised) {
+    this.type      = type !== undefined ? type : 0;
+    this.x         = x !== undefined ? x : -180;
+    this.y         = y !== undefined ? y : Math.random() * H;
+    this.vx        = 0.18 + Math.random() * 0.22;
+    this.vy        = (Math.random() - 0.5) * 0.12;
+    this.scale     = 0.45 + Math.random() * 0.95;
+    this.rotation  = (Math.random() - 0.5) * 0.35;
+    this.maxAlpha  = 0.06 + Math.random() * 0.05;
+    this.alpha     = initialised ? this.maxAlpha * Math.random() : 0;
+    this.phase     = initialised ? 'stable' : 'fadein';
+    this.timer     = 0;
+    this.fadeIn    = 100 + Math.random() * 80;
+    this.stable    = 280 + Math.floor(Math.random() * 240);
+    this.fadeOut   = 100 + Math.random() * 80;
+  }
+
+  Silhouette.prototype.update = function () {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.timer++;
+    if (this.phase === 'fadein') {
+      this.alpha = this.maxAlpha * Math.min(1, this.timer / this.fadeIn);
+      if (this.timer >= this.fadeIn) { this.phase = 'stable'; this.timer = 0; }
+    } else if (this.phase === 'stable') {
+      this.alpha = this.maxAlpha;
+      if (this.timer >= this.stable || this.x > W + 200) {
+        this.phase = 'fadeout'; this.timer = 0;
+      }
+    } else {
+      this.alpha = this.maxAlpha * Math.max(0, 1 - this.timer / this.fadeOut);
+      if (this.timer >= this.fadeOut) return true; // done
+    }
+    return false;
+  };
+
+  Silhouette.prototype.draw = function () {
+    /* Reduce opacity near vertical center to protect hero text */
+    var cy   = H / 2;
+    var zone = H * 0.22;
+    var dist = Math.abs(this.y - cy);
+    var mod  = dist < zone ? 0.15 + 0.85 * (dist / zone) : 1;
+    var a    = this.alpha * mod;
+    if (a < 0.008) return;
+
+    ctx.save();
+    ctx.globalAlpha  = a;
+    ctx.strokeStyle  = '#C4932A';
+    ctx.lineWidth    = 1.5 / this.scale;
+    ctx.lineCap      = 'round';
+    ctx.lineJoin     = 'round';
+    ctx.translate(this.x, this.y);
+    ctx.scale(this.scale, this.scale);
+    ctx.rotate(this.rotation);
+    ctx.beginPath();
+    WEAPONS[this.type](ctx);
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  /* ── Particle pool ── */
+  var particles = [];
+  var seqIdx    = 0;
+  var spawnTimer = 0;
+  var SPAWN_EVERY = 85;
+  var MAX_COUNT   = 14;
+
+  /* Seed initial particles scattered across screen */
+  for (var i = 0; i < 10; i++) {
+    particles.push(new Silhouette(
+      i % WEAPONS.length,
+      Math.random() * W,
+      Math.random() * H,
+      true
+    ));
+  }
+
+  function spawnNext() {
+    if (particles.length >= MAX_COUNT) return;
+    particles.push(new Silhouette(seqIdx % WEAPONS.length));
+    seqIdx++;
+  }
+
+  /* ── Main animation loop ── */
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+
+    spawnTimer++;
+    if (spawnTimer >= SPAWN_EVERY) { spawnNext(); spawnTimer = 0; }
+
+    particles = particles.filter(function (p) {
+      var done = p.update();
+      if (!done) p.draw();
+      return !done;
     });
-  })();
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* ============================================================
+   SCIENCE PANEL — Atom/particle network animation
+============================================================ */
+(function () {
+  var sc  = document.getElementById('scienceCanvas');
+  if (!sc) return;
+  var ctx = sc.getContext('2d');
+  var W, H;
+
+  function resize() {
+    W = sc.width  = sc.parentElement.offsetWidth  || window.innerWidth / 2;
+    H = sc.height = sc.parentElement.offsetHeight || 480;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  var NODES = 22;
+  var MAX_DIST = 110;
+
+  var nodes = [];
+  for (var i = 0; i < NODES; i++) {
+    nodes.push({
+      x:  Math.random() * (W || 500),
+      y:  Math.random() * (H || 480),
+      vx: (Math.random() - 0.5) * 0.35,
+      vy: (Math.random() - 0.5) * 0.35
+    });
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, W, H);
+
+    nodes.forEach(function (n) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    });
+
+    /* Lines */
+    ctx.strokeStyle = '#2ECC71';
+    for (var i = 0; i < nodes.length; i++) {
+      for (var j = i + 1; j < nodes.length; j++) {
+        var dx = nodes[i].x - nodes[j].x;
+        var dy = nodes[i].y - nodes[j].y;
+        var d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < MAX_DIST) {
+          ctx.globalAlpha = (1 - d / MAX_DIST) * 0.55;
+          ctx.lineWidth   = 0.6;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    /* Dots */
+    ctx.fillStyle   = '#2ECC71';
+    ctx.globalAlpha = 0.65;
+    nodes.forEach(function (n) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 2, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
 </script>
 </body>
 </html>
