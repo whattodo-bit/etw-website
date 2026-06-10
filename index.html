@@ -5,36 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ETW — Explaining The World</title>
   <meta name="description" content="Learning from history. Creating in the present. Preparing for the future.">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 
-<body style="background:#0A0F2E;">
+<body class="page-main">
 
-  <!-- ═══ NAVBAR ═══════════════════════════════════════════ -->
-  <nav class="navbar" id="navbar" role="navigation" aria-label="Main navigation">
-    <div class="nav-container">
+  <!-- ░░ GLOBE CANVAS — z-index 0, fills viewport ░░ -->
+  <canvas id="globe-canvas" aria-hidden="true"></canvas>
 
+  <!-- ══ NAVBAR ══════════════════════════════════════════ -->
+  <nav class="navbar" id="navbar" aria-label="Main navigation">
+    <div class="nav-wrap">
       <a href="index.html" class="nav-brand" aria-label="ETW Home">E T W</a>
 
       <div class="nav-right">
-        <div class="nav-links">
-          <a href="history.html">History</a>
-          <a href="science.html">Science</a>
-        </div>
+        <a href="history.html" class="nav-link">History</a>
 
         <div class="nav-icons">
           <!-- YouTube -->
-          <div class="icon-wrapper">
+          <div class="icon-wrap">
             <button class="icon-btn" data-popup="yt" aria-label="YouTube channels">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
             </button>
-            <div class="social-popup">
+            <div class="popup">
               <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
               <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
               <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
@@ -42,27 +40,27 @@
           </div>
 
           <!-- Instagram -->
-          <div class="icon-wrapper">
+          <div class="icon-wrap">
             <button class="icon-btn" data-popup="ig" aria-label="Instagram profiles">
               <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
               </svg>
             </button>
-            <div class="social-popup">
+            <div class="popup">
               <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
               <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
               <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
             </div>
           </div>
 
-          <!-- X / Twitter -->
-          <div class="icon-wrapper">
+          <!-- X -->
+          <div class="icon-wrap">
             <button class="icon-btn" data-popup="x" aria-label="X profiles">
               <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
               </svg>
             </button>
-            <div class="social-popup">
+            <div class="popup">
               <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
               <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
               <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
@@ -70,36 +68,34 @@
           </div>
         </div><!-- /nav-icons -->
 
-        <!-- Hamburger (mobile) -->
-        <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <button class="hamburger" id="hamburger" aria-label="Open menu">
           <span></span><span></span><span></span>
         </button>
-      </div><!-- /nav-right -->
-    </div><!-- /nav-container -->
+      </div>
+    </div>
   </nav>
 
-  <!-- ═══ MOBILE OVERLAY ═══════════════════════════════════ -->
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Mobile navigation">
-    <button class="mobile-close" id="mobile-close" aria-label="Close menu">×</button>
-    <nav class="mobile-nav-links">
+  <!-- ══ MOBILE OVERLAY ══════════════════════════════════ -->
+  <div class="mob-menu" id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button class="mob-close" id="mob-close" aria-label="Close menu">×</button>
+    <nav class="mob-links">
       <a href="history.html">History</a>
-      <a href="science.html">Science</a>
     </nav>
-    <div class="mobile-social">
-      <div class="mobile-social-group">
-        <span class="mobile-social-label">YOUTUBE</span>
+    <div class="mob-social">
+      <div class="mob-social-group">
+        <span class="mob-social-label">YOUTUBE</span>
         <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
         <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
         <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
       </div>
-      <div class="mobile-social-group">
-        <span class="mobile-social-label">INSTAGRAM</span>
+      <div class="mob-social-group">
+        <span class="mob-social-label">INSTAGRAM</span>
         <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
         <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
         <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
       </div>
-      <div class="mobile-social-group">
-        <span class="mobile-social-label">X</span>
+      <div class="mob-social-group">
+        <span class="mob-social-label">X</span>
         <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
         <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
         <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
@@ -107,133 +103,91 @@
     </div>
   </div>
 
-  <!-- ═══ HERO ══════════════════════════════════════════════ -->
-  <section class="hero index-hero">
+  <!-- ══ HERO ════════════════════════════════════════════ -->
+  <section class="main-hero">
     <p class="hero-eyebrow">EXPLAINING THE WORLD</p>
-    <h1 class="hero-title">E T W</h1>
-    <div class="hero-rule" style="width:180px;" role="presentation"></div>
+    <h1 class="hero-etw">E T W</h1>
+    <div class="gold-rule" style="width:160px;" role="presentation"></div>
     <p class="hero-tagline">
       Learning from history. Creating in the present.<br>
       Preparing for the future.
     </p>
   </section>
 
-  <!-- ═══ PANELS ════════════════════════════════════════════ -->
-  <div class="panels">
-
-    <!-- LEFT — HISTORY (clickable) -->
-    <a href="history.html" class="panel panel-history" aria-label="Go to History">
-      <div class="panel-content">
-        <p class="panel-eyebrow">ETW</p>
-        <div class="panel-rule" role="presentation"></div>
-        <h2 class="panel-title">HISTORY</h2>
-        <p class="panel-desc">
-          Decoding the decisions of history's<br>
-          most powerful figures.
-        </p>
-      </div>
-    </a>
-
-    <!-- RIGHT — SCIENCE (not clickable) -->
-    <div class="panel panel-science">
-      <span class="panel-badge">LAUNCHING SOON</span>
-      <div class="panel-content">
-        <p class="panel-eyebrow">ETW</p>
-        <div class="panel-rule green" role="presentation"></div>
-        <h2 class="panel-title">SCIENCE</h2>
-        <p class="panel-desc">
-          How the world behaves.<br>
-          How humans respond to it.
-        </p>
-
-        <form class="notify-form" id="science-notify-panel">
-          <input type="hidden" name="access_key" value="cd486e45-9e46-494d-8a5d-94fca8325f0a">
-          <input type="hidden" name="subject" value="ETW Science — Launch Notification">
-          <input type="hidden" name="from_name" value="ETW Science">
-          <label class="notify-label" for="email-panel">GET NOTIFIED ON LAUNCH</label>
-          <div class="notify-row">
-            <input
-              class="notify-input"
-              type="email"
-              id="email-panel"
-              name="email"
-              placeholder="your@email.com"
-              required
-              autocomplete="email"
-            >
-            <button class="notify-btn" type="submit">NOTIFY ME</button>
-          </div>
-          <p class="notify-success" aria-live="polite"></p>
-        </form>
-      </div>
+  <!-- ══ HISTORY ENTRY PANEL ═════════════════════════════ -->
+  <a href="history.html" class="history-entry" aria-label="Enter History">
+    <div class="entry-inner">
+      <p class="entry-eyebrow">ETW</p>
+      <div class="entry-rule" role="presentation"></div>
+      <h2 class="entry-title">HISTORY</h2>
+      <p class="entry-tagline">
+        Every empire fell. Every war started.<br>
+        Every leader chose.
+      </p>
+      <p class="entry-cta">ENTER →</p>
     </div>
+  </a>
 
-  </div><!-- /panels -->
-
-  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="footer footer-main">
     <div class="footer-grid">
 
-      <!-- Brand -->
       <div class="footer-brand">
         <a href="index.html" class="footer-etw">E T W</a>
-        <p class="footer-tagline">Explaining The World</p>
+        <p class="footer-sub">Explaining The World</p>
       </div>
 
-      <!-- Nav links -->
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="history.html">History</a>
-        <a href="science.html">Science</a>
       </nav>
 
-      <!-- Social icons -->
-      <div class="footer-social">
-        <div class="icon-wrapper">
-          <button class="icon-btn" data-popup="yt-f" aria-label="YouTube channels">
+      <div class="footer-icons">
+        <div class="icon-wrap">
+          <button class="icon-btn" data-popup="fyt" aria-label="YouTube channels">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
             </svg>
           </button>
-          <div class="social-popup">
+          <div class="popup">
             <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
             <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
             <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
           </div>
         </div>
 
-        <div class="icon-wrapper">
-          <button class="icon-btn" data-popup="ig-f" aria-label="Instagram profiles">
+        <div class="icon-wrap">
+          <button class="icon-btn" data-popup="fig" aria-label="Instagram profiles">
             <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
             </svg>
           </button>
-          <div class="social-popup">
+          <div class="popup">
             <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
             <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
             <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
           </div>
         </div>
 
-        <div class="icon-wrapper">
-          <button class="icon-btn" data-popup="x-f" aria-label="X profiles">
+        <div class="icon-wrap">
+          <button class="icon-btn" data-popup="fx" aria-label="X profiles">
             <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
             </svg>
           </button>
-          <div class="social-popup">
+          <div class="popup">
             <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
             <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
             <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
           </div>
         </div>
-      </div><!-- /footer-social -->
+      </div>
+    </div>
 
-    </div><!-- /footer-grid -->
     <div class="footer-bottom">
-      <p class="footer-copyright">© 2026 Explaining The World. All rights reserved.</p>
+      <p class="footer-copy">© 2026 Explaining The World. All rights reserved.</p>
     </div>
   </footer>
 
-  <script src="assets/js/nav.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
