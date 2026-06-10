@@ -521,3 +521,181 @@ section,
   .hero-etw { font-size: 58px; }
   .mob-social { flex-direction: column; align-items: center; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   HISTORY PAGE — GLOBE CANVAS (inline, separate from main.js globe)
+   ═══════════════════════════════════════════════════════ */
+#hist-globe-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+}
+
+/* ═══════════════════════════════════════════════════════
+   INDEX — TWO CHANNEL PANELS
+   ═══════════════════════════════════════════════════════ */
+.channel-panels {
+  display: flex;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+}
+
+.channel-panel {
+  flex: 1;
+  min-height: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 56px;
+  position: relative;
+  overflow: hidden;
+}
+
+.channel-panel--history {
+  background: #0D0B08;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow .35s ease, filter .35s ease;
+}
+.channel-panel--history:hover {
+  box-shadow: inset 0 0 0 1px #C4932A, 0 0 60px rgba(196,147,42,.07);
+  filter: brightness(1.08);
+}
+
+.channel-panel--science {
+  background: #080D0A;
+  cursor: default;
+}
+
+/* panel inner content */
+.cpanel-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: .4em;
+  margin-bottom: 16px;
+}
+.cpanel-eyebrow--green { color: #2ECC71; }
+
+.cpanel-rule {
+  width: 64px;
+  height: 1px;
+  border: none;
+  margin-bottom: 18px;
+  flex-shrink: 0;
+}
+.cpanel-rule--gold  { background: var(--gold); }
+.cpanel-rule--green { background: #2ECC71; }
+
+.cpanel-title {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(52px, 6vw, 80px);
+  color: var(--cream);
+  letter-spacing: .18em;
+  line-height: 1;
+  margin-bottom: 18px;
+}
+
+.cpanel-tagline {
+  font-family: var(--f-body);
+  font-style: italic;
+  font-size: 15px;
+  color: rgba(240,237,230,0.50);
+  line-height: 1.75;
+  max-width: 280px;
+  margin-bottom: 14px;
+}
+.cpanel-tagline--green {
+  color: #2ECC71;
+  opacity: 0.85;
+}
+
+.cpanel-cta {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: var(--gold);
+  letter-spacing: .3em;
+}
+
+.cpanel-badge {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+  color: #2ECC71;
+  border: 1px solid rgba(46,204,113,.4);
+  padding: 5px 12px;
+  margin-bottom: 24px;
+}
+
+/* Email form inside Science panel */
+.cpanel-notify {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  width: 100%;
+  max-width: 300px;
+}
+.cpanel-notify__label {
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: .22em;
+  color: #2ECC71;
+  text-transform: uppercase;
+}
+.cpanel-notify__row {
+  display: flex;
+  width: 100%;
+}
+.cpanel-notify__input {
+  flex: 1;
+  min-width: 0;
+  background: #0D1410;
+  border: 1px solid #2ECC71;
+  border-right: none;
+  color: var(--cream);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  padding: 9px 12px;
+  border-radius: 0;
+  outline: none;
+}
+.cpanel-notify__input::placeholder { color: rgba(240,237,230,.28); }
+.cpanel-notify__btn {
+  background: #2ECC71;
+  color: #000;
+  font-family: var(--f-mono);
+  font-size: 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 9px 14px;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: opacity .2s;
+  white-space: nowrap;
+}
+.cpanel-notify__btn:hover { opacity: .82; }
+.cpanel-notify__ok {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  color: #2ECC71;
+  letter-spacing: .06em;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .channel-panels { flex-direction: column; }
+  .channel-panel { min-height: 420px; padding: 64px 32px; }
+}

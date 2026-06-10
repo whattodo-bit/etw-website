@@ -23,6 +23,8 @@
 
       <div class="nav-right">
         <a href="history.html" class="nav-link">History</a>
+        <a href="science.html" class="nav-link">Science</a>
+        <a href="about.html"   class="nav-link">About</a>
 
         <div class="nav-icons">
           <!-- YouTube -->
@@ -80,6 +82,8 @@
     <button class="mob-close" id="mob-close" aria-label="Close menu">×</button>
     <nav class="mob-links">
       <a href="history.html">History</a>
+      <a href="science.html">Science</a>
+      <a href="about.html">About</a>
     </nav>
     <div class="mob-social">
       <div class="mob-social-group">
@@ -114,19 +118,41 @@
     </p>
   </section>
 
-  <!-- ══ HISTORY ENTRY PANEL ═════════════════════════════ -->
-  <a href="history.html" class="history-entry" aria-label="Enter History">
-    <div class="entry-inner">
-      <p class="entry-eyebrow">ETW</p>
-      <div class="entry-rule" role="presentation"></div>
-      <h2 class="entry-title">HISTORY</h2>
-      <p class="entry-tagline">
-        Every empire fell. Every war started.<br>
-        Every leader chose.
+  <!-- ══ CHANNEL PANELS ════════════════════════════════ -->
+  <div class="channel-panels">
+
+    <!-- History — clickable -->
+    <a href="history.html" class="channel-panel channel-panel--history" aria-label="Enter History">
+      <p class="cpanel-eyebrow">ETW</p>
+      <hr class="cpanel-rule cpanel-rule--gold">
+      <h2 class="cpanel-title">HISTORY</h2>
+      <p class="cpanel-tagline">
+        Every empire fell.<br>Every war started.<br>Every leader chose.
       </p>
-      <p class="entry-cta">ENTER →</p>
+      <p class="cpanel-cta">ENTER →</p>
+    </a>
+
+    <!-- Science — not clickable, email form -->
+    <div class="channel-panel channel-panel--science">
+      <p class="cpanel-badge">LAUNCHING SOON</p>
+      <p class="cpanel-eyebrow cpanel-eyebrow--green">ETW</p>
+      <hr class="cpanel-rule cpanel-rule--green">
+      <h2 class="cpanel-title">SCIENCE</h2>
+      <p class="cpanel-tagline cpanel-tagline--green">
+        How the world behaves.<br>How humans respond to it.
+      </p>
+
+      <form class="cpanel-notify" id="idx-sci-notify">
+        <span class="cpanel-notify__label">Get Notified on Launch</span>
+        <div class="cpanel-notify__row">
+          <input type="email" class="cpanel-notify__input" placeholder="your@email.com" required>
+          <button type="submit" class="cpanel-notify__btn">Notify Me</button>
+        </div>
+        <span class="cpanel-notify__ok" id="idx-sci-ok">You'll be the first to know.</span>
+      </form>
     </div>
-  </a>
+
+  </div>
 
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="footer footer-main">
@@ -139,6 +165,8 @@
 
       <nav class="footer-nav" aria-label="Footer navigation">
         <a href="history.html">History</a>
+        <a href="science.html">Science</a>
+        <a href="about.html">About</a>
       </nav>
 
       <div class="footer-icons">
@@ -189,5 +217,29 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
+  <script>
+  /* Science panel email form on index.html */
+  (function () {
+    var form = document.getElementById('idx-sci-notify');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type="email"]').value;
+      var fd = new FormData();
+      fd.append('access_key', 'cd486e45-9e46-494d-8a5d-94fca8325f0a');
+      fd.append('subject', 'ETW Science Launch Notification');
+      fd.append('email', email);
+      fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
+        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (r.success) {
+            form.querySelector('.cpanel-notify__row').style.display = 'none';
+            form.querySelector('.cpanel-notify__label').style.display = 'none';
+            document.getElementById('idx-sci-ok').style.display = 'block';
+          }
+        }).catch(function () {});
+    });
+  })();
+  </script>
 </body>
 </html>
