@@ -1,0 +1,1 @@
+worker: python etw_automation.py
