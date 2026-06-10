@@ -411,7 +411,7 @@ if (weaponsEl) {
         scale:     0.35 + Math.random() * 0.40,
         widx:      i % DRAWS.length,
         timer:     Math.random() * 9,
-        speed:     0.25 + Math.random() * 0.35,
+        speed:     28 + Math.random() * 27,   // px/sec — visible cinematic drift
       };
     });
   }
