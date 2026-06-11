@@ -1,785 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ETW — Explaining The World</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:#0A0F2E;color:#E8E0D0;font-family:'Source Serif 4',serif;overflow-x:hidden}
-
-/* ── NAVBAR ── */
-#mainNav{
-  position:fixed;top:0;left:0;right:0;z-index:1000;
-  background:#0A0F2E;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;height:64px;
-  border-bottom:1px solid rgba(196,147,42,0.12);
-}
-.nav-logo{
-  font-family:'Playfair Display',serif;font-weight:900;
-  font-size:20px;letter-spacing:0.35em;color:#C4932A;
-  text-decoration:none;
-}
-.nav-right{display:flex;align-items:center;gap:32px}
-.nav-link{
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;
-  color:#E8E0D0;text-decoration:none;text-transform:uppercase;
-  opacity:0.75;transition:opacity 0.2s;
-}
-.nav-link:hover{opacity:1}
-.nav-icons{display:flex;align-items:center;gap:20px;position:relative}
-.icon-btn{
-  background:none;border:none;cursor:pointer;
-  color:#C4932A;opacity:0.7;transition:opacity 0.2s;padding:4px;
-  position:relative;
-}
-.icon-btn:hover{opacity:1}
-.icon-btn svg{display:block;width:18px;height:18px;fill:currentColor}
-
-/* Popups */
-.social-popup{
-  position:fixed;
-  background:#0A0A0A;border:1px solid #C4932A;
-  padding:8px 0;min-width:160px;
-  display:none;z-index:2000;
-}
-.social-popup.open{display:block}
-.social-popup a{
-  display:block;padding:10px 18px;
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.15em;
-  color:#E8E0D0;text-decoration:none;
-  transition:color 0.15s;
-}
-.social-popup a:hover{color:#C4932A}
-
-/* Hamburger */
-.hamburger{
-  display:none;flex-direction:column;gap:5px;cursor:pointer;
-  background:none;border:none;padding:8px;
-}
-.hamburger span{
-  display:block;width:24px;height:1.5px;background:#C4932A;
-  transition:all 0.3s;
-}
-
-/* Mobile overlay */
-#navOverlay{
-  position:fixed;inset:0;background:#0A0F2E;z-index:5000;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:36px;
-  opacity:0;pointer-events:none;transition:opacity 0.35s;
-}
-#navOverlay.open{opacity:1;pointer-events:all}
-.overlay-close{
-  position:absolute;top:24px;right:32px;
-  background:none;border:none;color:#C4932A;font-size:28px;cursor:pointer;
-}
-.overlay-link{
-  font-family:'DM Mono',monospace;font-size:13px;letter-spacing:0.25em;
-  color:#E8E0D0;text-decoration:none;text-transform:uppercase;
-}
-.overlay-icons{display:flex;gap:28px;margin-top:16px}
-.overlay-icon-btn{
-  background:none;border:none;cursor:pointer;color:#C4932A;padding:4px;
-}
-.overlay-icon-btn svg{width:22px;height:22px;fill:currentColor;display:block}
-
-/* ── SECTION 1: HERO ── */
-#hero{
-  position:relative;width:100%;height:100vh;
-  background:#0A0F2E;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-}
-#hero-globe-canvas{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:0;opacity:0.5;
-}
-.hero-text{
-  position:relative;z-index:10;
-  text-align:center;pointer-events:none;
-}
-.hero-eyebrow{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.4em;
-  color:#C4932A;text-transform:uppercase;margin-bottom:20px;
-}
-.hero-title{
-  font-family:'Playfair Display',serif;font-weight:900;
-  font-size:clamp(72px,10vw,130px);letter-spacing:0.25em;
-  color:#E8E0D0;line-height:1;margin-bottom:28px;
-}
-.hero-rule{
-  width:160px;height:1.5px;background:#C4932A;
-  margin:0 auto 28px;
-}
-.hero-tagline{
-  font-family:'Source Serif 4',serif;font-style:italic;font-weight:300;
-  font-size:17px;color:#E8E0D0;opacity:0.85;
-  max-width:460px;margin:0 auto;line-height:1.7;
-}
-
-/* ── SECTION 2: ABOUT ── */
-#about{
-  background:#0A0F2E;
-  padding:120px 60px;
-}
-.about-inner{max-width:780px;margin:0 auto}
-.section-eyebrow{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.4em;
-  color:#C4932A;text-transform:uppercase;margin-bottom:16px;
-}
-.section-rule{
-  width:80px;height:1px;background:#C4932A;
-  margin-bottom:48px;
-}
-.about-body{
-  font-family:'Source Serif 4',serif;font-weight:300;
-  font-size:17px;line-height:1.85;color:#E8E0D0;opacity:0.85;
-  margin-bottom:28px;
-}
-.about-links{
-  margin-top:52px;
-  display:flex;flex-direction:column;gap:40px;
-}
-.about-link{
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.3em;
-  color:#C4932A;text-decoration:none;text-transform:uppercase;
-  border-bottom:1px solid transparent;
-  transition:border-color 0.2s;width:fit-content;
-}
-.about-link:hover{border-bottom-color:#C4932A}
-
-/* ── SECTION 3: HISTORY PANEL ── */
-#history-panel{
-  position:relative;width:100%;min-height:500px;overflow:hidden;
-  cursor:pointer;
-  background:#0D0B08;
-  transition:box-shadow 0.4s;
-}
-#history-panel:hover{box-shadow:inset 0 0 0 1px #C4932A}
-#hist-panel-globe{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:0;pointer-events:none;
-}
-#hist-panel-weapons{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:1;pointer-events:none;
-}
-.hist-content{
-  position:relative;z-index:10;
-  text-align:center;
-  padding:100px 60px;
-  display:flex;flex-direction:column;align-items:center;
-}
-.hist-eyebrow{
-  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.4em;
-  color:#C4932A;text-transform:uppercase;margin-bottom:16px;
-}
-.hist-rule{
-  width:80px;height:1px;background:#C4932A;
-  margin-bottom:40px;
-}
-.hist-title{
-  font-family:'Playfair Display',serif;font-weight:900;
-  font-size:clamp(52px,7vw,80px);letter-spacing:0.2em;
-  color:#E8E0D0;line-height:1;margin-bottom:28px;
-}
-.hist-tagline{
-  font-family:'Source Serif 4',serif;font-style:italic;font-weight:300;
-  font-size:16px;color:#C4932A;opacity:0.9;
-  max-width:500px;line-height:1.7;margin-bottom:40px;
-}
-.hist-cta{
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.3em;
-  color:#C4932A;text-transform:uppercase;
-}
-
-/* ── SECTION 4: FOOTER ── */
-#footer{
-  background:#0A0F2E;
-  padding:40px 60px;
-  border-top:1px solid rgba(196,147,42,0.25);
-  text-align:center;
-}
-.footer-copy{
-  font-family:'Source Serif 4',serif;font-size:13px;
-  color:#E8E0D0;opacity:0.45;
-}
-
-/* ── MOBILE ── */
-@media(max-width:768px){
-  #mainNav{padding:0 24px}
-  .nav-right{display:none}
-  .hamburger{display:flex}
-  #hero{height:100svh}
-  .hero-title{font-size:clamp(52px,14vw,100px)}
-  #about{padding:80px 28px}
-  .about-inner{max-width:100%}
-  .hist-content{padding:80px 28px}
-  #footer{padding:32px 24px}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ETW — Explaining The World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
 
-<!-- ══════════════════════════════════ NAVBAR ══════════════════════════════════ -->
-<nav id="mainNav">
-  <a href="/" class="nav-logo">E T W</a>
-  <div class="nav-right">
-    <a href="history.html" class="nav-link">History</a>
-    <a href="#about" class="nav-link">About</a>
-    <div class="nav-icons">
+  <!-- ══════════════════════════════════ NAVBAR ══════════════════════════════════ -->
+  <nav id="mainNav">
+    <a href="/" class="nav-logo">E T W</a>
 
-      <!-- YouTube -->
-      <button class="icon-btn" id="ytBtn" aria-label="YouTube">
-        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    <div class="nav-right">
+      <a href="history.html" class="nav-link">History</a>
+      <a href="#about"       class="nav-link">About</a>
+
+      <div class="nav-icons">
+
+        <!-- YouTube -->
+        <button class="icon-btn" id="ytBtn" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </button>
+        <div class="social-popup" id="popup-yt">
+          <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
+          <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
+        </div>
+
+        <!-- Instagram -->
+        <button class="icon-btn" id="igBtn" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+          </svg>
+        </button>
+        <div class="social-popup" id="popup-ig">
+          <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
+          <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
+        </div>
+
+        <!-- X -->
+        <button class="icon-btn" id="xBtn" aria-label="X">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+          </svg>
+        </button>
+        <div class="social-popup" id="popup-x">
+          <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
+          <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
+        </div>
+
+      </div><!-- /.nav-icons -->
+    </div><!-- /.nav-right -->
+
+    <!-- Hamburger (mobile) -->
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
+    <button class="overlay-close" id="overlayClose" aria-label="Close menu">&#x2715;</button>
+    <a href="history.html" class="overlay-link">History</a>
+    <a href="#about"       class="overlay-link" id="overlayAbout">About</a>
+    <div class="overlay-icons">
+      <button class="overlay-icon-btn" id="ovYt" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
       </button>
-      <div class="social-popup" id="popup-yt">
-        <a href="https://youtube.com/@ETWmain" target="_blank" rel="noopener">ETW</a>
-        <a href="https://youtube.com/@ETWhistory" target="_blank" rel="noopener">History</a>
-      </div>
-
-      <!-- Instagram -->
-      <button class="icon-btn" id="igBtn" aria-label="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+      <button class="overlay-icon-btn" id="ovIg" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+        </svg>
       </button>
-      <div class="social-popup" id="popup-ig">
-        <a href="https://instagram.com/etwmain" target="_blank" rel="noopener">ETW</a>
-        <a href="https://instagram.com/etwhistory" target="_blank" rel="noopener">History</a>
-      </div>
-
-      <!-- X / Twitter -->
-      <button class="icon-btn" id="xBtn" aria-label="X">
-        <svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+      <button class="overlay-icon-btn" id="ovX" aria-label="X">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
+        </svg>
       </button>
-      <div class="social-popup" id="popup-x">
-        <a href="https://x.com/etwmain" target="_blank" rel="noopener">ETW</a>
-        <a href="https://x.com/etwhistory" target="_blank" rel="noopener">History</a>
-      </div>
-
     </div>
-  </div>
-  <button class="hamburger" id="navHamburger" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
+  </div><!-- /#navOverlay -->
 
-<!-- Mobile overlay -->
-<div id="navOverlay">
-  <button class="overlay-close" id="navOverlayClose">&#x2715;</button>
-  <a href="history.html" class="overlay-link">History</a>
-  <a href="#about" class="overlay-link" id="overlayAbout">About</a>
-  <div class="overlay-icons">
-    <button class="overlay-icon-btn" id="ovYt" aria-label="YouTube">
-      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-    </button>
-    <button class="overlay-icon-btn" id="ovIg" aria-label="Instagram">
-      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-    </button>
-    <button class="overlay-icon-btn" id="ovX" aria-label="X">
-      <svg viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-    </button>
-  </div>
-</div>
 
-<!-- ══════════════════════════════════ HERO ══════════════════════════════════ -->
-<section id="hero">
-  <canvas id="hero-globe-canvas"></canvas>
-  <div class="hero-text">
-    <div class="hero-eyebrow">Explaining The World</div>
-    <div class="hero-title">E T W</div>
-    <div class="hero-rule"></div>
-    <div class="hero-tagline">We provide what is valuable. Not what is popular.</div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════ ABOUT ══════════════════════════════════ -->
-<section id="about">
-  <div class="about-inner">
-    <div class="section-eyebrow">About</div>
-    <div class="section-rule"></div>
-    <p class="about-body">
-      ETW is an independent media project dedicated to the serious study of history, ideas, and the forces that shape our world. We believe that understanding the past is not a luxury — it is a necessity for anyone who wants to make sense of the present.
-    </p>
-    <p class="about-body">
-      We produce long-form content for those who are willing to go deeper. No algorithms. No outrage. No shortcuts. Just careful, rigorous, and honest exploration of the subjects that matter most.
-    </p>
-    <div class="about-links">
-      <a href="faq.html" class="about-link">FAQ</a>
-      <a href="collaboration.html" class="about-link">Collaboration</a>
-      <a href="legal.html" class="about-link">Legal</a>
+  <!-- ══════════════════════════════════ SECTION 1 — HERO ══════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Explaining The World</p>
+      <h1 class="hero-title">E T W</h1>
+      <div class="gold-line"></div>
+      <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ══════════════════════════════════ HISTORY PANEL ══════════════════════════════════ -->
-<section id="history-panel">
-  <canvas id="hist-panel-globe"></canvas>
-  <canvas id="hist-panel-weapons"></canvas>
-  <div class="hist-content">
-    <div class="hist-eyebrow">E T W</div>
-    <div class="hist-rule"></div>
-    <div class="hist-title">HISTORY</div>
-    <div class="hist-tagline">Every empire. Every leader. Every lesson.</div>
-    <div class="hist-cta">EXPLORE &#x2192;</div>
-  </div>
-</section>
 
-<!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
-<footer id="footer">
-  <div class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</div>
-</footer>
+  <!-- ══════════════════════════════════ SECTION 2 — ABOUT ══════════════════════════════════ -->
+  <section id="about" class="about-section">
+    <div class="about-inner">
+      <p class="eyebrow">About</p>
+      <div class="section-rule"></div>
 
-<!-- ══════════════════════════════════ SCRIPTS ══════════════════════════════════ -->
-<script>
-(function(){
-'use strict';
+      <p class="body-text">
+        Explaining The World is an independent media brand currently operating in history,
+        with plans to expand into science. We produce content for a global English-speaking
+        audience. As demand grows, we aim to reach every major language.
+      </p>
+      <p class="body-text">
+        We do not focus on speed. We focus on quality. Every video takes time because we
+        read the books, study the sources, and extract only what is genuinely worth your
+        attention.
+      </p>
 
-/* ══════════════ NAVBAR POPUPS ══════════════ */
-var activePopup = null;
+      <nav class="about-links" aria-label="Additional pages">
+        <a href="faq.html">FAQ</a>
+        <a href="collaboration.html">Collaboration</a>
+        <a href="legal.html">Legal</a>
+      </nav>
+    </div>
+  </section>
 
-function positionPopup(popup, btn) {
-  var rect = btn.getBoundingClientRect();
-  popup.style.top  = (rect.bottom + 8) + 'px';
-  popup.style.left = 'auto';
-  popup.style.right = (window.innerWidth - rect.right) + 'px';
-}
 
-function togglePopup(popup, btn) {
-  if (activePopup && activePopup !== popup) {
-    activePopup.classList.remove('open');
-  }
-  if (popup.classList.contains('open')) {
-    popup.classList.remove('open');
-    activePopup = null;
-  } else {
-    positionPopup(popup, btn);
-    popup.classList.add('open');
-    activePopup = popup;
-  }
-}
+  <!-- ══════════════════════════════════ SECTION 3 — HISTORY PANEL ══════════════════════════════════ -->
+  <section id="history-panel" role="link" tabindex="0" aria-label="Go to History">
+    <canvas id="civ-canvas" aria-hidden="true"></canvas>
+    <div class="hist-content">
+      <p class="hist-eyebrow">E T W</p>
+      <div class="hist-rule"></div>
+      <h2 class="hist-title">HISTORY</h2>
+      <p class="hist-tagline">
+        Lessons from every empire and its leader.<br>
+        History through one lens only &mdash; power.<br>
+        How it is taken. How it is held. How it is lost.
+      </p>
+      <span class="hist-cta">EXPLORE &#x2192;</span>
+    </div>
+  </section>
 
-var ytBtn = document.getElementById('ytBtn');
-var igBtn = document.getElementById('igBtn');
-var xBtn  = document.getElementById('xBtn');
-var popYt = document.getElementById('popup-yt');
-var popIg = document.getElementById('popup-ig');
-var popX  = document.getElementById('popup-x');
 
-ytBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePopup(popYt, ytBtn); });
-igBtn.addEventListener('click', function(e){ e.stopPropagation(); togglePopup(popIg, igBtn); });
-xBtn.addEventListener('click',  function(e){ e.stopPropagation(); togglePopup(popX,  xBtn);  });
+  <!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
+  <footer>
+    <p class="copyright">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+  </footer>
 
-[popYt, popIg, popX].forEach(function(p){
-  p.addEventListener('click', function(e){ e.stopPropagation(); });
-});
-document.addEventListener('click', function(){
-  if (activePopup) { activePopup.classList.remove('open'); activePopup = null; }
-});
 
-/* ══════════════ HAMBURGER / OVERLAY ══════════════ */
-var hamburger = document.getElementById('navHamburger');
-var overlay   = document.getElementById('navOverlay');
-var closeBtn  = document.getElementById('navOverlayClose');
-var ovAbout   = document.getElementById('overlayAbout');
+  <script src="assets/js/globe.js"></script>
+  <script src="assets/js/nav.js"></script>
 
-hamburger.addEventListener('click', function(){
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-});
-closeBtn.addEventListener('click', function(){
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-});
-ovAbout.addEventListener('click', function(){
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-});
-document.addEventListener('keydown', function(e){
-  if (e.key === 'Escape') {
-    overlay.classList.remove('open');
-    document.body.style.overflow = '';
-    if (activePopup) { activePopup.classList.remove('open'); activePopup = null; }
-  }
-});
-
-/* ══════════════ GLOBE ENGINE ══════════════ */
-function hexToRgba(hex, a) {
-  if (!hex.startsWith('#')) return hex;
-  var r = parseInt(hex.slice(1,3),16);
-  var g = parseInt(hex.slice(3,5),16);
-  var b = parseInt(hex.slice(5,7),16);
-  return 'rgba('+r+','+g+','+b+','+(a!==undefined?a:1)+')';
-}
-
-function project3D(lat, lon, rY, rX) {
-  var la = lat * Math.PI / 180;
-  var lo = lon * Math.PI / 180;
-  var x0 = Math.cos(la) * Math.sin(lo);
-  var y0 = Math.sin(la);
-  var z0 = Math.cos(la) * Math.cos(lo);
-  // Y-axis rotation (spin W→E)
-  var x1 =  x0 * Math.cos(rY) + z0 * Math.sin(rY);
-  var z1 = -x0 * Math.sin(rY) + z0 * Math.cos(rY);
-  var y1 =  y0;
-  // X-axis tilt
-  var y2 =  y1 * Math.cos(rX) - z1 * Math.sin(rX);
-  var z2 =  y1 * Math.sin(rX) + z1 * Math.cos(rX);
-  return { sx: x1, sy: y2, z: z2 };
-}
-
-function getContinents() {
-  return [
-    { clat:45, clon:-100, coords:[[-168,71],[-140,70],[-95,75],[-63,46],[-52,47],[-55,47],[-60,45],[-75,45],[-76,34],[-81,25],[-87,15],[-92,15],[-102,18],[-117,32],[-117,49],[-123,49],[-130,54],[-140,58],[-152,60],[-168,63],[-168,71]] },
-    { clat:-15, clon:-60, coords:[[-80,12],[-75,10],[-60,8],[-50,5],[-35,-4],[-35,-8],[-38,-12],[-40,-20],[-42,-22],[-48,-27],[-52,-32],[-55,-35],[-68,-54],[-75,-50],[-72,-42],[-72,-30],[-70,-17],[-75,-10],[-78,-2],[-80,0],[-80,12]] },
-    { clat:50,  clon:15,  coords:[[-10,36],[0,36],[5,36],[15,37],[28,37],[32,36],[36,37],[28,45],[30,50],[26,55],[20,60],[15,60],[10,63],[5,62],[0,60],[-5,55],[-10,50],[-10,44],[-5,36],[-10,36]] },
-    { clat:0,   clon:22,  coords:[[-5,36],[5,36],[15,37],[28,37],[38,20],[40,10],[42,5],[40,0],[37,-5],[35,-18],[33,-28],[26,-34],[18,-34],[14,-22],[10,-8],[8,5],[0,5],[-5,5],[-15,10],[-17,14],[-15,20],[-10,28],[-5,36]] },
-    { clat:40,  clon:90,  coords:[[28,37],[36,37],[38,37],[42,37],[50,30],[55,23],[60,22],[70,22],[80,22],[90,22],[100,20],[105,10],[110,5],[120,5],[130,20],[140,35],[142,45],[135,50],[130,55],[120,65],[110,70],[100,70],[90,72],[80,70],[70,68],[60,65],[55,58],[50,55],[45,55],[40,60],[35,55],[28,45],[28,37]] },
-    { clat:-25, clon:135, coords:[[114,-22],[118,-20],[122,-18],[128,-15],[136,-12],[140,-17],[148,-20],[152,-24],[152,-30],[148,-38],[144,-38],[140,-36],[130,-33],[124,-32],[118,-28],[114,-26],[114,-22]] },
-    { clat:72,  clon:-42, coords:[[-68,76],[-52,83],[-30,83],[-18,76],[-20,70],[-26,65],[-45,60],[-55,63],[-68,70],[-68,76]] }
-  ];
-}
-
-function makeGlobe(cfg) {
-  var canvas = cfg.canvas;
-  var ctx    = canvas.getContext('2d');
-  var rY = 0, rX = cfg.tilt || 0.25;
-  var rotSpeed = (2 * Math.PI) / (cfg.rotSpeed || 90); // rad/sec
-  var dragging = false, lastMX = 0, lastMY = 0;
-  var lastT = null;
-  var continents = getContinents();
-  var cities = cfg.cities || [];
-
-  function getR() {
-    var W = canvas.offsetWidth, H = canvas.offsetHeight;
-    return Math.min(W, H) * (cfg.diameterVmin || 80) / 200;
-  }
-
-  function frame(ts) {
-    if (lastT === null) lastT = ts;
-    var dt = Math.min((ts - lastT) / 1000, 0.1);
-    lastT = ts;
-    if (!dragging) rY += rotSpeed * dt;
-
-    var W = canvas.offsetWidth, H = canvas.offsetHeight;
-    canvas.width = W; canvas.height = H;
-    var R  = Math.min(W, H) * (cfg.diameterVmin || 80) / 200;
-    var CX = W / 2, CY = H / 2;
-
-    ctx.clearRect(0, 0, W, H);
-
-    // Globe disc background
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(CX, CY, R, 0, Math.PI * 2);
-    ctx.fillStyle = cfg.bg || '#0A0F2E';
-    ctx.fill();
-    ctx.clip();
-
-    // Continents
-    ctx.lineWidth   = cfg.strokeWidth || 1.5;
-    ctx.strokeStyle = hexToRgba(cfg.strokeColor || '#C4932A', cfg.strokeOpacity !== undefined ? cfg.strokeOpacity : 0.5);
-    ctx.fillStyle   = cfg.fillColor || 'rgba(26,31,94,0.6)';
-
-    continents.forEach(function(poly) {
-      var cp = project3D(poly.clat, poly.clon, rY, rX);
-      if (cp.z < -0.1) return;
-      ctx.beginPath();
-      var started = false;
-      poly.coords.forEach(function(pt) {
-        var p = project3D(pt[1], pt[0], rY, rX);
-        if (p.z < 0) return;
-        var sx = CX + p.sx * R;
-        var sy = CY - p.sy * R;
-        if (!started) { ctx.moveTo(sx, sy); started = true; }
-        else            ctx.lineTo(sx, sy);
-      });
-      if (started) { ctx.closePath(); ctx.fill(); ctx.stroke(); }
-    });
-
-    // City dots
-    ctx.fillStyle = hexToRgba(cfg.dotColor || '#C4932A', cfg.dotOpacity !== undefined ? cfg.dotOpacity : 0.6);
-    cities.forEach(function(c) {
-      var p = project3D(c[0], c[1], rY, rX);
-      if (p.z < 0.05) return;
-      ctx.beginPath();
-      ctx.arc(CX + p.sx * R, CY - p.sy * R, cfg.dotRadius || 3, 0, Math.PI * 2);
-      ctx.fill();
-    });
-
-    ctx.restore();
-
-    // Outline ring
-    ctx.beginPath();
-    ctx.arc(CX, CY, R, 0, Math.PI * 2);
-    ctx.strokeStyle = hexToRgba(cfg.strokeColor || '#C4932A', (cfg.strokeOpacity || 0.5) * 0.5);
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    requestAnimationFrame(frame);
-  }
-
-  if (cfg.interactive) {
-    canvas.style.cursor = 'grab';
-    canvas.addEventListener('mousedown', function(e){
-      dragging = true; lastMX = e.clientX; lastMY = e.clientY;
-      canvas.style.cursor = 'grabbing';
-    });
-    window.addEventListener('mouseup', function(){
-      dragging = false; canvas.style.cursor = 'grab';
-    });
-    window.addEventListener('mousemove', function(e){
-      if (!dragging) return;
-      var R = getR();
-      rY += (e.clientX - lastMX) / R;
-      rX += (e.clientY - lastMY) / R;
-      rX = Math.max(-1.3, Math.min(1.3, rX));
-      lastMX = e.clientX; lastMY = e.clientY;
-    });
-    canvas.addEventListener('touchstart', function(e){
-      if (e.touches.length === 1) { dragging=true; lastMX=e.touches[0].clientX; lastMY=e.touches[0].clientY; }
-    }, {passive:true});
-    window.addEventListener('touchend', function(){ dragging=false; });
-    window.addEventListener('touchmove', function(e){
-      if (!dragging || e.touches.length !== 1) return;
-      var R = getR();
-      rY += (e.touches[0].clientX - lastMX) / R;
-      rX += (e.touches[0].clientY - lastMY) / R;
-      rX = Math.max(-1.3, Math.min(1.3, rX));
-      lastMX = e.touches[0].clientX; lastMY = e.touches[0].clientY;
-    }, {passive:true});
-  }
-
-  requestAnimationFrame(frame);
-}
-
-/* ══════════════ CITY LIST ══════════════ */
-var CITIES = [
-  [51.5,-0.1],[40.7,-74.0],[55.7,37.6],[39.9,116.4],
-  [28.6,77.2],[30.0,31.2],[41.9,12.5],[41.0,28.9],
-  [37.9,23.7],[33.3,44.4],[36.8,10.2],[31.2,29.9],[39.7,66.9]
-];
-
-/* ══════════════ HERO GLOBE ══════════════ */
-makeGlobe({
-  canvas:        document.getElementById('hero-globe-canvas'),
-  bg:            '#0A0F2E',
-  fillColor:     'rgba(26,31,94,0.6)',
-  strokeColor:   '#C4932A',
-  strokeOpacity: 0.5,
-  strokeWidth:   1.5,
-  dotColor:      '#C4932A',
-  dotOpacity:    0.6,
-  dotRadius:     3,
-  diameterVmin:  80,
-  rotSpeed:      90,
-  tilt:          0.25,
-  interactive:   true,
-  cities:        CITIES
-});
-
-/* ══════════════ HISTORY PANEL GLOBE ══════════════ */
-makeGlobe({
-  canvas:        document.getElementById('hist-panel-globe'),
-  bg:            '#0D0B08',
-  fillColor:     'rgba(20,12,4,0.7)',
-  strokeColor:   '#C4932A',
-  strokeOpacity: 0.4,
-  strokeWidth:   1.5,
-  dotColor:      '#C4932A',
-  dotOpacity:    0.5,
-  dotRadius:     3,
-  diameterVmin:  85,
-  rotSpeed:      90,
-  tilt:          0.25,
-  interactive:   false,
-  cities:        CITIES
-});
-
-/* ══════════════ WEAPONS ANIMATION ══════════════ */
-(function(){
-  var wc  = document.getElementById('hist-panel-weapons');
-  var ctx = wc.getContext('2d');
-  var W, H;
-  var pool  = [];
-  var lastT = null;
-  var GOLD  = '#C4932A';
-  var ALPHA = 0.09;
-
-  function r(a,b){ return a + Math.random()*(b-a); }
-
-  function resizeW(){
-    W = wc.offsetWidth; H = wc.offsetHeight;
-    wc.width = W; wc.height = H;
-  }
-
-  /* ── Spawn helpers ── */
-  function spawnSpear(){
-    return { type:'spear', x:-60, y:r(H*0.2,H*0.8), speed:r(32,60) };
-  }
-  function spawnTank(){
-    return { type:'tank', x:-100, y:r(H*0.5,H*0.85), speed:r(28,45) };
-  }
-  function spawnCannon(){
-    return {
-      type:'cannon',
-      x:-60, y:r(H*0.4,H*0.75), speed:r(20,32),
-      bx:-60, by:0, vx:r(80,130), vy:-r(70,110), gravity:200,
-      initialized:false
-    };
-  }
-  function spawnMissile(){
-    return { type:'missile', x:r(W*0.15,W*0.85), y:H+60, speed:r(50,85) };
-  }
-  function spawnMushroom(){
-    return { type:'mushroom', x:r(W*0.2,W*0.8), y:H*0.85, phase:0, maxR:r(60,100), wait:0 };
-  }
-
-  var spawners = [spawnSpear, spawnTank, spawnCannon, spawnMissile, spawnMushroom];
-
-  function maybeSpawn(){
-    if (pool.length < 4) {
-      var fn = spawners[Math.floor(Math.random()*spawners.length)];
-      pool.push(fn());
-    }
-  }
-
-  /* ── Draw routines ── */
-  function setStyle(){
-    ctx.strokeStyle = GOLD;
-    ctx.lineWidth   = 1.5;
-    ctx.globalAlpha = ALPHA;
-  }
-
-  function drawSpear(w){
-    setStyle();
-    ctx.beginPath(); ctx.moveTo(w.x-40,w.y); ctx.lineTo(w.x+12,w.y); ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(w.x+12,w.y);
-    ctx.lineTo(w.x+32,w.y-9);
-    ctx.lineTo(w.x+38,w.y);
-    ctx.lineTo(w.x+32,w.y+9);
-    ctx.closePath(); ctx.stroke();
-  }
-
-  function drawTank(w){
-    setStyle();
-    var x=w.x, y=w.y;
-    ctx.strokeRect(x-35,y-12,70,24);   // body
-    ctx.strokeRect(x-14,y-26,28,16);   // turret
-    ctx.beginPath(); ctx.moveTo(x+14,y-18); ctx.lineTo(x+44,y-18); ctx.stroke(); // barrel
-    for(var i=-20;i<=20;i+=10){         // wheels
-      ctx.beginPath(); ctx.arc(x+i,y+14,7,0,Math.PI*2); ctx.stroke();
-    }
-  }
-
-  function drawCannon(w, dt){
-    setStyle();
-    var x=w.x, y=w.y;
-    // carriage
-    ctx.beginPath(); ctx.moveTo(x-22,y+6); ctx.lineTo(x+22,y-8); ctx.stroke();
-    ctx.beginPath(); ctx.arc(x-10,y+16,10,0,Math.PI*2); ctx.stroke();
-    ctx.beginPath(); ctx.arc(x+10,y+16,10,0,Math.PI*2); ctx.stroke();
-    // cannon ball
-    if(!w.initialized){ w.bx=x+22; w.by=y-8; w.initialized=true; }
-    ctx.beginPath(); ctx.arc(w.bx,w.by,4,0,Math.PI*2); ctx.stroke();
-    w.bx += w.vx * dt;
-    w.by += w.vy * dt;
-    w.vy += w.gravity * dt;
-  }
-
-  function drawMissile(w){
-    setStyle();
-    var x=w.x, y=w.y;
-    // nose cone + body
-    ctx.beginPath();
-    ctx.moveTo(x, y-28);
-    ctx.lineTo(x-7,y+10);
-    ctx.lineTo(x+7,y+10);
-    ctx.closePath(); ctx.stroke();
-    // fins
-    ctx.beginPath(); ctx.moveTo(x-7,y+6);  ctx.lineTo(x-18,y+24); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(x+7,y+6);  ctx.lineTo(x+18,y+24); ctx.stroke();
-    // exhaust
-    ctx.beginPath(); ctx.moveTo(x-3,y+12); ctx.lineTo(x,y+26); ctx.lineTo(x+3,y+12); ctx.stroke();
-  }
-
-  function drawMushroom(w){
-    var fadeAlpha = ALPHA * (1 - w.phase * 0.7);
-    ctx.globalAlpha = Math.max(0, fadeAlpha);
-    ctx.strokeStyle = GOLD; ctx.lineWidth = 1.5;
-    var x=w.x, y=w.y;
-    var stemH = w.maxR * 1.4 * w.phase;
-    var capR  = w.maxR * w.phase;
-    // stem
-    ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x, y-stemH); ctx.stroke();
-    // cap dome
-    ctx.beginPath(); ctx.ellipse(x, y-stemH, capR, capR*0.6, 0, 0, Math.PI*2); ctx.stroke();
-    // skirt ring
-    ctx.beginPath(); ctx.ellipse(x, y-stemH*0.35, capR*0.55, capR*0.18, 0, 0, Math.PI*2); ctx.stroke();
-    ctx.globalAlpha = 1;
-  }
-
-  /* ── Main loop ── */
-  function wframe(ts){
-    if (lastT===null) lastT = ts;
-    var dt = Math.min((ts-lastT)/1000, 0.1);
-    lastT = ts;
-
-    resizeW();
-    ctx.clearRect(0,0,W,H);
-    ctx.globalAlpha = 1;
-
-    maybeSpawn();
-
-    pool = pool.filter(function(w){
-      switch(w.type){
-        case 'spear':
-          drawSpear(w);
-          w.x += w.speed * dt;
-          return w.x < W+80;
-
-        case 'tank':
-          drawTank(w);
-          w.x += w.speed * dt;
-          return w.x < W+120;
-
-        case 'cannon':
-          drawCannon(w, dt);
-          w.x += w.speed * dt;
-          if(w.bx > W+20 || w.by > H+20) return false;
-          return w.x < W+80;
-
-        case 'missile':
-          drawMissile(w);
-          w.y -= w.speed * dt;
-          return w.y > -80;
-
-        case 'mushroom':
-          w.phase = Math.min(w.phase + dt * 0.45, 1);
-          drawMushroom(w);
-          if(w.phase >= 1){ w.wait += dt; if(w.wait > 1.5) return false; }
-          return true;
+  <!-- Keyboard accessibility for history panel -->
+  <script>
+    (function () {
+      var panel = document.getElementById('history-panel');
+      if (panel) {
+        panel.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.location.href = 'history.html';
+          }
+        });
       }
-      return false;
-    });
+    })();
+  </script>
 
-    requestAnimationFrame(wframe);
-  }
-
-  requestAnimationFrame(wframe);
-
-  /* Panel click → history */
-  document.getElementById('history-panel').addEventListener('click', function(){
-    window.location.href = 'history.html';
-  });
-})();
-
-})();
-</script>
 </body>
 </html>
