@@ -8,25 +8,358 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <style>
+    /* ─── RESET ──────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { background: #0A0F2E; color: #F0EDE6; font-family: 'Source Serif 4', Georgia, serif; overflow-x: hidden; min-height: 100vh; }
+    a { text-decoration: none; color: inherit; }
+    button { background: none; border: none; cursor: pointer; padding: 0; font: inherit; }
+
+    /* ─── GLOBE CANVAS ───────────────────────────────── */
+    #globe-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.22;
+    }
+
+    /* ─── STACKING ───────────────────────────────────── */
+    .navbar,
+    .main-hero,
+    .about-section,
+    .history-panel,
+    .site-footer { position: relative; z-index: 10; }
+    .navbar { z-index: 1000; }
+
+    /* ─── NAVBAR ─────────────────────────────────────── */
+    .navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: #0A0F2E;          /* never changes */
+      height: 68px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: #C4932A;
+      letter-spacing: 0.35em;
+    }
+    .nav-right { display: flex; align-items: center; gap: 0; }
+    .nav-icons { display: flex; align-items: center; gap: 16px; }
+
+    /* Icon + popup */
+    .icon-wrap { position: relative; }
+    .icon-btn {
+      display: flex;
+      align-items: center;
+      color: rgba(240,237,230,0.65);
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .icon-btn:hover { color: #C4932A; }
+    .popup {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      min-width: 128px;
+      background: #0A0A0A;
+      border: 1px solid #C4932A;
+      z-index: 2000;
+    }
+    .popup.open { display: block; }
+    .popup a {
+      display: block;
+      padding: 10px 18px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #F0EDE6;
+      letter-spacing: 0.07em;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .popup a:hover { color: #C4932A; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: #F0EDE6;
+      transition: opacity 0.2s;
+    }
+
+    /* ─── MOBILE OVERLAY ─────────────────────────────── */
+    .mob-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: #0A0F2E;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-close {
+      position: absolute;
+      top: 22px; right: 30px;
+      font-family: 'DM Mono', monospace;
+      font-size: 30px;
+      color: rgba(240,237,230,0.55);
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .mob-close:hover { color: #C4932A; }
+    .mob-nav {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+    .mob-nav a {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 36px;
+      color: #F0EDE6;
+      letter-spacing: 0.12em;
+      transition: color 0.2s;
+    }
+    .mob-nav a:hover { color: #C4932A; }
+    .mob-social { display: flex; gap: 36px; }
+    .mob-social-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .mob-social-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px;
+      color: #C4932A;
+      letter-spacing: 0.25em;
+      margin-bottom: 2px;
+    }
+    .mob-social-group a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: rgba(240,237,230,0.48);
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .mob-social-group a:hover { color: #F0EDE6; }
+
+    /* ─── HERO ───────────────────────────────────────── */
+    .main-hero {
+      min-height: 100vh;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 108px 40px 80px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: #C4932A;
+      letter-spacing: 0.4em;
+      margin-bottom: 28px;
+    }
+    .hero-etw {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(72px, 11vw, 130px);
+      color: #F0EDE6;
+      letter-spacing: 0.25em;
+      line-height: 1;
+      margin-bottom: 28px;
+    }
+    .gold-rule {
+      width: 160px;
+      height: 1.5px;
+      background: #C4932A;
+      border: none;
+      margin-bottom: 28px;
+      flex-shrink: 0;
+    }
+    .hero-tagline {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-style: italic;
+      font-size: 17px;
+      color: #F0EDE6;
+      max-width: 460px;
+      line-height: 1.9;
+    }
+
+    /* ─── ABOUT SECTION ──────────────────────────────── */
+    .about-section {
+      background: #0A0F2E;
+      padding: 120px 60px;
+    }
+    .about-inner { max-width: 780px; margin: 0 auto; }
+    .section-eyebrow {
+      display: block;
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: #C4932A;
+      letter-spacing: 0.4em;
+      margin-bottom: 40px;
+    }
+    .section-rule {
+      width: 80px;
+      height: 1px;
+      background: #C4932A;
+      border: none;
+      margin-bottom: 50px;
+    }
+    .about-section p {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 17px;
+      color: #F0EDE6;
+      line-height: 1.95;
+      margin-bottom: 28px;
+    }
+    .about-section p:last-child { margin-bottom: 0; }
+
+    /* ─── HISTORY PANEL ──────────────────────────────── */
+    .history-panel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+      width: 100%;
+      background: #0D0B08;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      text-align: center;
+      transition: box-shadow 0.4s ease, filter 0.4s ease;
+    }
+    .history-panel:hover {
+      box-shadow: inset 0 0 0 1px #C4932A, 0 0 80px rgba(196,147,42,0.07);
+      filter: brightness(1.09);
+    }
+    .history-panel__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 80px 40px;
+    }
+    .history-panel__eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: #C4932A;
+      letter-spacing: 0.4em;
+      margin-bottom: 20px;
+    }
+    .history-panel__rule {
+      width: 80px;
+      height: 1px;
+      background: #C4932A;
+      border: none;
+      margin-bottom: 22px;
+    }
+    .history-panel__title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(56px, 7vw, 80px);
+      color: #F0EDE6;
+      letter-spacing: 0.2em;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .history-panel__tagline {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-style: italic;
+      font-size: 16px;
+      color: #C4932A;
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+    }
+    .history-panel__cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: #C4932A;
+      letter-spacing: 0.3em;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    .site-footer {
+      background: #0A0F2E;
+      padding: 40px 60px;
+      border-top: 1px solid rgba(196,147,42,0.3);
+      text-align: center;
+    }
+    .footer-copy {
+      font-family: 'Source Serif 4', Georgia, serif;
+      font-size: 13px;
+      color: rgba(240,237,230,0.42);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-icons  { display: none; }
+      .hamburger  { display: flex; }
+      .nav-wrap   { padding: 0 24px; }
+
+      .main-hero  { padding: 90px 24px 60px; }
+      .hero-etw   { font-size: 72px; }
+
+      .about-section { padding: 80px 24px; }
+
+      .history-panel__title  { font-size: clamp(48px, 12vw, 64px); }
+      .history-panel__inner  { padding: 64px 32px; }
+
+      .site-footer { padding: 32px 24px; }
+    }
+    @media (max-width: 480px) {
+      .hero-etw              { font-size: 58px; }
+      .history-panel__title  { font-size: 48px; }
+      .mob-social            { flex-direction: column; align-items: center; }
+    }
+  </style>
 </head>
 
-<body class="page-main">
+<body>
 
-  <!-- ░░ GLOBE CANVAS — z-index 0, fills viewport ░░ -->
+  <!-- ░░ GLOBE CANVAS ░░ -->
   <canvas id="globe-canvas" aria-hidden="true"></canvas>
 
-  <!-- ══ NAVBAR ══════════════════════════════════════════ -->
-  <nav class="navbar" id="navbar" aria-label="Main navigation">
+  <!-- ══ NAVBAR ══ -->
+  <nav class="navbar" aria-label="Main navigation">
     <div class="nav-wrap">
       <a href="index.html" class="nav-brand" aria-label="ETW Home">E T W</a>
 
       <div class="nav-right">
-        <a href="history.html" class="nav-link">History</a>
-        <a href="science.html" class="nav-link">Science</a>
-        <a href="about.html"   class="nav-link">About</a>
-
         <div class="nav-icons">
+
           <!-- YouTube -->
           <div class="icon-wrap">
             <button class="icon-btn" data-popup="yt" aria-label="YouTube channels">
@@ -34,10 +367,9 @@
                 <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
             </button>
-            <div class="popup">
+            <div class="popup" id="popup-yt">
               <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
               <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
-              <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
             </div>
           </div>
 
@@ -48,26 +380,12 @@
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
               </svg>
             </button>
-            <div class="popup">
+            <div class="popup" id="popup-ig">
               <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
               <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
-              <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
             </div>
           </div>
 
-          <!-- X -->
-          <div class="icon-wrap">
-            <button class="icon-btn" data-popup="x" aria-label="X profiles">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </button>
-            <div class="popup">
-              <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
-              <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
-              <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
-            </div>
-          </div>
         </div><!-- /nav-icons -->
 
         <button class="hamburger" id="hamburger" aria-label="Open menu">
@@ -77,168 +395,320 @@
     </div>
   </nav>
 
-  <!-- ══ MOBILE OVERLAY ══════════════════════════════════ -->
+  <!-- ══ MOBILE OVERLAY ══ -->
   <div class="mob-menu" id="mob-menu" role="dialog" aria-modal="true" aria-label="Navigation">
     <button class="mob-close" id="mob-close" aria-label="Close menu">×</button>
-    <nav class="mob-links">
+    <nav class="mob-nav">
       <a href="history.html">History</a>
-      <a href="science.html">Science</a>
-      <a href="about.html">About</a>
     </nav>
     <div class="mob-social">
       <div class="mob-social-group">
         <span class="mob-social-label">YOUTUBE</span>
         <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
         <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
-        <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
       </div>
       <div class="mob-social-group">
         <span class="mob-social-label">INSTAGRAM</span>
         <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
         <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
-        <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
-      </div>
-      <div class="mob-social-group">
-        <span class="mob-social-label">X</span>
-        <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
-        <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
-        <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
       </div>
     </div>
   </div>
 
-  <!-- ══ HERO ════════════════════════════════════════════ -->
+  <!-- ══ SECTION 1 — HERO ══ -->
   <section class="main-hero">
     <p class="hero-eyebrow">EXPLAINING THE WORLD</p>
     <h1 class="hero-etw">E T W</h1>
-    <div class="gold-rule" style="width:160px;" role="presentation"></div>
+    <hr class="gold-rule">
     <p class="hero-tagline">
-      We talk about what is valuable —<br>
-      not what is popular.
+      Learning from history. Creating in the present.<br>
+      Preparing for the future.
     </p>
   </section>
 
-  <!-- ══ CHANNEL PANELS ════════════════════════════════ -->
-  <div class="channel-panels">
+  <!-- ══ SECTION 2 — ABOUT ══ -->
+  <section class="about-section">
+    <div class="about-inner">
+      <span class="section-eyebrow">ABOUT</span>
+      <hr class="section-rule">
+      <p>Explaining The World is an independent media brand currently operating in history, with plans to expand into science in the near future. We produce content for a global English-speaking audience. As demand grows, we aim to reach every major language.</p>
+      <p>We do not focus on speed. We focus on quality. Every video takes time because we read the books, study the sources, and extract only what is genuinely worth your attention. That is the standard we hold ourselves to.</p>
+    </div>
+  </section>
 
-    <!-- History — clickable -->
-    <a href="history.html" class="channel-panel channel-panel--history" aria-label="Enter History">
-      <p class="cpanel-eyebrow">ETW</p>
-      <hr class="cpanel-rule cpanel-rule--gold">
-      <h2 class="cpanel-title">HISTORY</h2>
-      <p class="cpanel-tagline">
-        Every empire fell.<br>Every war started.<br>Every leader chose.
+  <!-- ══ SECTION 3 — HISTORY PANEL ══ -->
+  <a href="history.html" class="history-panel" aria-label="Explore ETW History">
+    <div class="history-panel__inner">
+      <p class="history-panel__eyebrow">ETW</p>
+      <hr class="history-panel__rule">
+      <h2 class="history-panel__title">HISTORY</h2>
+      <p class="history-panel__tagline">
+        Lessons from every empire and its leader.<br>
+        Lessons from history that are valuable today.
       </p>
-      <p class="cpanel-cta">ENTER →</p>
-    </a>
-
-    <!-- Science — not clickable, email form -->
-    <div class="channel-panel channel-panel--science">
-      <p class="cpanel-badge">LAUNCHING SOON</p>
-      <p class="cpanel-eyebrow cpanel-eyebrow--green">ETW</p>
-      <hr class="cpanel-rule cpanel-rule--green">
-      <h2 class="cpanel-title">SCIENCE</h2>
-      <p class="cpanel-tagline cpanel-tagline--green">
-        How the world behaves.<br>How humans respond to it.
-      </p>
-
-      <form class="cpanel-notify" id="idx-sci-notify">
-        <span class="cpanel-notify__label">Get Notified on Launch</span>
-        <div class="cpanel-notify__row">
-          <input type="email" class="cpanel-notify__input" placeholder="your@email.com" required>
-          <button type="submit" class="cpanel-notify__btn">Notify Me</button>
-        </div>
-        <span class="cpanel-notify__ok" id="idx-sci-ok">You'll be the first to know.</span>
-      </form>
+      <p class="history-panel__cta">EXPLORE →</p>
     </div>
+  </a>
 
-  </div>
-
-  <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="footer footer-main">
-    <div class="footer-grid">
-
-      <div class="footer-brand">
-        <a href="index.html" class="footer-etw">E T W</a>
-        <p class="footer-sub">Explaining The World</p>
-      </div>
-
-      <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="history.html">History</a>
-        <a href="science.html">Science</a>
-        <a href="about.html">About</a>
-      </nav>
-
-      <div class="footer-icons">
-        <div class="icon-wrap">
-          <button class="icon-btn" data-popup="fyt" aria-label="YouTube channels">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-          </button>
-          <div class="popup">
-            <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
-            <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
-            <a href="https://youtube.com/@etw_science"  target="_blank" rel="noopener">Science</a>
-          </div>
-        </div>
-
-        <div class="icon-wrap">
-          <button class="icon-btn" data-popup="fig" aria-label="Instagram profiles">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-            </svg>
-          </button>
-          <div class="popup">
-            <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
-            <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
-            <a href="https://www.instagram.com/etw_science"   target="_blank" rel="noopener">Science</a>
-          </div>
-        </div>
-
-        <div class="icon-wrap">
-          <button class="icon-btn" data-popup="fx" aria-label="X profiles">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.26 5.632zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-            </svg>
-          </button>
-          <div class="popup">
-            <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
-            <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
-            <a href="https://x.com/etw_science"     target="_blank" rel="noopener">Science</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 Explaining The World. All rights reserved.</p>
-    </div>
+  <!-- ══ SECTION 4 — FOOTER ══ -->
+  <footer class="site-footer">
+    <p class="footer-copy">© 2026 Explaining The World. All Rights Reserved.</p>
   </footer>
 
-  <script src="assets/js/main.js"></script>
   <script>
-  /* Science panel email form on index.html */
   (function () {
-    var form = document.getElementById('idx-sci-notify');
-    if (!form) return;
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var email = form.querySelector('input[type="email"]').value;
-      var fd = new FormData();
-      fd.append('access_key', 'cd486e45-9e46-494d-8a5d-94fca8325f0a');
-      fd.append('subject', 'ETW Science Launch Notification');
-      fd.append('email', email);
-      fetch('https://api.web3forms.com/submit', { method: 'POST', body: fd })
-        .then(function (r) { return r.json(); })
-        .then(function (r) {
-          if (r.success) {
-            form.querySelector('.cpanel-notify__row').style.display = 'none';
-            form.querySelector('.cpanel-notify__label').style.display = 'none';
-            document.getElementById('idx-sci-ok').style.display = 'block';
-          }
-        }).catch(function () {});
+    'use strict';
+
+    /* ════════════════════════════════════════
+       POPUP SYSTEM
+    ════════════════════════════════════════ */
+    function closeAllPopups() {
+      document.querySelectorAll('.popup').forEach(function (p) {
+        p.classList.remove('open');
+      });
+    }
+    document.querySelectorAll('.icon-btn[data-popup]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var key  = btn.dataset.popup;
+        var pop  = document.getElementById('popup-' + key);
+        if (!pop) return;
+        var wasOpen = pop.classList.contains('open');
+        closeAllPopups();
+        if (!wasOpen) pop.classList.add('open');
+      });
     });
+    document.addEventListener('click', closeAllPopups);
+    document.querySelectorAll('.popup').forEach(function (p) {
+      p.addEventListener('click', function (e) { e.stopPropagation(); });
+    });
+
+    /* ════════════════════════════════════════
+       HAMBURGER / MOBILE OVERLAY
+    ════════════════════════════════════════ */
+    var hamburger = document.getElementById('hamburger');
+    var mobMenu   = document.getElementById('mob-menu');
+    var mobClose  = document.getElementById('mob-close');
+
+    if (hamburger) hamburger.addEventListener('click', function () {
+      mobMenu.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+    if (mobClose) mobClose.addEventListener('click', function () {
+      mobMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && mobMenu) {
+        mobMenu.classList.remove('open');
+        document.body.style.overflow = '';
+        closeAllPopups();
+      }
+    });
+    if (mobMenu) {
+      mobMenu.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () {
+          mobMenu.classList.remove('open');
+          document.body.style.overflow = '';
+        });
+      });
+    }
+
+    /* ════════════════════════════════════════
+       GLOBE — Canvas2D orthographic projection
+    ════════════════════════════════════════ */
+    var canvas = document.getElementById('globe-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var W, H, CX, CY, R;
+    var autoRotY  = 0;
+    var dragRotY  = 0;
+    var dragRotX  = 0;
+    var tiltBase  = 0.22;      /* ~12° north tilt */
+    var dragging  = false;
+    var lastMX = 0, lastMY = 0;
+    var prevTs = null;
+
+    /* ── Continent polygons [lat, lon] ── */
+    var CONTINENTS = [
+      /* Africa */
+      [[37,-6],[38,10],[33,32],[22,38],[12,44],[5,42],[-1,41],[-11,40],
+       [-26,33],[-35,20],[-34,18],[-29,17],[-18,12],[-4,10],[5,2],
+       [5,-8],[5,-16],[15,-17],[22,-17],[35,-5]],
+      /* Europe */
+      [[71,26],[65,-5],[57,-10],[51,-10],[50,-4],[44,-8],[36,-5],
+       [36,28],[41,30],[43,41],[47,40],[47,50],[55,50],[60,55],[68,35]],
+      /* Russia / North Asia */
+      [[68,35],[60,55],[55,50],[47,50],[40,55],[40,70],[50,80],
+       [55,90],[55,110],[55,122],[48,140],[50,155],[64,170],
+       [73,163],[73,132],[78,102],[74,80],[73,55]],
+      /* South & SE Asia */
+      [[47,50],[47,40],[43,41],[36,28],[29,35],[22,38],[15,50],
+       [22,57],[8,77],[22,68],[5,99],[1,103],[10,104],[22,114],
+       [30,122],[44,135],[48,140],[55,122],[55,90],[50,80],[40,70],[40,55]],
+      /* North America */
+      [[72,-73],[71,-83],[71,-155],[60,-162],[55,-130],[48,-123],
+       [32,-117],[23,-110],[15,-87],[8,-77],[11,-72],[18,-72],
+       [25,-80],[35,-76],[45,-67],[47,-53],[55,-55],[62,-64]],
+      /* South America */
+      [[8,-77],[11,-72],[12,-62],[10,-60],[5,-52],[-5,-35],
+       [-15,-38],[-23,-43],[-35,-57],[-53,-67],[-55,-65],
+       [-44,-65],[-30,-50],[-10,-75],[0,-78],[5,-77]],
+      /* Australia */
+      [[-15,130],[-18,140],[-25,153],[-38,147],[-39,144],
+       [-35,137],[-35,117],[-25,113],[-20,119]],
+      /* Greenland */
+      [[83,-44],[83,-15],[72,-20],[63,-50],[66,-56],[70,-55],[76,-55]],
+      /* Antarctica (simplified ring) */
+      [[-70,0],[-68,45],[-65,90],[-68,135],[-70,180],
+       [-68,-135],[-65,-90],[-68,-45],[-70,0]],
+    ];
+
+    /* ── City dots [lat, lon] ── */
+    var CITIES = [
+      [51.5,-0.1],   /* London     */
+      [40.7,-74],    /* New York   */
+      [55.7,37.6],   /* Moscow     */
+      [39.9,116.4],  /* Beijing    */
+      [28.6,77.2],   /* Delhi      */
+      [30,31.2],     /* Cairo      */
+      [41.9,12.5],   /* Rome       */
+      [41,29],       /* Istanbul   */
+      [37.9,23.7],   /* Athens     */
+      [33.3,44.4],   /* Baghdad    */
+    ];
+
+    /* ── Projection helpers ── */
+    function geo3D(lat, lon, rY, rX) {
+      var phi = lat * Math.PI / 180;
+      var lam = lon * Math.PI / 180;
+      var x = Math.cos(phi) * Math.sin(lam);
+      var y = Math.sin(phi);
+      var z = Math.cos(phi) * Math.cos(lam);
+      /* Y-rotation (spin) */
+      var x1 =  x * Math.cos(rY) + z * Math.sin(rY);
+      var z1 = -x * Math.sin(rY) + z * Math.cos(rY);
+      x = x1; z = z1;
+      /* X-rotation (tilt) */
+      var y2 = y * Math.cos(rX) - z * Math.sin(rX);
+      var z2 = y * Math.sin(rX) + z * Math.cos(rX);
+      return { x: x, y: y2, z: z2 };
+    }
+
+    function screenPt(lat, lon, rY, rX) {
+      var p = geo3D(lat, lon, rY, rX);
+      return { sx: CX + p.x * R, sy: CY - p.y * R, z: p.z };
+    }
+
+    function centroid(pts) {
+      var la = 0, lo = 0;
+      for (var i = 0; i < pts.length; i++) { la += pts[i][0]; lo += pts[i][1]; }
+      return [la / pts.length, lo / pts.length];
+    }
+
+    function drawContinent(pts, rY, rX) {
+      var c = centroid(pts);
+      var cp = geo3D(c[0], c[1], rY, rX);
+      if (cp.z < -0.15) return;
+
+      ctx.beginPath();
+      var started = false;
+      for (var j = 0; j < pts.length; j++) {
+        var p = screenPt(pts[j][0], pts[j][1], rY, rX);
+        if (p.z > 0) {
+          if (!started) { ctx.moveTo(p.sx, p.sy); started = true; }
+          else           { ctx.lineTo(p.sx, p.sy); }
+        } else {
+          started = false;
+        }
+      }
+      if (cp.z > 0.5) ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    /* ── Main render loop ── */
+    function render(ts) {
+      if (prevTs !== null) {
+        var dt = Math.min((ts - prevTs) / 1000, 0.1);
+        autoRotY += (dt / 90) * Math.PI * 2;   /* 1 rev per 90s */
+      }
+      prevTs = ts;
+
+      ctx.clearRect(0, 0, W, H);
+
+      var rY = autoRotY + dragRotY;
+      var rX = tiltBase + dragRotX;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(CX, CY, R, 0, Math.PI * 2);
+      ctx.clip();
+
+      ctx.fillStyle   = 'rgba(10,15,46,0.9)';
+      ctx.strokeStyle = 'rgba(196,147,42,0.2)';
+      ctx.lineWidth   = 0.8;
+
+      for (var k = 0; k < CONTINENTS.length; k++) {
+        drawContinent(CONTINENTS[k], rY, rX);
+      }
+      ctx.restore();
+
+      /* City dots */
+      for (var ci = 0; ci < CITIES.length; ci++) {
+        var cd = screenPt(CITIES[ci][0], CITIES[ci][1], rY, rX);
+        if (cd.z < 0) continue;
+        ctx.beginPath();
+        ctx.arc(cd.sx, cd.sy, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(196,147,42,0.3)';
+        ctx.fill();
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    /* ── Resize ── */
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      CX = W / 2;
+      CY = H / 2;
+      R  = Math.min(W, H) * 0.425;   /* 85vmin / 2 */
+    }
+
+    /* ── Mouse drag (on document so it works through hero text) ── */
+    document.addEventListener('mousedown', function (e) {
+      dragging = true; lastMX = e.clientX; lastMY = e.clientY;
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!dragging) return;
+      dragRotY += (e.clientX - lastMX) * 0.005;
+      dragRotX -= (e.clientY - lastMY) * 0.005;
+      dragRotX  = Math.max(-1.3, Math.min(1.3, dragRotX));
+      lastMX = e.clientX; lastMY = e.clientY;
+    });
+    document.addEventListener('mouseup', function () { dragging = false; });
+
+    /* ── Touch drag ── */
+    document.addEventListener('touchstart', function (e) {
+      dragging = true;
+      lastMX = e.touches[0].clientX;
+      lastMY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (!dragging) return;
+      dragRotY += (e.touches[0].clientX - lastMX) * 0.005;
+      dragRotX -= (e.touches[0].clientY - lastMY) * 0.005;
+      dragRotX  = Math.max(-1.3, Math.min(1.3, dragRotX));
+      lastMX = e.touches[0].clientX;
+      lastMY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', function () { dragging = false; });
+
+    window.addEventListener('resize', resize);
+    resize();
+    requestAnimationFrame(render);
+
   })();
   </script>
 </body>
