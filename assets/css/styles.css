@@ -1,3 +1,6 @@
+body { background: #0A0F2E !important; }
+* { box-sizing: border-box; }
+
 /* ============================================================
    ETW — styles.css
    Background: #0A0F2E. Navbar: transparent always.

@@ -160,7 +160,7 @@
 
     /* Draw continents */
     gctx.lineWidth   = 1;
-    gctx.strokeStyle = 'rgba(196,147,42,0.45)';
+    gctx.strokeStyle = '#C4932A';
     gctx.fillStyle   = 'rgba(26,31,94,0.5)';
 
     CONTINENTS.forEach(function (cont) {
