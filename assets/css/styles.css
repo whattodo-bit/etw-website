@@ -1,5 +1,9 @@
-body { background: #0A0F2E !important; }
-* { box-sizing: border-box; }
+html, body {
+  background-color: #0A0F2E !important;
+  color: #F0EDE6 !important;
+  margin: 0;
+  padding: 0;
+}
 
 /* ============================================================
    ETW — styles.css
