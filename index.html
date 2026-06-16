@@ -108,28 +108,33 @@ html,body{background:#0A0F2E;color:#F0EDE6;font-family:'Source Serif 4',serif;ov
   text-shadow:0 1px 12px rgba(10,15,46,0.95);
 }
 .body-p+.body-p{margin-top:24px}
-.about-links{
-  margin-top:52px;display:flex;flex-direction:column;align-items:flex-start;
+/* ── About strip ── */
+.about-strip{
+  margin-left:-60px;margin-right:-60px;margin-top:60px;
+  padding:28px 60px;
+  background:rgba(196,147,42,0.08);
+  border-top:1px solid rgba(196,147,42,0.2);
+  border-bottom:1px solid rgba(196,147,42,0.2);
+  display:flex;justify-content:center;gap:60px;align-items:center;
 }
-.about-links a{
+.strip-link{
   font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;
-  color:#C4932A;text-decoration:none;text-transform:uppercase;
-  padding:20px 0;border-bottom:1px solid transparent;transition:border-color 0.2s;
+  color:rgba(240,237,230,0.5);text-decoration:none;text-transform:uppercase;
+  transition:color 0.3s;
 }
-.about-links a:hover{border-bottom-color:#C4932A}
+.strip-link:hover{color:#C4932A}
+
+/* ── HISTORY DIVIDER ── */
+.hist-divider{position:relative;z-index:10;height:2px;background:linear-gradient(to right,transparent,#C4932A,transparent)}
 
 /* ── HISTORY PANEL ── */
 #history-panel{
   position:relative;z-index:10;
-  width:100%;min-height:480px;overflow:hidden;
-  background:#0D0B08;cursor:pointer;
+  width:100%;min-height:480px;
+  background:rgba(13,11,8,0.85);cursor:pointer;
   transition:box-shadow 0.4s;
 }
 #history-panel:hover{box-shadow:inset 0 0 0 1px #C4932A}
-#civ-canvas{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:1;pointer-events:none;display:block;
-}
 .hist-inner{
   position:relative;z-index:10;
   text-align:center;padding:110px 60px;
@@ -177,6 +182,7 @@ footer{
   .hero-title{font-size:clamp(48px,14vw,96px)}
   #about{padding:90px 28px}
   .about-inner{max-width:100%}
+  .about-strip{margin-left:-28px;margin-right:-28px;gap:24px;padding:24px 20px;flex-wrap:wrap}
   .hist-inner{padding:80px 28px}
   footer{padding:28px 24px}
 }
@@ -231,22 +237,23 @@ footer{
     <div class="section-rule"></div>
     <p class="body-p">Explaining The World is an independent media brand currently operating in history, with plans to expand into science. We produce content for a global English-speaking audience.</p>
     <p class="body-p">We do not focus on speed. We focus on quality. Every video takes time because we read the books, study the sources, and extract only what is genuinely worth your attention.</p>
-    <nav class="about-links">
-      <a href="faq.html">FAQ</a>
-      <a href="collaboration.html">Collaboration</a>
-      <a href="legal.html">Legal</a>
-    </nav>
+  </div>
+  <div class="about-strip">
+    <a href="collaboration.html" class="strip-link">Collaboration</a>
+    <a href="legal.html" class="strip-link">Legal</a>
+    <a href="history.html" class="strip-link">Explore History &#x2192;</a>
   </div>
 </section>
 
+<div class="hist-divider"></div>
+
 <!-- ══ HISTORY PANEL ══ -->
 <section id="history-panel">
-  <canvas id="civ-canvas"></canvas>
   <div class="hist-inner">
     <p class="hist-eyebrow">E T W</p>
     <div class="hist-rule"></div>
     <h2 class="hist-title">HISTORY</h2>
-    <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only &mdash; power.<br>How it is taken. How it is held. How it is lost.</p>
+    <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only &mdash; power.</p>
     <span class="hist-cta">EXPLORE &#x2192;</span>
   </div>
 </section>
@@ -280,12 +287,6 @@ var CONTS = [
   { clat:45, clon:90,   pts:[[26,37],[36,37],[40,38],[44,37],[50,30],[56,25],[62,22],[72,22],[80,22],[90,22],[100,20],[105,12],[110,5],[120,5],[128,18],[130,20],[140,35],[142,46],[136,50],[132,55],[122,65],[112,72],[100,72],[90,72],[80,70],[70,68],[60,65],[55,58],[50,55],[44,55],[40,60],[36,55],[26,46],[26,37]] },
   { clat:-25, clon:135, pts:[[114,-22],[118,-20],[122,-18],[128,-15],[136,-12],[138,-14],[140,-17],[148,-20],[152,-24],[153,-28],[152,-32],[148,-38],[144,-38],[140,-36],[130,-33],[124,-32],[118,-28],[114,-26],[114,-22]] },
   { clat:-75, clon:0,   pts:[[0,-70],[45,-65],[90,-68],[135,-70],[180,-66],[225,-68],[270,-70],[315,-66],[360,-70]] }
-];
-
-/* City dots [lat, lon] */
-var CITIES = [
-  [51.5,-0.1],[40.7,-74],[55.7,37.6],[39.9,116.4],
-  [28.6,77.2],[30.1,31.2],[41.9,12.5],[41.0,28.9]
 ];
 
 /* Project lat/lon to screen coords */
@@ -323,10 +324,10 @@ function frame(ts) {
 
   ctx.clearRect(0,0,W,H);
 
-  /* Clip to globe ellipse */
+  /* Clip to circle — continents fade naturally at horizon */
   ctx.save();
   ctx.beginPath();
-  ctx.ellipse(CX,CY,RX,RY,0,0,Math.PI*2);
+  ctx.arc(CX,CY,curR,0,Math.PI*2);
   ctx.clip();
 
   /* Continents */
@@ -350,16 +351,6 @@ function frame(ts) {
       lastVis=vis;
     });
     if(started){ctx.closePath();ctx.fill();ctx.stroke();}
-  });
-
-  /* City dots */
-  ctx.fillStyle='rgba(196,147,42,0.5)';
-  CITIES.forEach(function(c){
-    var r=proj(c[0],c[1],rY,rX);
-    if(r.z<0.05) return;
-    ctx.beginPath();
-    ctx.arc(CX+r.sx*RX, CY-r.sy*RY, 2, 0, Math.PI*2);
-    ctx.fill();
   });
 
   ctx.restore();
@@ -410,88 +401,6 @@ window.addEventListener('touchmove',function(e){
 
 
 /* ════════════════════════════════════════
-   CIVILIZATION ANIMATION — history panel
-════════════════════════════════════════ */
-(function(){
-'use strict';
-
-var canvas=document.getElementById('civ-canvas');
-if(!canvas) return;
-var ctx=canvas.getContext('2d');
-var GOLD='#C4932A', MAX_A=0.07, CYCLE=30, civT=0, lastT=null;
-
-/* Smooth bell envelope over [s,e] seconds in cycle */
-function env(t,s,e){
-  var x=(t-s)/(e-s);
-  if(x<=0||x>=1) return 0;
-  return Math.sin(x*Math.PI);
-}
-
-/* Roman column */
-function pillar(x,baseY,h,a){
-  if(a<=0) return;
-  ctx.save();ctx.globalAlpha=MAX_A*a;ctx.strokeStyle=GOLD;ctx.lineWidth=1;
-  /* base */
-  ctx.strokeRect(x-9,baseY-h*0.05,18,h*0.05);
-  /* shaft */
-  ctx.strokeRect(x-4.5,baseY-h*0.93,9,h*0.88);
-  /* capital */
-  ctx.strokeRect(x-8,baseY-h,16,h*0.07);
-  ctx.restore();
-}
-
-/* Colosseum ellipse */
-function colosseum(a){
-  if(a<=0) return;
-  var W=canvas.width,H=canvas.height;
-  var cx=W/2,cy=H*0.58;
-  var rx=Math.min(W*0.26,170),ry=rx*0.54;
-  ctx.save();ctx.globalAlpha=MAX_A*a;ctx.strokeStyle=GOLD;ctx.lineWidth=1;
-  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.ellipse(cx,cy,rx*0.70,ry*0.70,0,0,Math.PI*2);ctx.stroke();
-  ctx.beginPath();ctx.moveTo(cx-rx,cy);ctx.lineTo(cx+rx,cy);ctx.stroke();
-  for(var i=0;i<8;i++){
-    var ang=(i/8)*Math.PI*2;
-    ctx.beginPath();
-    ctx.arc(cx+rx*0.85*Math.cos(ang),cy+ry*0.85*Math.sin(ang),4,0,Math.PI*2);
-    ctx.stroke();
-  }
-  ctx.restore();
-}
-
-function civFrame(ts){
-  if(!lastT) lastT=ts;
-  var dt=Math.min((ts-lastT)/1000,0.1);lastT=ts;
-  civT+=dt;
-
-  var W=canvas.offsetWidth||900,H=canvas.offsetHeight||480;
-  canvas.width=W;canvas.height=H;
-  ctx.clearRect(0,0,W,H);
-
-  var t=civT%CYCLE;
-  var pA=env(t,0,28);               /* pillars: 0→28s */
-  var pProg=Math.min(1,t/8);        /* rise over 8s */
-  var cA=env(t,6,26);               /* colosseum: 6→26s */
-
-  /* 5 columns across */
-  var baseY=H*0.84,pH=H*0.34,cx=W/2,sp=W*0.088;
-  [-2,-1,0,1,2].forEach(function(i){
-    pillar(cx+i*sp, baseY, pH*pProg, pA);
-  });
-
-  colosseum(cA);
-  requestAnimationFrame(civFrame);
-}
-requestAnimationFrame(civFrame);
-
-/* Panel click */
-var panel=document.getElementById('history-panel');
-if(panel) panel.addEventListener('click',function(){window.location.href='history.html';});
-
-})();
-
-
-/* ════════════════════════════════════════
    NAVBAR — hamburger / overlay
 ════════════════════════════════════════ */
 (function(){
@@ -511,6 +420,10 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 document.querySelectorAll('#overlay a').forEach(function(a){
   a.addEventListener('click',close);
 });
+
+/* History panel click */
+var panel=document.getElementById('history-panel');
+if(panel) panel.addEventListener('click',function(){window.location.href='history.html';});
 })();
 </script>
 </body>
