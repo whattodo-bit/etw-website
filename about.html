@@ -124,13 +124,13 @@ html,body{
 .hero{
   position:relative;
   z-index:10;
-  height:60vh;
+  min-height:60vh;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
   text-align:center;
-  padding:0 32px;
+  padding:100px 32px 0;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -183,16 +183,16 @@ html,body{
   padding:80px 56px;
 }
 .box-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:24px;
-  max-width:900px;
+  max-width:700px;
   margin:0 auto;
 }
 .box{
+  width:100%;
+  max-width:700px;
+  margin:0 auto 16px auto;
   background:rgba(10,15,46,0.6);
   border:1px solid rgba(196,147,42,0.2);
-  padding:40px 32px;
+  padding:40px 48px;
   cursor:pointer;
   transition:border-color 0.3s;
 }
@@ -245,12 +245,9 @@ footer{
   #nav{padding:20px 24px;}
   .nav-right{display:none;}
   .hamburger{display:flex;}
-  .box-grid{grid-template-columns:repeat(2,1fr);}
   #boxes{padding:60px 24px;}
+  .box{padding:32px 28px;}
   footer{padding:32px 24px;}
-}
-@media(max-width:480px){
-  .box-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -287,7 +284,7 @@ footer{
 
 <section id="about-text">
   <div class="about-inner">
-    <p class="about-body">Explaining The World is an independent media brand producing content for a global English-speaking audience, currently focused on history — expanding across subjects and languages as we grow.</p>
+    <p class="about-body">Explaining The World is an independent media brand producing content for a global English-speaking audience, currently focused on history — expanding reach across subjects and languages with time.</p>
     <p class="about-body">We go into the depth of every source and every book to find every detail that matters. We do not brush past anything.</p>
   </div>
 </section>
