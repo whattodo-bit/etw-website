@@ -6,291 +6,309 @@
 <title>ETW — Explaining The World</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html, body {
-  background: #0A0F2E;
-  color: #F0EDE6;
-  overflow-x: hidden;
-  font-family: 'Source Serif 4', serif;
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:#08090E;
+  color:#F0EDE6;
+  overflow-x:hidden;
+  font-family:'Source Serif 4',serif;
 }
 
-#globe-canvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  z-index: 0;
-  pointer-events: none;
-  display: block;
+#globe-canvas{
+  position:fixed;
+  top:0;left:0;
+  width:100vw;height:100vh;
+  z-index:0;
+  pointer-events:none;
+  display:block;
 }
 
 /* NAV */
-#nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  background: transparent;
-  padding: 24px 48px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:transparent;
+  padding:28px 56px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: #C4932A;
-  font-size: 22px;
-  letter-spacing: 0.35em;
-  text-decoration: none;
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:18px;
+  letter-spacing:0.4em;
+  text-indent:0.4em;
+  text-decoration:none;
 }
-.nav-right {
-  display: flex;
-  align-items: center;
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:32px;
 }
-.nav-link {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  color: #F0EDE6;
-  letter-spacing: 0.2em;
-  text-decoration: none;
-  margin-right: 32px;
-  transition: color 0.3s;
+.nav-link{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(240,237,230,0.5);
+  letter-spacing:0.2em;
+  text-decoration:none;
+  transition:color 0.3s;
 }
-.nav-link:hover { color: #C4932A; }
-.yt-btn {
-  color: rgba(240,237,230,0.4);
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  transition: color 0.3s;
+.nav-link:hover{color:#F0EDE6;}
+.yt-btn{
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:rgba(240,237,230,0.35);
+  display:flex;
+  align-items:center;
+  padding:0;
+  transition:color 0.3s;
 }
-.yt-btn:hover { color: #C4932A; }
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-}
-.hamburger span {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: #F0EDE6;
-}
+.yt-btn:hover{color:rgba(240,237,230,0.9);}
 
 /* MOBILE OVERLAY */
-#mob-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(10,15,46,0.97);
-  z-index: 200;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
+.hamburger{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:4px;
 }
-#mob-overlay.open { display: flex; }
-#mob-overlay a {
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.3em;
-  color: #F0EDE6;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: color 0.3s;
+.hamburger span{
+  display:block;
+  width:22px;
+  height:1px;
+  background:#F0EDE6;
 }
-#mob-overlay a:hover { color: #C4932A; }
-.mob-close {
-  position: absolute;
-  top: 24px; right: 28px;
-  background: none;
-  border: none;
-  color: rgba(240,237,230,0.5);
-  font-size: 22px;
-  cursor: pointer;
-  line-height: 1;
+#mob-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(8,9,14,0.97);
+  z-index:200;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:36px;
+}
+#mob-overlay.open{display:flex;}
+#mob-overlay a{
+  font-family:'DM Mono',monospace;
+  font-size:12px;
+  letter-spacing:0.3em;
+  color:rgba(240,237,230,0.6);
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:color 0.3s;
+}
+#mob-overlay a:hover{color:#F0EDE6;}
+.mob-close{
+  position:absolute;
+  top:28px;right:28px;
+  background:none;
+  border:none;
+  color:rgba(240,237,230,0.4);
+  font-size:20px;
+  cursor:pointer;
+  line-height:1;
+  font-family:'DM Mono',monospace;
 }
 
 /* HERO */
-.hero {
-  position: relative;
-  z-index: 10;
-  height: 100vh;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0 24px;
+.hero{
+  position:relative;
+  z-index:10;
+  height:100vh;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:0 32px;
 }
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 11px;
-  letter-spacing: 0.45em;
-  text-align: center;
-  display: block;
-  width: 100%;
-  margin-bottom: 16px;
+.hero-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+  margin-bottom:24px;
 }
-.hero-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: #F0EDE6;
-  font-size: clamp(80px, 14vw, 150px);
-  letter-spacing: 0.2em;
-  text-indent: 0.2em;
-  line-height: 1;
-  text-align: center;
-  display: block;
-  margin: 0 auto;
-  text-shadow: 0 0 60px rgba(0,0,0,1), 0 0 120px rgba(0,0,0,0.8);
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(72px,13vw,148px);
+  letter-spacing:0.15em;
+  text-indent:0.15em;
+  line-height:1;
+  text-shadow:0 0 80px rgba(0,0,0,0.95);
 }
-.hero-rule {
-  width: 100px;
-  height: 1px;
-  background: #C4932A;
-  margin: 24px auto;
+.hero-rule{
+  width:80px;
+  height:1px;
+  background:#C4932A;
+  margin:28px auto;
 }
-.hero-tagline {
-  font-family: 'Source Serif 4', serif;
-  font-style: italic;
-  color: #F0EDE6;
-  font-size: 17px;
-  line-height: 1.9;
-  max-width: 340px;
-  text-align: center;
-  margin: 0 auto;
-  text-shadow: 0 2px 30px rgba(0,0,0,1);
+.hero-tagline{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(240,237,230,0.7);
+  font-size:16px;
+  line-height:1.8;
+  max-width:320px;
+  text-align:center;
 }
 
 /* ABOUT */
-#about {
-  position: relative;
-  z-index: 10;
-  background: transparent;
-  padding: 140px 48px;
+#about{
+  position:relative;
+  z-index:10;
+  background:transparent;
+  padding:160px 56px;
+  max-width:640px;
+  margin:0 auto;
 }
-.about-box {
-  border: 1px solid rgba(196,147,42,0.4);
-  background: rgba(196,147,42,0.04);
-  padding: 48px;
-  max-width: 680px;
-  margin: 0 auto;
+.about-label{
+  font-family:'DM Mono',monospace;
+  color:rgba(196,147,42,0.6);
+  font-size:9px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+  margin-bottom:40px;
+  display:block;
 }
-.body-p {
-  font-family: 'Source Serif 4', serif;
-  color: #F0EDE6;
-  font-size: 16px;
-  line-height: 2;
+.about-body{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.75);
+  font-size:17px;
+  line-height:2;
 }
-.body-p + .body-p { margin-top: 24px; }
+.about-body+.about-body{margin-top:28px;}
 
 /* DIVIDER */
-.gold-divider {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(
+.divider{
+  position:relative;
+  z-index:10;
+  width:100%;
+  height:1px;
+  background:linear-gradient(
     to right,
     transparent 0%,
-    rgba(196,147,42,0.4) 20%,
-    rgba(196,147,42,0.6) 50%,
-    rgba(196,147,42,0.4) 80%,
+    rgba(196,147,42,0.3) 30%,
+    rgba(196,147,42,0.5) 50%,
+    rgba(196,147,42,0.3) 70%,
     transparent 100%
   );
 }
 
-/* HISTORY PANEL */
-#history-panel {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-  min-height: 500px;
-  background: rgba(13,11,8,0.88);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 100px 48px;
-  cursor: pointer;
-  border: 1px solid rgba(196,147,42,0.15);
+/* HISTORY */
+#history{
+  position:relative;
+  z-index:10;
+  width:100%;
+  min-height:520px;
+  background:rgba(13,11,8,0.92);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:120px 56px;
+  cursor:pointer;
+  outline:1px solid rgba(196,147,42,0.1);
+  transition:outline-color 0.4s;
 }
-.hist-eyebrow {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  margin-bottom: 16px;
+#history:hover{outline-color:rgba(196,147,42,0.35);}
+.hist-label{
+  font-family:'DM Mono',monospace;
+  color:rgba(196,147,42,0.7);
+  font-size:9px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+  margin-bottom:20px;
 }
-.hist-rule {
-  width: 60px;
-  height: 1px;
-  background: #C4932A;
-  margin: 0 auto 20px;
+.hist-rule{
+  width:50px;
+  height:1px;
+  background:#C4932A;
+  margin:0 auto 24px;
 }
-.hist-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: #F0EDE6;
-  font-size: clamp(52px, 8vw, 80px);
-  letter-spacing: 0.18em;
+.hist-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(48px,8vw,80px);
+  letter-spacing:0.15em;
 }
-.hist-tag {
-  font-family: 'Source Serif 4', serif;
-  font-style: italic;
-  color: #C4932A;
-  font-size: 16px;
-  max-width: 420px;
-  margin-top: 24px;
-  line-height: 1.9;
+.hist-tag{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(196,147,42,0.8);
+  font-size:15px;
+  max-width:400px;
+  margin:28px auto 0;
+  line-height:1.9;
 }
-.hist-cta {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 10px;
-  letter-spacing: 0.35em;
-  margin-top: 48px;
-  display: inline-block;
-  opacity: 0.7;
+.hist-cta{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.4);
+  font-size:9px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  margin-top:56px;
+  display:block;
+}
+.hist-arrow{
+  color:rgba(196,147,42,0.5);
+  font-size:18px;
+  display:block;
+  margin-top:12px;
+  animation:bounce 2s ease-in-out infinite;
+}
+@keyframes bounce{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(6px);}
 }
 
 /* FOOTER */
-footer {
-  position: relative;
-  z-index: 10;
-  background: #0A0F2E;
-  border-top: 1px solid rgba(196,147,42,0.15);
-  padding: 32px 48px;
-  text-align: center;
+footer{
+  position:relative;
+  z-index:10;
+  background:#08090E;
+  padding:48px 56px;
+  text-align:center;
 }
-.footer-rule {
-  width: 200px;
-  height: 1px;
-  background: linear-gradient(to right, transparent, #C4932A, transparent);
-  margin: 0 auto 20px auto;
-  display: block;
+.footer-rule{
+  width:160px;
+  height:1px;
+  background:linear-gradient(to right,transparent,#C4932A,transparent);
+  margin:0 auto 24px;
+  display:block;
 }
-.copy {
-  font-family: 'Source Serif 4', serif;
-  color: rgba(240,237,230,0.35);
-  font-size: 12px;
+.footer-copy{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.25);
+  font-size:11px;
+  letter-spacing:0.2em;
+  line-height:1.9;
 }
 
 /* MOBILE */
-@media (max-width: 768px) {
-  #nav { padding: 20px 24px; }
-  .nav-right { display: none; }
-  .hamburger { display: flex; }
-  .hero-title { font-size: 72px; }
-  #about { padding: 100px 28px; }
-  #history-panel { padding: 80px 28px; }
+@media(max-width:768px){
+  #nav{padding:20px 24px;}
+  .nav-right{display:none;}
+  .hamburger{display:flex;}
+  .hero{padding:0 24px;}
+  #about{padding:100px 28px;}
+  #history{padding:80px 28px;}
+  footer{padding:32px 24px;}
 }
 </style>
 </head>
@@ -299,16 +317,16 @@ footer {
 <canvas id="globe-canvas"></canvas>
 
 <nav id="nav">
-  <a href="/" class="nav-logo">E T W</a>
+  <a href="/" class="nav-logo">ETW</a>
   <div class="nav-right">
     <a href="history.html" class="nav-link">History</a>
-    <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener" class="yt-btn" aria-label="YouTube">
-      <svg width="22" height="16" viewBox="0 0 22 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M21.543 2.496A2.761 2.761 0 0 0 19.61.553C17.9 0 11 0 11 0S4.1 0 2.39.553A2.761 2.761 0 0 0 .457 2.496C0 4.224 0 8 0 8s0 3.776.457 5.504A2.761 2.761 0 0 0 2.39 15.447C4.1 16 11 16 11 16s6.9 0 8.61-.553a2.761 2.761 0 0 0 1.933-1.943C22 11.776 22 8 22 8s0-3.776-.457-5.504zM8.75 11.375V4.625L14.5 8l-5.75 3.375z"/>
+    <button class="yt-btn" onclick="window.open('https://youtube.com/@etw_official','_blank')" aria-label="YouTube">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="currentColor">
+        <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
       </svg>
-    </a>
+    </button>
   </div>
-  <button class="hamburger" id="hbg" aria-label="Open menu">
+  <button class="hamburger" id="hbg" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -320,51 +338,49 @@ footer {
 </div>
 
 <section class="hero">
-  <p class="hero-eyebrow">Explaining The World</p>
-  <h1 class="hero-title">E T W</h1>
+  <p class="hero-label">Explaining The World</p>
+  <h1 class="hero-title">ETW</h1>
   <div class="hero-rule"></div>
   <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
 </section>
 
 <section id="about">
-  <div class="about-box">
-    <p class="body-p">Explaining The World is an independent media brand. We produce content for a global English-speaking audience.</p>
-    <p class="body-p">We make content by reading real books and real resources. This takes time. We do not rush it.</p>
-    <p class="body-p">We provide what is worth your time. That is the only standard we hold.</p>
-  </div>
+  <span class="about-label">About</span>
+  <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history.</p>
+  <p class="about-body">We make content by reading real books and real sources. This takes time. We do not rush it.</p>
 </section>
 
-<div class="gold-divider"></div>
+<div class="divider"></div>
 
-<section id="history-panel" onclick="window.location='history.html'">
-  <p class="hist-eyebrow">ETW</p>
+<section id="history" onclick="window.location='history.html'">
+  <p class="hist-label">ETW</p>
   <div class="hist-rule"></div>
   <h2 class="hist-title">HISTORY</h2>
   <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only — power.</p>
-  <span class="hist-cta">EXPLORE &#x2192;</span>
+  <span class="hist-cta">Explore</span>
+  <span class="hist-arrow">&#x2193;</span>
 </section>
 
 <footer>
   <span class="footer-rule"></span>
-  <p class="copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+  <p class="footer-copy">&#169; 2026 EXPLAINING THE WORLD.<br>ALL RIGHTS RESERVED.</p>
 </footer>
 
 <script>
-(function () {
+(function(){
   var canvas = document.getElementById('globe-canvas');
   var ctx = canvas.getContext('2d');
-  var W, H, CX, CY, R;
-  var rotation = 0;
+  var W, H, cx, cy, R;
+  var rotDeg = 0;
 
-  // Continent polygons: [lat, lon] in degrees
   var CONTS = [
     // Africa
     [[37,-10],[38,22],[30,32],[12,42],[2,42],
      [-5,37],[-18,37],[-35,20],[-35,-5],
      [-20,-15],[-5,-10],[5,-5],[15,-5],[20,10],[37,-10]],
     // Europe
-    [[36,-10],[36,28],[55,28],[60,15],[58,5],
-     [55,-5],[50,-5],[45,-10],[36,-10]],
+    [[36,-10],[36,28],[55,28],[60,15],
+     [58,5],[55,-5],[50,-5],[45,-10],[36,-10]],
     // Asia
     [[37,28],[37,60],[55,60],[70,55],[70,80],
      [55,80],[40,75],[20,80],[5,100],[5,120],
@@ -381,60 +397,58 @@ footer {
      [-20,-70],[-5,-80],[10,-75]],
     // Oceania
     [[-15,130],[-15,145],[-30,150],[-40,145],
-     [-38,140],[-30,135],[-20,130],[-15,130]],
-    // Antarctica
-    [[-65,-180],[-65,180],[-90,180],[-90,-180],[-65,-180]]
+     [-38,140],[-30,135],[-20,130],[-15,130]]
   ];
 
-  // Precompute centroid [latRad, lonRad] for back-face culling
-  var CENTROIDS = CONTS.map(function (poly) {
-    var n = poly.length - 1;
-    var la = 0, lo = 0;
-    for (var i = 0; i < n; i++) { la += poly[i][0]; lo += poly[i][1]; }
-    return [la / n * Math.PI / 180, lo / n * Math.PI / 180];
+  // Centroid [latDeg, lonDeg] for culling
+  var CENTS = CONTS.map(function(p){
+    var n=p.length-1, la=0, lo=0;
+    for(var i=0;i<n;i++){la+=p[i][0];lo+=p[i][1];}
+    return [la/n, lo/n];
   });
 
-  function resize() {
+  function resize(){
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    CX = W / 2;
-    CY = H / 2;
-    R = Math.min(W, H) * 0.42;
+    cx = W/2; cy = H/2;
+    R = Math.min(W,H)*0.40;
   }
 
-  function project(lat, lon) {
-    var la = lat * Math.PI / 180;
-    var lo = lon * Math.PI / 180;
+  function proj(lat, lon){
+    var lonR = (lon - rotDeg) * Math.PI/180;
+    var latR = lat * Math.PI/180;
     return {
-      x: CX + R * Math.cos(la) * Math.sin(lo - rotation),
-      y: CY - R * Math.sin(la)
+      x: cx + R * Math.cos(latR) * Math.sin(lonR),
+      y: cy - R * Math.sin(latR),
+      v: Math.cos(latR) * Math.cos(lonR)
     };
   }
 
-  function frame() {
-    ctx.clearRect(0, 0, W, H);
+  function frame(){
+    ctx.clearRect(0,0,W,H);
 
+    // Clip to globe circle, draw continents
     ctx.save();
     ctx.beginPath();
-    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.arc(cx,cy,R,0,Math.PI*2);
     ctx.clip();
 
-    ctx.fillStyle = 'rgba(26,31,94,0.5)';
-    ctx.strokeStyle = 'rgba(196,147,42,0.6)';
-    ctx.lineWidth = 1;
+    ctx.fillStyle = 'rgba(20,22,40,0.6)';
+    ctx.strokeStyle = 'rgba(196,147,42,0.35)';
+    ctx.lineWidth = 0.8;
 
-    for (var i = 0; i < CONTS.length; i++) {
-      var c = CENTROIDS[i];
-      var facing = Math.cos(c[0]) * Math.cos(c[1] - rotation);
-      // Antarctica (index 6) always draw; others cull when facing away
-      if (i !== 6 && facing < -0.1) continue;
+    for(var i=0;i<CONTS.length;i++){
+      var c = CENTS[i];
+      var cLonR = (c[1]-rotDeg)*Math.PI/180;
+      var cLatR = c[0]*Math.PI/180;
+      if(Math.cos(cLatR)*Math.cos(cLonR) < -0.1) continue;
 
       var poly = CONTS[i];
       ctx.beginPath();
-      for (var j = 0; j < poly.length; j++) {
-        var p = project(poly[j][0], poly[j][1]);
-        if (j === 0) ctx.moveTo(p.x, p.y);
-        else ctx.lineTo(p.x, p.y);
+      for(var j=0;j<poly.length;j++){
+        var p = proj(poly[j][0],poly[j][1]);
+        if(j===0) ctx.moveTo(p.x,p.y);
+        else ctx.lineTo(p.x,p.y);
       }
       ctx.closePath();
       ctx.fill();
@@ -443,24 +457,23 @@ footer {
 
     ctx.restore();
 
-    // Atmosphere glow
-    var atmosGrad = ctx.createRadialGradient(CX, CY, R * 0.95, CX, CY, R * 1.15);
-    atmosGrad.addColorStop(0, 'rgba(196,147,42,0.08)');
-    atmosGrad.addColorStop(0.5, 'rgba(196,147,42,0.03)');
-    atmosGrad.addColorStop(1, 'rgba(196,147,42,0)');
+    // Atmosphere
+    var ag = ctx.createRadialGradient(cx,cy,R,cx,cy,R*1.2);
+    ag.addColorStop(0,'rgba(196,147,42,0.06)');
+    ag.addColorStop(1,'rgba(196,147,42,0)');
     ctx.beginPath();
-    ctx.arc(CX, CY, R * 1.15, 0, Math.PI * 2);
-    ctx.fillStyle = atmosGrad;
+    ctx.arc(cx,cy,R*1.2,0,Math.PI*2);
+    ctx.fillStyle = ag;
     ctx.fill();
 
-    // Thin gold circle at globe edge
+    // Globe edge
     ctx.beginPath();
-    ctx.arc(CX, CY, R, 0, Math.PI * 2);
-    ctx.strokeStyle = 'rgba(196,147,42,0.25)';
-    ctx.lineWidth = 1;
+    ctx.arc(cx,cy,R,0,Math.PI*2);
+    ctx.strokeStyle = 'rgba(196,147,42,0.2)';
+    ctx.lineWidth = 0.5;
     ctx.stroke();
 
-    rotation += 0.0008;
+    rotDeg += 0.02;
     requestAnimationFrame(frame);
   }
 
@@ -468,16 +481,13 @@ footer {
   resize();
   requestAnimationFrame(frame);
 
-  // Hamburger menu
+  // Hamburger
   var hbg = document.getElementById('hbg');
-  var overlay = document.getElementById('mob-overlay');
-  var closeBtn = document.getElementById('mob-close');
-
-  hbg.addEventListener('click', function () { overlay.classList.add('open'); });
-  closeBtn.addEventListener('click', function () { overlay.classList.remove('open'); });
-  overlay.addEventListener('click', function (e) {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
+  var ov = document.getElementById('mob-overlay');
+  var mc = document.getElementById('mob-close');
+  hbg.addEventListener('click',function(){ov.classList.add('open');});
+  mc.addEventListener('click',function(){ov.classList.remove('open');});
+  ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open');});
 }());
 </script>
 </body>
