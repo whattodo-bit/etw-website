@@ -37,8 +37,8 @@ html,body{
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#F0EDE6;
-  font-size:18px;
+  color:rgba(240,237,230,0.9);
+  font-size:16px;
   letter-spacing:0.4em;
   text-indent:0.4em;
   text-decoration:none;
@@ -170,19 +170,16 @@ html,body{
 #about{
   position:relative;
   z-index:10;
-  padding:160px 56px;
+  width:100%;
+  background:rgba(10,15,46,0.85);
+  padding:100px 56px;
+  border:1px solid rgba(196,147,42,0.12);
+  transition:border 0.4s;
+}
+#about:hover{border-color:rgba(196,147,42,0.5);}
+.about-inner{
   max-width:640px;
   margin:0 auto;
-}
-.about-inner{
-  border:1px solid rgba(196,147,42,0.15);
-  background:rgba(196,147,42,0.02);
-  padding:48px;
-  transition:all 0.4s;
-}
-.about-inner:hover{
-  border-color:rgba(196,147,42,0.5);
-  background:rgba(196,147,42,0.06);
 }
 .about-label{
   font-family:'DM Mono',monospace;
@@ -223,7 +220,7 @@ html,body{
   z-index:10;
   width:100%;
   min-height:520px;
-  background:rgba(13,11,8,0.92);
+  background:rgba(13,11,8,0.75);
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -231,13 +228,10 @@ html,body{
   text-align:center;
   padding:120px 56px;
   cursor:pointer;
-  outline:1px solid rgba(196,147,42,0.12);
-  transition:all 0.4s;
+  border:1px solid rgba(196,147,42,0.12);
+  transition:border 0.4s;
 }
-#history:hover{
-  outline-color:rgba(196,147,42,0.5);
-  background:rgba(13,11,8,0.95);
-}
+#history:hover{border-color:rgba(196,147,42,0.5);}
 .hist-label{
   font-family:'DM Mono',monospace;
   color:rgba(196,147,42,0.7);
@@ -270,23 +264,12 @@ html,body{
 }
 .hist-cta{
   font-family:'DM Mono',monospace;
-  color:rgba(240,237,230,0.4);
-  font-size:9px;
-  letter-spacing:0.3em;
+  color:rgba(196,147,42,0.6);
+  font-size:10px;
+  letter-spacing:0.4em;
   text-transform:uppercase;
   margin-top:56px;
   display:block;
-}
-.hist-arrow{
-  color:rgba(196,147,42,0.5);
-  font-size:18px;
-  display:block;
-  margin-top:12px;
-  animation:bounce 2s ease-in-out infinite;
-}
-@keyframes bounce{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(6px);}
 }
 
 /* FOOTER */
@@ -297,19 +280,6 @@ footer{
   padding:48px 56px;
   text-align:center;
 }
-.footer-top-arrow{
-  display:block;
-  font-family:'DM Mono',monospace;
-  color:rgba(196,147,42,0.4);
-  font-size:20px;
-  cursor:pointer;
-  margin-bottom:32px;
-  transition:color 0.3s;
-  background:none;
-  border:none;
-  width:100%;
-}
-.footer-top-arrow:hover{color:rgba(196,147,42,0.9);}
 .footer-rule{
   width:160px;
   height:1px;
@@ -320,7 +290,7 @@ footer{
 .footer-copy{
   font-family:'DM Mono',monospace;
   color:rgba(240,237,230,0.25);
-  font-size:11px;
+  font-size:10px;
   letter-spacing:0.2em;
   line-height:1.9;
 }
@@ -372,8 +342,8 @@ footer{
 <section id="about">
   <div class="about-inner">
     <span class="about-label">About</span>
-    <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history.</p>
-    <p class="about-body">We make content by reading real books and real sources. This takes time. We do not rush it.</p>
+    <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history, expanding reach across languages as demand grows.</p>
+    <p class="about-body">We go into depth to find every detail that matters. That takes time. We do not rush it.</p>
   </div>
 </section>
 
@@ -383,13 +353,11 @@ footer{
   <p class="hist-label">ETW</p>
   <div class="hist-rule"></div>
   <h2 class="hist-title">HISTORY</h2>
-  <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only — power.</p>
-  <span class="hist-cta">Explore</span>
-  <span class="hist-arrow">&#x2193;</span>
+  <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only — power.<br>How it was achieved. How it was held.<br>How it was lost.</p>
+  <span class="hist-cta">EXPLORE &#x2192;</span>
 </section>
 
 <footer>
-  <button class="footer-top-arrow" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#x2191;</button>
   <span class="footer-rule"></span>
   <p class="footer-copy">&#169; 2026 EXPLAINING THE WORLD.<br>ALL RIGHTS RESERVED.</p>
 </footer>
@@ -461,8 +429,8 @@ footer{
     ctx.arc(cx,cy,R,0,Math.PI*2);
     ctx.clip();
 
-    ctx.fillStyle = 'rgba(20,22,40,0.6)';
-    ctx.strokeStyle = 'rgba(196,147,42,0.35)';
+    ctx.fillStyle = 'rgba(101,67,33,0.4)';
+    ctx.strokeStyle = 'rgba(196,147,42,0.5)';
     ctx.lineWidth = 0.8;
 
     for(var i=0;i<CONTS.length;i++){
@@ -486,9 +454,9 @@ footer{
     ctx.restore();
 
     // Atmosphere
-    var ag = ctx.createRadialGradient(cx,cy,R,cx,cy,R*1.2);
-    ag.addColorStop(0,'rgba(196,147,42,0.06)');
-    ag.addColorStop(1,'rgba(196,147,42,0)');
+    var ag = ctx.createRadialGradient(cx,cy,R*0.95,cx,cy,R*1.2);
+    ag.addColorStop(0,'rgba(100,140,255,0.08)');
+    ag.addColorStop(1,'rgba(100,140,255,0)');
     ctx.beginPath();
     ctx.arc(cx,cy,R*1.2,0,Math.PI*2);
     ctx.fillStyle = ag;
