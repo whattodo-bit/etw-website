@@ -1,172 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ETW — Explaining The World</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Source+Serif+4:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./assets/css/styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETW — Explaining The World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+/* ── Reset ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+html,body{background:#0A0F2E;color:#F0EDE6;font-family:'Source Serif 4',serif;overflow-x:hidden}
+
+/* ── Globe canvas ── */
+#globe-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block}
+
+/* ── NAVBAR ── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:transparent;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 52px;height:64px;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;font-weight:700;
+  font-size:20px;letter-spacing:0.35em;color:#C4932A;
+  text-decoration:none;
+}
+.nav-right{display:flex;align-items:center;gap:32px}
+.nav-link{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;
+  color:#F0EDE6;text-decoration:none;text-transform:uppercase;
+  opacity:0.75;transition:opacity 0.2s;
+}
+.nav-link:hover{opacity:1}
+.yt-btn{
+  display:flex;align-items:center;color:#F0EDE6;
+  opacity:0.35;transition:opacity 0.3s,color 0.3s;
+}
+.yt-btn:hover{opacity:1;color:#C4932A}
+.yt-btn svg{width:20px;height:20px;fill:currentColor;display:block}
+
+/* ── Hamburger ── */
+.hamburger{
+  display:none;flex-direction:column;gap:5px;
+  background:none;border:none;cursor:pointer;padding:8px;
+}
+.hamburger span{display:block;width:22px;height:1.5px;background:#F0EDE6;opacity:0.5;transition:opacity 0.2s}
+.hamburger:hover span{opacity:1}
+
+/* ── Mobile overlay ── */
+#overlay{
+  position:fixed;inset:0;background:#0A0F2E;z-index:500;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:36px;opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+#overlay.open{opacity:1;pointer-events:all}
+.ov-close{
+  position:absolute;top:22px;right:28px;
+  background:none;border:none;color:#C4932A;font-size:26px;cursor:pointer;line-height:1;
+}
+.ov-link{
+  font-family:'DM Mono',monospace;font-size:13px;letter-spacing:0.25em;
+  color:#F0EDE6;text-decoration:none;text-transform:uppercase;
+}
+.ov-link:hover{color:#C4932A}
+.ov-yt{display:flex;align-items:center;color:#F0EDE6;opacity:0.55;transition:opacity 0.2s}
+.ov-yt:hover{opacity:1;color:#C4932A}
+.ov-yt svg{width:24px;height:24px;fill:currentColor}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:10;
+  height:100vh;background:transparent;
+  display:flex;align-items:center;justify-content:center;
+  padding-top:64px;
+}
+.hero-inner{text-align:center;padding:0 24px}
+.eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.45em;
+  color:#C4932A;text-transform:uppercase;margin-bottom:20px;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;font-weight:700;
+  font-size:clamp(64px,10vw,120px);letter-spacing:0.25em;
+  color:#F0EDE6;line-height:1;
+  text-shadow:0 0 40px rgba(0,0,0,0.9);
+}
+.gold-line{width:140px;height:1px;background:#C4932A;margin:24px auto}
+.hero-tag{
+  font-family:'Source Serif 4',serif;font-style:italic;
+  font-size:17px;color:#F0EDE6;max-width:420px;line-height:1.9;
+  text-shadow:0 2px 20px rgba(0,0,0,1);margin:0 auto;
+}
+
+/* ── ABOUT ── */
+#about{
+  position:relative;z-index:10;
+  background:transparent;padding:120px 60px;
+}
+.about-inner{max-width:700px;margin:0 auto}
+.section-rule{width:60px;height:1px;background:#C4932A;margin:16px 0 48px}
+.body-p{
+  font-family:'Source Serif 4',serif;font-size:16px;line-height:1.95;
+  color:#F0EDE6;opacity:0.88;
+  text-shadow:0 1px 12px rgba(10,15,46,0.95);
+}
+.body-p+.body-p{margin-top:24px}
+.about-links{
+  margin-top:52px;display:flex;flex-direction:column;align-items:flex-start;
+}
+.about-links a{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;
+  color:#C4932A;text-decoration:none;text-transform:uppercase;
+  padding:20px 0;border-bottom:1px solid transparent;transition:border-color 0.2s;
+}
+.about-links a:hover{border-bottom-color:#C4932A}
+
+/* ── HISTORY PANEL ── */
+#history-panel{
+  position:relative;z-index:10;
+  width:100%;min-height:480px;overflow:hidden;
+  background:#0D0B08;cursor:pointer;
+  transition:box-shadow 0.4s;
+}
+#history-panel:hover{box-shadow:inset 0 0 0 1px #C4932A}
+#civ-canvas{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:1;pointer-events:none;display:block;
+}
+.hist-inner{
+  position:relative;z-index:10;
+  text-align:center;padding:110px 60px;
+  display:flex;flex-direction:column;align-items:center;
+}
+.hist-eyebrow{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.45em;
+  color:#C4932A;text-transform:uppercase;margin-bottom:14px;
+}
+.hist-rule{width:80px;height:1px;background:#C4932A;margin-bottom:36px}
+.hist-title{
+  font-family:'Playfair Display',serif;font-weight:700;
+  font-size:clamp(52px,7vw,76px);letter-spacing:0.2em;
+  color:#F0EDE6;line-height:1;margin-bottom:22px;
+  text-shadow:0 2px 30px rgba(0,0,0,0.85);
+}
+.hist-tag{
+  font-family:'Source Serif 4',serif;font-style:italic;
+  font-size:16px;color:#C4932A;max-width:460px;line-height:1.8;
+  margin-bottom:44px;text-align:center;
+}
+.hist-cta{
+  font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.35em;
+  color:#C4932A;text-transform:uppercase;
+}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:10;
+  background:#0A0F2E;
+  border-top:1px solid rgba(196,147,42,0.2);
+  padding:32px 60px;text-align:center;
+}
+.copy{
+  font-family:'Source Serif 4',serif;font-size:12px;
+  color:rgba(240,237,230,0.4);
+}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  #nav{padding:0 24px}
+  .nav-right{display:none}
+  .hamburger{display:flex}
+  .hero{height:100svh}
+  .hero-title{font-size:clamp(48px,14vw,96px)}
+  #about{padding:90px 28px}
+  .about-inner{max-width:100%}
+  .hist-inner{padding:80px 28px}
+  footer{padding:28px 24px}
+}
+@media(max-width:480px){
+  .hero-title{font-size:clamp(42px,15vw,80px)}
+  .hero-tag{font-size:15px}
+}
+</style>
 </head>
 <body>
 
-  <!-- ══════════════════════════════════ NAVBAR ══════════════════════════════════ -->
-  <nav id="mainNav">
-    <a href="/" class="nav-logo">E T W</a>
+<!-- ══ GLOBE CANVAS ══ -->
+<canvas id="globe-canvas"></canvas>
 
-    <div class="nav-right">
-      <a href="history.html" class="nav-link">History</a>
-      <a href="#about"       class="nav-link">About</a>
+<!-- ══ NAVBAR ══ -->
+<nav id="nav">
+  <a href="/" class="nav-logo">E T W</a>
+  <div class="nav-right">
+    <a href="history.html" class="nav-link">History</a>
+    <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener" class="yt-btn" aria-label="YouTube">
+      <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+    </a>
+  </div>
+  <button class="hamburger" id="hbg" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-      <div class="nav-icons">
+<!-- ══ MOBILE OVERLAY ══ -->
+<div id="overlay">
+  <button class="ov-close" id="ov-close">&#x2715;</button>
+  <a href="history.html" class="ov-link" id="ov-hist">History</a>
+  <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener" class="ov-yt" aria-label="YouTube">
+    <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+  </a>
+</div>
 
-        <!-- YouTube -->
-        <button class="icon-btn" id="ytBtn" aria-label="YouTube">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-        </button>
-        <div class="social-popup" id="popup-yt">
-          <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">ETW</a>
-          <a href="https://youtube.com/@etw_history"  target="_blank" rel="noopener">History</a>
-        </div>
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Explaining The World</p>
+    <h1 class="hero-title">E T W</h1>
+    <div class="gold-line"></div>
+    <p class="hero-tag">We provide what is valuable.<br>Not what is popular.</p>
+  </div>
+</section>
 
-        <!-- Instagram -->
-        <button class="icon-btn" id="igBtn" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-          </svg>
-        </button>
-        <div class="social-popup" id="popup-ig">
-          <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW</a>
-          <a href="https://www.instagram.com/etw_history"   target="_blank" rel="noopener">History</a>
-        </div>
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-inner">
+    <p class="eyebrow">About</p>
+    <div class="section-rule"></div>
+    <p class="body-p">Explaining The World is an independent media brand currently operating in history, with plans to expand into science. We produce content for a global English-speaking audience.</p>
+    <p class="body-p">We do not focus on speed. We focus on quality. Every video takes time because we read the books, study the sources, and extract only what is genuinely worth your attention.</p>
+    <nav class="about-links">
+      <a href="faq.html">FAQ</a>
+      <a href="collaboration.html">Collaboration</a>
+      <a href="legal.html">Legal</a>
+    </nav>
+  </div>
+</section>
 
-        <!-- X -->
-        <button class="icon-btn" id="xBtn" aria-label="X">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
-          </svg>
-        </button>
-        <div class="social-popup" id="popup-x">
-          <a href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW</a>
-          <a href="https://x.com/etw_history"     target="_blank" rel="noopener">History</a>
-        </div>
+<!-- ══ HISTORY PANEL ══ -->
+<section id="history-panel">
+  <canvas id="civ-canvas"></canvas>
+  <div class="hist-inner">
+    <p class="hist-eyebrow">E T W</p>
+    <div class="hist-rule"></div>
+    <h2 class="hist-title">HISTORY</h2>
+    <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only &mdash; power.<br>How it is taken. How it is held. How it is lost.</p>
+    <span class="hist-cta">EXPLORE &#x2192;</span>
+  </div>
+</section>
 
-      </div><!-- /.nav-icons -->
-    </div><!-- /.nav-right -->
+<!-- ══ FOOTER ══ -->
+<footer>
+  <p class="copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+</footer>
 
-    <!-- Hamburger (mobile) -->
-    <button class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+<script>
+/* ════════════════════════════════════════
+   GLOBE — orthographic projection
+   Rotates right to left (E→W on screen)
+════════════════════════════════════════ */
+(function(){
+'use strict';
 
-  <!-- Mobile overlay -->
-  <div id="navOverlay" role="dialog" aria-modal="true" aria-label="Navigation">
-    <button class="overlay-close" id="overlayClose" aria-label="Close menu">&#x2715;</button>
-    <a href="history.html" class="overlay-link">History</a>
-    <a href="#about"       class="overlay-link" id="overlayAbout">About</a>
-    <div class="overlay-icons">
-      <button class="overlay-icon-btn" id="ovYt" aria-label="YouTube">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-        </svg>
-      </button>
-      <button class="overlay-icon-btn" id="ovIg" aria-label="Instagram">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-        </svg>
-      </button>
-      <button class="overlay-icon-btn" id="ovX" aria-label="X">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
-        </svg>
-      </button>
-    </div>
-  </div><!-- /#navOverlay -->
+var canvas = document.getElementById('globe-canvas');
+var ctx    = canvas.getContext('2d');
 
+/* State */
+var rY = 0, rX = 0.28, breathT = 0, lastT = null;
+var dragging = false, mx = 0, my = 0, curR = 300;
 
-  <!-- ══════════════════════════════════ SECTION 1 — HERO ══════════════════════════════════ -->
-  <section class="hero">
-    <div class="hero-content">
-      <p class="eyebrow">Explaining The World</p>
-      <h1 class="hero-title">E T W</h1>
-      <div class="gold-line"></div>
-      <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
-    </div>
-  </section>
+/* Continent polygons — [lon, lat] pairs, centroid for culling */
+var CONTS = [
+  { clat:50, clon:-100, pts:[[-168,71],[-153,60],[-138,59],[-130,54],[-124,49],[-117,46],[-117,32],[-97,26],[-90,18],[-83,9],[-77,8],[-77,4],[-75,10],[-72,12],[-60,18],[-55,22],[-55,47],[-52,47],[-60,47],[-60,65],[-68,76],[-95,76],[-140,70],[-153,62],[-168,71]] },
+  { clat:-15, clon:-60, pts:[[-80,12],[-75,10],[-62,11],[-50,0],[-44,-3],[-35,-4],[-35,-8],[-38,-13],[-43,-23],[-48,-28],[-52,-33],[-56,-38],[-65,-55],[-75,-53],[-74,-43],[-70,-38],[-70,-17],[-76,-2],[-78,0],[-80,3],[-80,12]] },
+  { clat:52, clon:14,   pts:[[-10,36],[0,36],[8,36],[15,37],[24,38],[28,38],[33,37],[35,38],[28,42],[28,47],[26,52],[22,56],[18,60],[14,58],[8,63],[5,62],[0,61],[-5,54],[-8,53],[-10,44],[-10,36]] },
+  { clat:5,  clon:22,   pts:[[-5,37],[5,37],[15,38],[24,37],[28,37],[38,22],[44,12],[44,5],[42,0],[38,-5],[36,-18],[34,-28],[27,-34],[18,-34],[13,-22],[10,-8],[8,5],[2,5],[-5,5],[-14,10],[-17,15],[-16,20],[-12,28],[-5,37]] },
+  { clat:45, clon:90,   pts:[[26,37],[36,37],[40,38],[44,37],[50,30],[56,25],[62,22],[72,22],[80,22],[90,22],[100,20],[105,12],[110,5],[120,5],[128,18],[130,20],[140,35],[142,46],[136,50],[132,55],[122,65],[112,72],[100,72],[90,72],[80,70],[70,68],[60,65],[55,58],[50,55],[44,55],[40,60],[36,55],[26,46],[26,37]] },
+  { clat:-25, clon:135, pts:[[114,-22],[118,-20],[122,-18],[128,-15],[136,-12],[138,-14],[140,-17],[148,-20],[152,-24],[153,-28],[152,-32],[148,-38],[144,-38],[140,-36],[130,-33],[124,-32],[118,-28],[114,-26],[114,-22]] },
+  { clat:-75, clon:0,   pts:[[0,-70],[45,-65],[90,-68],[135,-70],[180,-66],[225,-68],[270,-70],[315,-66],[360,-70]] }
+];
 
+/* City dots [lat, lon] */
+var CITIES = [
+  [51.5,-0.1],[40.7,-74],[55.7,37.6],[39.9,116.4],
+  [28.6,77.2],[30.1,31.2],[41.9,12.5],[41.0,28.9]
+];
 
-  <!-- ══════════════════════════════════ SECTION 2 — ABOUT ══════════════════════════════════ -->
-  <section id="about" class="about-section">
-    <div class="about-inner">
-      <p class="eyebrow">About</p>
-      <div class="section-rule"></div>
+/* Project lat/lon to screen coords */
+function proj(lat, lon, ry, rx) {
+  var la = lat*Math.PI/180, lo = lon*Math.PI/180;
+  var x0 = Math.cos(la)*Math.sin(lo);
+  var y0 = Math.sin(la);
+  var z0 = Math.cos(la)*Math.cos(lo);
+  var x1 =  x0*Math.cos(ry)+z0*Math.sin(ry);
+  var z1 = -x0*Math.sin(ry)+z0*Math.cos(ry);
+  var y2 =  y0*Math.cos(rx)-z1*Math.sin(rx);
+  var z2 =  y0*Math.sin(rx)+z1*Math.cos(rx);
+  return {sx:x1, sy:y2, z:z2};
+}
 
-      <p class="body-text">
-        Explaining The World is an independent media brand currently operating in history,
-        with plans to expand into science. We produce content for a global English-speaking
-        audience. As demand grows, we aim to reach every major language.
-      </p>
-      <p class="body-text">
-        We do not focus on speed. We focus on quality. Every video takes time because we
-        read the books, study the sources, and extract only what is genuinely worth your
-        attention.
-      </p>
+function frame(ts) {
+  if (!lastT) lastT = ts;
+  var dt = Math.min((ts-lastT)/1000, 0.1);
+  lastT = ts;
+  breathT += dt;
 
-      <nav class="about-links" aria-label="Additional pages">
-        <a href="faq.html">FAQ</a>
-        <a href="collaboration.html">Collaboration</a>
-        <a href="legal.html">Legal</a>
-      </nav>
-    </div>
-  </section>
+  /* Rotate right-to-left: rY decreases */
+  if (!dragging) rY -= (2*Math.PI/90)*dt;
 
+  var W = window.innerWidth, H = window.innerHeight;
+  canvas.width = W; canvas.height = H;
 
-  <!-- ══════════════════════════════════ SECTION 3 — HISTORY PANEL ══════════════════════════════════ -->
-  <section id="history-panel" role="link" tabindex="0" aria-label="Go to History">
-    <canvas id="civ-canvas" aria-hidden="true"></canvas>
-    <div class="hist-content">
-      <p class="hist-eyebrow">E T W</p>
-      <div class="hist-rule"></div>
-      <h2 class="hist-title">HISTORY</h2>
-      <p class="hist-tagline">
-        Lessons from every empire and its leader.<br>
-        History through one lens only &mdash; power.<br>
-        How it is taken. How it is held. How it is lost.
-      </p>
-      <span class="hist-cta">EXPLORE &#x2192;</span>
-    </div>
-  </section>
+  /* Breathing ellipse — organic, not mechanical */
+  var base = Math.min(W,H)*0.35;   /* 70vmin/2 */
+  var RX = base*(1+0.045*Math.sin(breathT*0.22));
+  var RY = base*(0.96+0.035*Math.cos(breathT*0.17+1.1));
+  var CX = W/2+6*Math.sin(breathT*0.13);
+  var CY = H/2+4*Math.cos(breathT*0.09+0.5);
+  curR = (RX+RY)/2;
 
+  ctx.clearRect(0,0,W,H);
 
-  <!-- ══════════════════════════════════ FOOTER ══════════════════════════════════ -->
-  <footer>
-    <p class="copyright">&#169; 2026 Explaining The World. All Rights Reserved.</p>
-  </footer>
+  /* Clip to globe ellipse */
+  ctx.save();
+  ctx.beginPath();
+  ctx.ellipse(CX,CY,RX,RY,0,0,Math.PI*2);
+  ctx.clip();
 
+  /* Continents */
+  ctx.lineWidth=1;
+  ctx.strokeStyle='rgba(196,147,42,0.6)';
+  ctx.fillStyle='rgba(26,31,94,0.4)';
 
-  <script src="assets/js/globe.js"></script>
-  <script src="assets/js/nav.js"></script>
-
-  <!-- Keyboard accessibility for history panel -->
-  <script>
-    (function () {
-      var panel = document.getElementById('history-panel');
-      if (panel) {
-        panel.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            window.location.href = 'history.html';
-          }
-        });
+  CONTS.forEach(function(c){
+    var cp=proj(c.clat,c.clon,rY,rX);
+    if(cp.z<-0.05) return;
+    ctx.beginPath();
+    var started=false, lastVis=false;
+    c.pts.forEach(function(p){
+      var r=proj(p[1],p[0],rY,rX);
+      var vis=r.z>-0.02;
+      var sx=CX+r.sx*RX, sy=CY-r.sy*RY;
+      if(vis){
+        if(!started||!lastVis){ctx.moveTo(sx,sy);started=true;}
+        else ctx.lineTo(sx,sy);
       }
-    })();
-  </script>
+      lastVis=vis;
+    });
+    if(started){ctx.closePath();ctx.fill();ctx.stroke();}
+  });
 
+  /* City dots */
+  ctx.fillStyle='rgba(196,147,42,0.5)';
+  CITIES.forEach(function(c){
+    var r=proj(c[0],c[1],rY,rX);
+    if(r.z<0.05) return;
+    ctx.beginPath();
+    ctx.arc(CX+r.sx*RX, CY-r.sy*RY, 2, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  ctx.restore();
+
+  /* Outer glow */
+  ctx.save();
+  var g=ctx.createRadialGradient(CX,CY,RX*0.88,CX,CY,RX*1.1);
+  g.addColorStop(0,'rgba(196,147,42,0)');
+  g.addColorStop(1,'rgba(196,147,42,0.03)');
+  ctx.beginPath();ctx.ellipse(CX,CY,RX*1.1,RY*1.1,0,0,Math.PI*2);
+  ctx.fillStyle=g;ctx.fill();
+  ctx.restore();
+
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+
+/* Drag on document — avoids blocking links/buttons */
+document.addEventListener('mousedown',function(e){
+  var t=e.target.tagName.toLowerCase();
+  if(t==='a'||t==='button'||t==='input') return;
+  dragging=true;mx=e.clientX;my=e.clientY;
+});
+window.addEventListener('mouseup',function(){dragging=false;});
+window.addEventListener('mousemove',function(e){
+  if(!dragging) return;
+  rY+=(e.clientX-mx)/curR;
+  rX+=(e.clientY-my)/curR;
+  rX=Math.max(-1.4,Math.min(1.4,rX));
+  mx=e.clientX;my=e.clientY;
+});
+document.addEventListener('touchstart',function(e){
+  if(e.touches.length!==1) return;
+  var t=e.target.tagName.toLowerCase();
+  if(t==='a'||t==='button') return;
+  dragging=true;mx=e.touches[0].clientX;my=e.touches[0].clientY;
+},{passive:true});
+window.addEventListener('touchend',function(){dragging=false;});
+window.addEventListener('touchmove',function(e){
+  if(!dragging||e.touches.length!==1) return;
+  rY+=(e.touches[0].clientX-mx)/curR;
+  rX+=(e.touches[0].clientY-my)/curR;
+  rX=Math.max(-1.4,Math.min(1.4,rX));
+  mx=e.touches[0].clientX;my=e.touches[0].clientY;
+},{passive:true});
+
+})();
+
+
+/* ════════════════════════════════════════
+   CIVILIZATION ANIMATION — history panel
+════════════════════════════════════════ */
+(function(){
+'use strict';
+
+var canvas=document.getElementById('civ-canvas');
+if(!canvas) return;
+var ctx=canvas.getContext('2d');
+var GOLD='#C4932A', MAX_A=0.07, CYCLE=30, civT=0, lastT=null;
+
+/* Smooth bell envelope over [s,e] seconds in cycle */
+function env(t,s,e){
+  var x=(t-s)/(e-s);
+  if(x<=0||x>=1) return 0;
+  return Math.sin(x*Math.PI);
+}
+
+/* Roman column */
+function pillar(x,baseY,h,a){
+  if(a<=0) return;
+  ctx.save();ctx.globalAlpha=MAX_A*a;ctx.strokeStyle=GOLD;ctx.lineWidth=1;
+  /* base */
+  ctx.strokeRect(x-9,baseY-h*0.05,18,h*0.05);
+  /* shaft */
+  ctx.strokeRect(x-4.5,baseY-h*0.93,9,h*0.88);
+  /* capital */
+  ctx.strokeRect(x-8,baseY-h,16,h*0.07);
+  ctx.restore();
+}
+
+/* Colosseum ellipse */
+function colosseum(a){
+  if(a<=0) return;
+  var W=canvas.width,H=canvas.height;
+  var cx=W/2,cy=H*0.58;
+  var rx=Math.min(W*0.26,170),ry=rx*0.54;
+  ctx.save();ctx.globalAlpha=MAX_A*a;ctx.strokeStyle=GOLD;ctx.lineWidth=1;
+  ctx.beginPath();ctx.ellipse(cx,cy,rx,ry,0,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.ellipse(cx,cy,rx*0.70,ry*0.70,0,0,Math.PI*2);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-rx,cy);ctx.lineTo(cx+rx,cy);ctx.stroke();
+  for(var i=0;i<8;i++){
+    var ang=(i/8)*Math.PI*2;
+    ctx.beginPath();
+    ctx.arc(cx+rx*0.85*Math.cos(ang),cy+ry*0.85*Math.sin(ang),4,0,Math.PI*2);
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+function civFrame(ts){
+  if(!lastT) lastT=ts;
+  var dt=Math.min((ts-lastT)/1000,0.1);lastT=ts;
+  civT+=dt;
+
+  var W=canvas.offsetWidth||900,H=canvas.offsetHeight||480;
+  canvas.width=W;canvas.height=H;
+  ctx.clearRect(0,0,W,H);
+
+  var t=civT%CYCLE;
+  var pA=env(t,0,28);               /* pillars: 0→28s */
+  var pProg=Math.min(1,t/8);        /* rise over 8s */
+  var cA=env(t,6,26);               /* colosseum: 6→26s */
+
+  /* 5 columns across */
+  var baseY=H*0.84,pH=H*0.34,cx=W/2,sp=W*0.088;
+  [-2,-1,0,1,2].forEach(function(i){
+    pillar(cx+i*sp, baseY, pH*pProg, pA);
+  });
+
+  colosseum(cA);
+  requestAnimationFrame(civFrame);
+}
+requestAnimationFrame(civFrame);
+
+/* Panel click */
+var panel=document.getElementById('history-panel');
+if(panel) panel.addEventListener('click',function(){window.location.href='history.html';});
+
+})();
+
+
+/* ════════════════════════════════════════
+   NAVBAR — hamburger / overlay
+════════════════════════════════════════ */
+(function(){
+'use strict';
+var hbg=document.getElementById('hbg');
+var ov=document.getElementById('overlay');
+var ovc=document.getElementById('ov-close');
+
+function open(){ov.classList.add('open');document.body.style.overflow='hidden';}
+function close(){ov.classList.remove('open');document.body.style.overflow='';}
+
+if(hbg) hbg.addEventListener('click',open);
+if(ovc) ovc.addEventListener('click',close);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+
+/* Close overlay when an overlay link is clicked */
+document.querySelectorAll('#overlay a').forEach(function(a){
+  a.addEventListener('click',close);
+});
+})();
+</script>
 </body>
 </html>
