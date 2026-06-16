@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ETW — Explaining The World</title>
+<title>About — Explaining The World</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -14,14 +14,14 @@ html,body{
   font-family:'Source Serif 4',serif;
 }
 
-#globe-canvas{
+#bg-canvas{
   position:fixed;
   top:0;left:0;
   width:100vw;height:100vh;
   z-index:0;
   pointer-events:none;
   display:block;
-  opacity:0.7;
+  opacity:0.25;
 }
 
 /* NAV */
@@ -124,8 +124,7 @@ html,body{
 .hero{
   position:relative;
   z-index:10;
-  height:100vh;
-  background:transparent;
+  height:60vh;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -139,138 +138,83 @@ html,body{
   font-size:10px;
   letter-spacing:0.5em;
   text-transform:uppercase;
-  margin-bottom:24px;
-}
-.hero-title{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-  color:#F0EDE6;
-  font-size:clamp(72px,13vw,148px);
-  letter-spacing:0.15em;
-  text-indent:0.15em;
-  line-height:1;
-  text-shadow:0 0 80px rgba(0,0,0,0.95);
 }
 .hero-rule{
   width:80px;
   height:1px;
   background:#C4932A;
-  margin:28px auto;
+  margin:20px auto;
 }
-.hero-tagline{
-  font-family:'Source Serif 4',serif;
-  font-style:italic;
-  color:rgba(240,237,230,0.7);
-  font-size:16px;
-  line-height:1.8;
-  max-width:320px;
-  text-align:center;
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(40px,6vw,64px);
+  letter-spacing:0.15em;
+  text-indent:0.15em;
+  line-height:1.1;
+  text-shadow:0 0 60px rgba(0,0,0,0.9);
 }
 
-/* ABOUT */
-#about{
+/* ABOUT TEXT */
+#about-text{
   position:relative;
   z-index:10;
   width:100%;
-  background:rgba(10,15,46,0.85);
-  padding:100px 56px;
-  border:1px solid rgba(196,147,42,0.12);
-  transition:border 0.4s;
+  background:rgba(10,15,46,0.88);
+  padding:80px clamp(28px,8vw,120px);
 }
-#about:hover{border-color:rgba(196,147,42,0.5);}
 .about-inner{
-  max-width:640px;
+  max-width:760px;
   margin:0 auto;
-}
-.about-label{
-  font-family:'DM Mono',monospace;
-  color:rgba(196,147,42,0.6);
-  font-size:9px;
-  letter-spacing:0.5em;
-  text-transform:uppercase;
-  margin-bottom:40px;
-  display:block;
 }
 .about-body{
   font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.75);
+  color:#F0EDE6;
   font-size:17px;
   line-height:2;
 }
 .about-body+.about-body{margin-top:28px;}
 
-/* DIVIDER */
-.divider{
+/* BOXES */
+#boxes{
   position:relative;
   z-index:10;
-  width:100%;
-  height:1px;
-  background:linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(196,147,42,0.3) 30%,
-    rgba(196,147,42,0.5) 50%,
-    rgba(196,147,42,0.3) 70%,
-    transparent 100%
-  );
+  padding:80px 56px;
 }
-
-/* HISTORY */
-#history{
-  position:relative;
-  z-index:10;
-  width:100%;
-  min-height:520px;
-  background:rgba(13,11,8,0.75);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:120px 56px;
+.box-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+  max-width:900px;
+  margin:0 auto;
+}
+.box{
+  background:rgba(10,15,46,0.6);
+  border:1px solid rgba(196,147,42,0.2);
+  padding:40px 32px;
   cursor:pointer;
-  border:1px solid rgba(196,147,42,0.12);
-  transition:border 0.4s;
+  transition:border-color 0.3s;
 }
-#history:hover{border-color:rgba(196,147,42,0.5);}
-.hist-label{
+.box:hover{border-color:rgba(196,147,42,0.6);}
+.box-label{
   font-family:'DM Mono',monospace;
-  color:rgba(196,147,42,0.7);
+  color:#C4932A;
   font-size:9px;
-  letter-spacing:0.5em;
-  text-transform:uppercase;
-  margin-bottom:20px;
-}
-.hist-rule{
-  width:50px;
-  height:1px;
-  background:#C4932A;
-  margin:0 auto 24px;
-}
-.hist-title{
-  font-family:'Playfair Display',serif;
-  font-weight:700;
-  color:#F0EDE6;
-  font-size:clamp(48px,8vw,80px);
-  letter-spacing:0.15em;
-}
-.hist-tag{
-  font-family:'Source Serif 4',serif;
-  font-style:italic;
-  color:rgba(196,147,42,0.8);
-  font-size:15px;
-  max-width:400px;
-  margin:28px auto 0;
-  line-height:1.9;
-}
-.hist-cta{
-  font-family:'DM Mono',monospace;
-  color:rgba(196,147,42,0.6);
-  font-size:10px;
   letter-spacing:0.4em;
   text-transform:uppercase;
-  margin-top:56px;
-  display:block;
+}
+.box-rule{
+  width:40px;
+  height:1px;
+  background:#C4932A;
+  margin:16px 0;
+}
+.box-text{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.6);
+  font-size:13px;
+  line-height:1.6;
 }
 
 /* FOOTER */
@@ -301,19 +245,21 @@ footer{
   #nav{padding:20px 24px;}
   .nav-right{display:none;}
   .hamburger{display:flex;}
-  .hero{padding:0 24px;}
-  #about{padding:100px 28px;}
-  #history{padding:80px 28px;}
+  .box-grid{grid-template-columns:repeat(2,1fr);}
+  #boxes{padding:60px 24px;}
   footer{padding:32px 24px;}
+}
+@media(max-width:480px){
+  .box-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
-<canvas id="globe-canvas"></canvas>
+<canvas id="bg-canvas"></canvas>
 
 <nav id="nav">
-  <a href="/" class="nav-logo">ETW</a>
+  <a href="index.html" class="nav-logo">ETW</a>
   <div class="nav-right">
     <a href="history.html" class="nav-link">History</a>
     <button class="yt-btn" onclick="window.open('https://youtube.com/@etw_official','_blank')" aria-label="YouTube">
@@ -334,28 +280,41 @@ footer{
 </div>
 
 <section class="hero">
-  <p class="hero-label">Explaining The World</p>
-  <h1 class="hero-title">ETW</h1>
+  <p class="hero-label">About</p>
   <div class="hero-rule"></div>
-  <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
+  <h1 class="hero-title">EXPLAINING THE WORLD</h1>
 </section>
 
-<section id="about">
+<section id="about-text">
   <div class="about-inner">
-    <span class="about-label">About</span>
-    <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history, expanding reach across languages as demand grows.</p>
-    <p class="about-body">We go into depth to find every detail that matters. That takes time. We do not rush it.</p>
+    <p class="about-body">Explaining The World is an independent media brand producing content for a global English-speaking audience, currently focused on history — expanding across subjects and languages as we grow.</p>
+    <p class="about-body">We go into the depth of every source and every book to find every detail that matters. We do not brush past anything.</p>
   </div>
 </section>
 
-<div class="divider"></div>
-
-<section id="history" onclick="window.location='history.html'">
-  <p class="hist-label">ETW</p>
-  <div class="hist-rule"></div>
-  <h2 class="hist-title">HISTORY</h2>
-  <p class="hist-tag">Lessons from every empire and its leader.<br>History through one lens only — power.<br>How it was achieved. How it was held.<br>How it was lost.</p>
-  <span class="hist-cta">EXPLORE &#x2192;</span>
+<section id="boxes">
+  <div class="box-grid">
+    <div class="box" onclick="window.location='faq.html'">
+      <p class="box-label">FAQ</p>
+      <div class="box-rule"></div>
+      <p class="box-text">Common questions about ETW.</p>
+    </div>
+    <div class="box" onclick="window.location='collaboration.html'">
+      <p class="box-label">Collaboration</p>
+      <div class="box-rule"></div>
+      <p class="box-text">Work with us or apply for a position.</p>
+    </div>
+    <div class="box" onclick="window.location='legal.html'">
+      <p class="box-label">Legal</p>
+      <div class="box-rule"></div>
+      <p class="box-text">Terms of use, privacy policy, and copyright.</p>
+    </div>
+    <div class="box" onclick="window.location='mailto:explainingtheworld@gmail.com'">
+      <p class="box-label">Contact</p>
+      <div class="box-rule"></div>
+      <p class="box-text">Get in touch directly.</p>
+    </div>
+  </div>
 </section>
 
 <footer>
@@ -365,107 +324,59 @@ footer{
 
 <script>
 (function(){
-  var canvas = document.getElementById('globe-canvas');
+  var canvas = document.getElementById('bg-canvas');
   var ctx = canvas.getContext('2d');
-  var W, H, cx, cy, R;
-  var rotDeg = 0;
+  var W, H, sunX, sunY;
 
-  var CONTS = [
-    // Africa
-    [[37,-10],[38,22],[30,32],[12,42],[2,42],
-     [-5,37],[-18,37],[-35,20],[-35,-5],
-     [-20,-15],[-5,-10],[5,-5],[15,-5],[20,10],[37,-10]],
-    // Europe
-    [[36,-10],[36,28],[55,28],[60,15],
-     [58,5],[55,-5],[50,-5],[45,-10],[36,-10]],
-    // Asia
-    [[37,28],[37,60],[55,60],[70,55],[70,80],
-     [55,80],[40,75],[20,80],[5,100],[5,120],
-     [20,120],[35,120],[55,130],[60,140],
-     [70,140],[70,100],[80,80],[80,60],
-     [70,40],[60,28],[37,28]],
-    // North America
-    [[70,-140],[70,-60],[50,-55],[45,-60],
-     [30,-80],[25,-90],[20,-105],[20,-120],
-     [30,-120],[40,-125],[55,-130],[70,-140]],
-    // South America
-    [[10,-75],[10,-50],[-10,-35],[-20,-40],
-     [-35,-55],[-55,-65],[-55,-70],[-35,-70],
-     [-20,-70],[-5,-80],[10,-75]],
-    // Oceania
-    [[-15,130],[-15,145],[-30,150],[-40,145],
-     [-38,140],[-30,135],[-20,130],[-15,130]]
+  // Planets: [color, semi-minor (x radius), semi-major (y radius), size, speed, phase]
+  var PLANETS = [
+    ['rgba(196,147,42,0.8)',  90,  150, 5, 0.00040, 0],
+    ['rgba(140,160,190,0.8)', 150, 250, 7, 0.00026, 1.4],
+    ['rgba(170,90,60,0.8)',   220, 360, 6, 0.00018, 3.0],
+    ['rgba(230,225,210,0.8)', 300, 480, 8, 0.00012, 4.6]
   ];
-
-  // Centroid [latDeg, lonDeg] for culling
-  var CENTS = CONTS.map(function(p){
-    var n=p.length-1, la=0, lo=0;
-    for(var i=0;i<n;i++){la+=p[i][0];lo+=p[i][1];}
-    return [la/n, lo/n];
-  });
 
   function resize(){
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    cx = W/2; cy = H/2;
-    R = Math.min(W,H)*0.40;
+    sunX = W * 0.22;
+    sunY = H / 2;
   }
 
-  function proj(lat, lon){
-    var lonR = (lon - rotDeg) * Math.PI/180;
-    var latR = lat * Math.PI/180;
-    return {
-      x: cx + R * Math.cos(latR) * Math.sin(lonR),
-      y: cy - R * Math.sin(latR),
-      v: Math.cos(latR) * Math.cos(lonR)
-    };
-  }
-
-  function frame(){
+  function frame(t){
     ctx.clearRect(0,0,W,H);
 
-    // Clip to globe circle, draw continents
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.clip();
-
-    ctx.fillStyle = 'rgba(80,55,25,0.35)';
-    ctx.strokeStyle = 'rgba(196,147,42,0.45)';
-    ctx.lineWidth = 0.8;
-
-    for(var i=0;i<CONTS.length;i++){
-      var c = CENTS[i];
-      var cLonR = (c[1]-rotDeg)*Math.PI/180;
-      var cLatR = c[0]*Math.PI/180;
-      if(Math.cos(cLatR)*Math.cos(cLonR) <= 0) continue;
-
-      var poly = CONTS[i];
+    // Orbit paths
+    for(var i=0;i<PLANETS.length;i++){
+      var p = PLANETS[i];
       ctx.beginPath();
-      for(var j=0;j<poly.length;j++){
-        var p = proj(poly[j][0],poly[j][1]);
-        if(j===0) ctx.moveTo(p.x,p.y);
-        else ctx.lineTo(p.x,p.y);
-      }
-      ctx.closePath();
-      ctx.fill();
+      ctx.ellipse(sunX, sunY, p[1], p[2], 0, 0, Math.PI*2);
+      ctx.strokeStyle = 'rgba(196,147,42,0.06)';
+      ctx.lineWidth = 1;
       ctx.stroke();
     }
 
-    ctx.restore();
-
-    // Atmosphere
-    var ag = ctx.createRadialGradient(cx,cy,R*0.92,cx,cy,R*1.18);
-    ag.addColorStop(0,'rgba(180,200,255,0.07)');
-    ag.addColorStop(0.6,'rgba(180,200,255,0.02)');
-    ag.addColorStop(1,'rgba(180,200,255,0)');
+    // Sun glow
+    var sg = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 40);
+    sg.addColorStop(0,'rgba(196,147,42,0.6)');
+    sg.addColorStop(1,'rgba(196,147,42,0)');
     ctx.beginPath();
-    ctx.arc(cx,cy,R*1.18,0,Math.PI*2);
-    ctx.fillStyle = ag;
+    ctx.arc(sunX, sunY, 40, 0, Math.PI*2);
+    ctx.fillStyle = sg;
     ctx.fill();
 
+    // Planets
+    for(var k=0;k<PLANETS.length;k++){
+      var pl = PLANETS[k];
+      var a = t * pl[4] + pl[5];
+      var x = sunX + pl[1] * Math.cos(a);
+      var y = sunY + pl[2] * Math.sin(a);
+      ctx.beginPath();
+      ctx.arc(x, y, pl[3], 0, Math.PI*2);
+      ctx.fillStyle = pl[0];
+      ctx.fill();
+    }
 
-    rotDeg += 0.02;
     requestAnimationFrame(frame);
   }
 
