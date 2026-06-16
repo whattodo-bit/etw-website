@@ -127,28 +127,33 @@ html, body {
   text-align: center;
   padding: 0 24px;
 }
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  margin-bottom: 32px;
-}
 .hero-title {
   font-family: 'Playfair Display', serif;
   font-weight: 700;
   color: #F0EDE6;
-  font-size: clamp(72px, 12vw, 140px);
-  letter-spacing: 0.2em;
+  font-size: clamp(80px, 14vw, 150px);
+  letter-spacing: 0.3em;
   line-height: 1;
+  text-align: center;
+  display: block;
+  width: 100%;
   text-shadow: 0 0 60px rgba(0,0,0,1), 0 0 120px rgba(0,0,0,0.8);
 }
 .hero-rule {
-  width: 120px;
+  width: 100px;
   height: 1px;
   background: #C4932A;
-  margin: 28px auto;
+  margin: 20px auto;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  color: #C4932A;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  text-align: center;
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
 }
 .hero-tagline {
   font-family: 'Source Serif 4', serif;
@@ -156,8 +161,9 @@ html, body {
   color: #F0EDE6;
   font-size: 17px;
   line-height: 1.9;
-  max-width: 380px;
+  max-width: 360px;
   text-align: center;
+  margin: 0 auto;
   text-shadow: 0 2px 30px rgba(0,0,0,1);
 }
 
@@ -167,18 +173,13 @@ html, body {
   z-index: 10;
   background: transparent;
   padding: 140px 48px;
+}
+.about-box {
+  border: 1px solid rgba(196,147,42,0.4);
+  background: rgba(196,147,42,0.04);
+  padding: 48px;
   max-width: 680px;
   margin: 0 auto;
-  text-align: left;
-}
-.about-eyebrow {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 10px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  margin-bottom: 48px;
-  display: block;
 }
 .body-p {
   font-family: 'Source Serif 4', serif;
@@ -187,20 +188,6 @@ html, body {
   line-height: 2;
 }
 .body-p + .body-p { margin-top: 24px; }
-.about-cta {
-  font-family: 'DM Mono', monospace;
-  color: #C4932A;
-  font-size: 10px;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  text-decoration: none;
-  margin-top: 48px;
-  display: inline-block;
-  border-bottom: 1px solid rgba(196,147,42,0.3);
-  padding-bottom: 4px;
-  transition: border-color 0.3s;
-}
-.about-cta:hover { border-color: #C4932A; }
 
 /* DIVIDER */
 .gold-divider {
@@ -330,17 +317,17 @@ footer {
 </div>
 
 <section class="hero">
-  <p class="hero-eyebrow">Explaining The World</p>
   <h1 class="hero-title">E T W</h1>
   <div class="hero-rule"></div>
+  <p class="hero-eyebrow">Explaining The World</p>
   <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
 </section>
 
 <section id="about">
-  <span class="about-eyebrow">About</span>
-  <p class="body-p">Explaining The World is an independent media brand. We produce content for a global English-speaking audience — currently focused on history.</p>
-  <p class="body-p">We make content by reading real books and real sources. That takes time. We do not rush it.</p>
-  <a href="about.html" class="about-cta">About &#x2192;</a>
+  <div class="about-box">
+    <p class="body-p">Explaining The World is an independent media brand. We produce content for a global English-speaking audience — currently focused on history.</p>
+    <p class="body-p">We make content by reading real books and real sources. That takes time. We do not rush it.</p>
+  </div>
 </section>
 
 <div class="gold-divider"></div>
@@ -450,6 +437,13 @@ footer {
     }
 
     ctx.restore();
+
+    // Globe border ring
+    ctx.beginPath();
+    ctx.arc(CX, CY, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(196,147,42,0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
 
     rotation += 0.0008;
     requestAnimationFrame(frame);
