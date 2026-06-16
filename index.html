@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{
-  background:#08090E;
+  background:#0A0F2E;
   color:#F0EDE6;
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
@@ -89,7 +89,7 @@ html,body{
   display:none;
   position:fixed;
   inset:0;
-  background:rgba(8,9,14,0.97);
+  background:rgba(10,15,46,0.97);
   z-index:200;
   flex-direction:column;
   align-items:center;
@@ -170,10 +170,19 @@ html,body{
 #about{
   position:relative;
   z-index:10;
-  background:transparent;
   padding:160px 56px;
   max-width:640px;
   margin:0 auto;
+}
+.about-inner{
+  border:1px solid rgba(196,147,42,0.15);
+  background:rgba(196,147,42,0.02);
+  padding:48px;
+  transition:all 0.4s;
+}
+.about-inner:hover{
+  border-color:rgba(196,147,42,0.5);
+  background:rgba(196,147,42,0.06);
 }
 .about-label{
   font-family:'DM Mono',monospace;
@@ -222,10 +231,13 @@ html,body{
   text-align:center;
   padding:120px 56px;
   cursor:pointer;
-  outline:1px solid rgba(196,147,42,0.1);
-  transition:outline-color 0.4s;
+  outline:1px solid rgba(196,147,42,0.12);
+  transition:all 0.4s;
 }
-#history:hover{outline-color:rgba(196,147,42,0.35);}
+#history:hover{
+  outline-color:rgba(196,147,42,0.5);
+  background:rgba(13,11,8,0.95);
+}
 .hist-label{
   font-family:'DM Mono',monospace;
   color:rgba(196,147,42,0.7);
@@ -281,10 +293,23 @@ html,body{
 footer{
   position:relative;
   z-index:10;
-  background:#08090E;
+  background:#0A0F2E;
   padding:48px 56px;
   text-align:center;
 }
+.footer-top-arrow{
+  display:block;
+  font-family:'DM Mono',monospace;
+  color:rgba(196,147,42,0.4);
+  font-size:20px;
+  cursor:pointer;
+  margin-bottom:32px;
+  transition:color 0.3s;
+  background:none;
+  border:none;
+  width:100%;
+}
+.footer-top-arrow:hover{color:rgba(196,147,42,0.9);}
 .footer-rule{
   width:160px;
   height:1px;
@@ -345,9 +370,11 @@ footer{
 </section>
 
 <section id="about">
-  <span class="about-label">About</span>
-  <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history.</p>
-  <p class="about-body">We make content by reading real books and real sources. This takes time. We do not rush it.</p>
+  <div class="about-inner">
+    <span class="about-label">About</span>
+    <p class="about-body">Explaining The World is an independent media brand. We produce content for a global English-speaking audience, currently focused on history.</p>
+    <p class="about-body">We make content by reading real books and real sources. This takes time. We do not rush it.</p>
+  </div>
 </section>
 
 <div class="divider"></div>
@@ -362,6 +389,7 @@ footer{
 </section>
 
 <footer>
+  <button class="footer-top-arrow" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#x2191;</button>
   <span class="footer-rule"></span>
   <p class="footer-copy">&#169; 2026 EXPLAINING THE WORLD.<br>ALL RIGHTS RESERVED.</p>
 </footer>
@@ -441,7 +469,7 @@ footer{
       var c = CENTS[i];
       var cLonR = (c[1]-rotDeg)*Math.PI/180;
       var cLatR = c[0]*Math.PI/180;
-      if(Math.cos(cLatR)*Math.cos(cLonR) < -0.1) continue;
+      if(Math.cos(cLatR)*Math.cos(cLonR) <= 0) continue;
 
       var poly = CONTS[i];
       ctx.beginPath();
@@ -466,12 +494,6 @@ footer{
     ctx.fillStyle = ag;
     ctx.fill();
 
-    // Globe edge
-    ctx.beginPath();
-    ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.strokeStyle = 'rgba(196,147,42,0.2)';
-    ctx.lineWidth = 0.5;
-    ctx.stroke();
 
     rotDeg += 0.02;
     requestAnimationFrame(frame);
