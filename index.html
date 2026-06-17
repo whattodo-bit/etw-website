@@ -16,14 +16,13 @@ html,body{
   font-family:'Source Serif 4',serif;
 }
 
-#globe-canvas{
+#mon-canvas{
   position:fixed;
   top:0;left:0;
   width:100vw;height:100vh;
   z-index:0;
   pointer-events:none;
   display:block;
-  opacity:0.7;
 }
 
 /* NAV */
@@ -81,16 +80,7 @@ html,body{
   width:80px;
   height:1px;
   background:#C4932A;
-  margin:28px auto;
-}
-.hero-tagline{
-  font-family:'Source Serif 4',serif;
-  font-style:italic;
-  color:rgba(240,237,230,0.7);
-  font-size:16px;
-  line-height:1.8;
-  max-width:340px;
-  text-align:center;
+  margin:28px auto 0;
 }
 
 /* PANELS (about + history, side by side) */
@@ -150,6 +140,15 @@ html,body{
   margin-top:20px;
   line-height:1.9;
 }
+.about-quote{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(196,147,42,0.8);
+  font-size:15px;
+  max-width:400px;
+  margin:16px auto 0;
+  line-height:1.9;
+}
 .about-cta{
   font-family:'DM Mono',monospace;
   color:#C4932A;
@@ -204,7 +203,7 @@ footer{
   position:relative;
   z-index:10;
   background:#0A0F2E;
-  padding:24px;
+  padding:20px;
   text-align:center;
 }
 .footer-copy{
@@ -212,6 +211,7 @@ footer{
   color:rgba(240,237,230,0.25);
   font-size:10px;
   letter-spacing:0.15em;
+  white-space:nowrap;
 }
 
 /* MOBILE */
@@ -225,7 +225,7 @@ footer{
 </head>
 <body>
 
-<canvas id="globe-canvas"></canvas>
+<canvas id="mon-canvas"></canvas>
 
 <nav id="nav"></nav>
 
@@ -233,7 +233,6 @@ footer{
   <p class="hero-label">Explaining The World</p>
   <h1 class="hero-title">ETW</h1>
   <div class="hero-rule"></div>
-  <p class="hero-tagline">We provide what is valuable.<br>Not what is popular.</p>
 </section>
 
 <section class="panels">
@@ -242,6 +241,7 @@ footer{
     <div class="about-rule"></div>
     <h2 class="about-title">EXPLAINING THE WORLD</h2>
     <p class="about-tag">We produce content for a global English-speaking audience, currently focused on history. We go into depth by reading every book and resource that matters.</p>
+    <p class="about-quote">We provide what is valuable.<br>Not what is popular.</p>
     <span class="about-cta">EXPLORE &#x2192;</span>
   </div>
   <div id="history" class="panel" onclick="window.location='history.html'">
@@ -259,124 +259,152 @@ footer{
 
 <script>
 (function(){
-  var canvas = document.getElementById('globe-canvas');
+  var canvas = document.getElementById('mon-canvas');
   var ctx = canvas.getContext('2d');
-  var W, H, cx, cy, R;
-  var rotDeg = 0;
-
-  var CONTS = [
-    // Africa
-    [[37.2,-5.4],[36.9,10.0],[30.0,32.0],
-     [11.8,42.6],[1.7,42.1],[-4.6,36.7],
-     [-17.5,37.3],[-34.8,19.9],[-34.5,-4.5],
-     [-19.0,-12.5],[-4.5,-10.0],[5.0,-5.0],
-     [14.7,-4.9],[22.5,2.5],[37.2,-5.4]],
-    // Europe
-    [[35.9,-5.3],[35.9,28.2],[41.0,28.9],
-     [45.0,35.0],[47.0,39.0],[55.0,28.0],
-     [60.0,24.0],[58.0,8.0],[55.0,5.0],
-     [51.0,-2.0],[47.0,-2.0],[43.4,-8.6],
-     [36.0,-5.5],[35.9,-5.3]],
-    // Asia
-    [[36.0,28.0],[36.0,36.0],[39.0,41.0],
-     [42.0,48.0],[55.0,60.0],[70.0,60.0],
-     [72.0,75.0],[70.0,100.0],[53.0,142.0],
-     [45.0,135.0],[22.0,120.0],[1.0,104.0],
-     [1.0,100.0],[8.0,77.0],[22.0,70.0],
-     [24.0,62.0],[22.0,58.0],[12.0,45.0],
-     [36.0,36.0],[36.0,28.0]],
-    // North America
-    [[71.0,-156.0],[71.0,-78.0],[60.0,-64.0],
-     [47.0,-52.0],[44.0,-66.0],[35.0,-75.0],
-     [25.0,-80.0],[25.0,-90.0],[16.0,-88.0],
-     [16.0,-92.0],[20.0,-105.0],[23.0,-110.0],
-     [30.0,-116.0],[32.0,-117.0],[37.0,-122.0],
-     [48.0,-124.0],[60.0,-140.0],[71.0,-156.0]],
-    // South America
-    [[12.0,-72.0],[10.0,-62.0],[8.0,-60.0],
-     [5.0,-52.0],[-4.0,-35.0],[-15.0,-39.0],
-     [-23.0,-43.0],[-33.0,-53.0],[-55.0,-65.0],
-     [-54.0,-70.0],[-45.0,-75.0],[-18.0,-70.0],
-     [-4.0,-81.0],[0.0,-78.0],[5.0,-77.0],
-     [12.0,-72.0]],
-    // Oceania
-    [[-14.0,130.0],[-14.0,136.0],[-12.0,142.0],
-     [-18.0,146.0],[-28.0,153.0],[-38.0,147.0],
-     [-39.0,140.0],[-34.0,136.0],[-32.0,132.0],
-     [-22.0,114.0],[-14.0,128.0],[-14.0,130.0]]
-  ];
-
-  // Centroid [latDeg, lonDeg] for culling
-  var CENTS = CONTS.map(function(p){
-    var n=p.length-1, la=0, lo=0;
-    for(var i=0;i<n;i++){la+=p[i][0];lo+=p[i][1];}
-    return [la/n, lo/n];
-  });
+  var W, H;
 
   function resize(){
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    cx = W/2; cy = H/2;
-    R = Math.min(W,H)*0.40;
   }
-
-  function proj(lat, lon){
-    var lonR = (lon - rotDeg) * Math.PI/180;
-    var latR = lat * Math.PI/180;
-    return {
-      x: cx + R * Math.cos(latR) * Math.sin(lonR),
-      y: cy - R * Math.sin(latR)
-    };
-  }
-
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(cx,cy,R,0,Math.PI*2);
-    ctx.clip();
-
-    ctx.fillStyle = 'rgba(80,55,25,0.35)';
-    ctx.strokeStyle = 'rgba(196,147,42,0.5)';
-    ctx.lineWidth = 0.8;
-
-    for(var i=0;i<CONTS.length;i++){
-      var c = CENTS[i];
-      var cLonR = (c[1]-rotDeg)*Math.PI/180;
-      var cLatR = c[0]*Math.PI/180;
-      if(Math.cos(cLatR)*Math.cos(cLonR) <= 0) continue;
-
-      var poly = CONTS[i];
-      ctx.beginPath();
-      for(var j=0;j<poly.length;j++){
-        var p = proj(poly[j][0],poly[j][1]);
-        if(j===0) ctx.moveTo(p.x,p.y);
-        else ctx.lineTo(p.x,p.y);
-      }
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-    }
-
-    ctx.restore();
-
-    // Atmosphere — blue glow
-    var ag = ctx.createRadialGradient(cx,cy,R*0.92,cx,cy,R*1.18);
-    ag.addColorStop(0,'rgba(100,140,255,0.07)');
-    ag.addColorStop(0.6,'rgba(100,140,255,0.02)');
-    ag.addColorStop(1,'rgba(100,140,255,0)');
-    ctx.beginPath();
-    ctx.arc(cx,cy,R*1.18,0,Math.PI*2);
-    ctx.fillStyle = ag;
-    ctx.fill();
-
-    rotDeg += 0.02;
-    requestAnimationFrame(frame);
-  }
-
   window.addEventListener('resize', resize);
   resize();
+
+  // Each monument drawn as gold line-art, anchored near center-bottom.
+  function base(){ return { x: W/2, y: H*0.72, s: Math.min(W,H)*0.16 }; }
+
+  function pyramid(){
+    var b = base(), s = b.s;
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y - s*1.4);
+    ctx.lineTo(b.x + s*1.3, b.y);
+    ctx.lineTo(b.x - s*1.3, b.y);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y - s*1.4);
+    ctx.lineTo(b.x - s*0.18, b.y);
+    ctx.stroke();
+  }
+
+  function parthenon(){
+    var b = base(), s = b.s;
+    var w = s*1.5, top = b.y - s*1.3;
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, top + s*0.45);
+    ctx.lineTo(b.x, top);
+    ctx.lineTo(b.x + w, top + s*0.45);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, top + s*0.45);
+    ctx.lineTo(b.x + w, top + s*0.45);
+    ctx.moveTo(b.x - w, top + s*0.62);
+    ctx.lineTo(b.x + w, top + s*0.62);
+    ctx.stroke();
+    var n = 6;
+    for(var i=0;i<n;i++){
+      var cx = b.x - w*0.82 + (i*(w*1.64)/(n-1));
+      ctx.beginPath();
+      ctx.moveTo(cx, top + s*0.62);
+      ctx.lineTo(cx, b.y);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, b.y);
+    ctx.lineTo(b.x + w, b.y);
+    ctx.stroke();
+  }
+
+  function colosseum(){
+    var b = base(), s = b.s;
+    var w = s*1.5, top = b.y - s*1.25;
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, b.y);
+    ctx.lineTo(b.x - w, top + s*0.4);
+    ctx.quadraticCurveTo(b.x, top - s*0.25, b.x + w, top + s*0.4);
+    ctx.lineTo(b.x + w, b.y);
+    ctx.stroke();
+    var tiers = 3;
+    for(var t=0;t<tiers;t++){
+      var ty = top + s*0.55 + t*s*0.4;
+      ctx.beginPath();
+      ctx.moveTo(b.x - w, ty);
+      ctx.lineTo(b.x + w, ty);
+      ctx.stroke();
+      for(var a=-3;a<=3;a++){
+        var ax = b.x + a*(w/3.4);
+        ctx.beginPath();
+        ctx.arc(ax, ty + s*0.18, s*0.12, Math.PI, 0, true);
+        ctx.stroke();
+      }
+    }
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, b.y);
+    ctx.lineTo(b.x + w, b.y);
+    ctx.stroke();
+  }
+
+  function castle(){
+    var b = base(), s = b.s;
+    var w = s*0.55, top = b.y - s*1.6;
+    ctx.beginPath();
+    ctx.moveTo(b.x - w, b.y);
+    ctx.lineTo(b.x - w, top);
+    ctx.lineTo(b.x + w, top);
+    ctx.lineTo(b.x + w, b.y);
+    ctx.stroke();
+    var merl = 5;
+    ctx.beginPath();
+    for(var i=0;i<merl;i++){
+      var mx = b.x - w + i*(2*w/merl);
+      var mw = (2*w/merl);
+      ctx.moveTo(mx, top);
+      ctx.lineTo(mx, top - s*0.18);
+      ctx.lineTo(mx + mw*0.5, top - s*0.18);
+      ctx.lineTo(mx + mw*0.5, top);
+    }
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(b.x - s*0.18, b.y);
+    ctx.lineTo(b.x - s*0.18, b.y - s*0.4);
+    ctx.arc(b.x, b.y - s*0.4, s*0.18, Math.PI, 0, false);
+    ctx.lineTo(b.x + s*0.18, b.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(b.x, top + s*0.45, s*0.1, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  var MON = [pyramid, parthenon, colosseum, castle];
+  var HOLD = 8000;
+  var startT = null;
+
+  function easeFade(p){
+    if(p < 0.25) return p/0.25;
+    if(p > 0.75) return (1-p)/0.25;
+    return 1;
+  }
+
+  function frame(t){
+    if(startT === null) startT = t;
+    var elapsed = t - startT;
+    var cycle = MON.length * HOLD;
+    var local = elapsed % cycle;
+    var idx = Math.floor(local / HOLD);
+    var p = (local % HOLD) / HOLD;
+
+    ctx.clearRect(0,0,W,H);
+
+    var alpha = 0.07 * easeFade(p);
+    ctx.strokeStyle = 'rgba(196,147,42,' + alpha.toFixed(3) + ')';
+    ctx.lineWidth = 1.4;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    MON[idx]();
+
+    requestAnimationFrame(frame);
+  }
   requestAnimationFrame(frame);
 }());
 </script>

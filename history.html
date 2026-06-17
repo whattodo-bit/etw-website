@@ -102,11 +102,30 @@ html,body{
   max-width:860px;
   margin:0 auto;
 }
-.video-wrap iframe{
+.video-frame{
+  position:relative;
   width:100%;
   aspect-ratio:16/9;
+}
+.video-frame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   border:none;
   display:block;
+}
+.recent-badge{
+  position:absolute;
+  top:-12px;
+  left:0;
+  background:#C4932A;
+  color:#0A0A0A;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:0.3em;
+  padding:4px 10px;
+  z-index:2;
 }
 .video-title{
   font-family:'Playfair Display',serif;
@@ -115,77 +134,105 @@ html,body{
   margin-top:24px;
   line-height:1.4;
 }
-.social-row{
+.video-buttons{
   display:flex;
   justify-content:center;
-  gap:28px;
+  gap:16px;
   margin-top:28px;
+  flex-wrap:wrap;
 }
-.social-row a{
-  color:rgba(240,237,230,0.4);
-  display:flex;
-  align-items:center;
-  transition:color 0.3s;
-}
-.social-row a:hover{color:#C4932A;}
-
-/* RESOURCES */
-#resources{
-  position:relative;
-  z-index:10;
-  background:rgba(10,8,5,0.9);
-  padding:80px clamp(24px,8vw,120px);
-  text-align:center;
-}
-.res-label{
-  font-family:'DM Mono',monospace;
-  color:#C4932A;
-  font-size:10px;
-  letter-spacing:0.5em;
-  text-transform:uppercase;
-  margin-bottom:40px;
-}
-.res-rule{
-  width:60px;
-  height:1px;
-  background:#C4932A;
-  margin:0 auto 48px;
-}
-.res-card{
-  max-width:600px;
-  margin:0 auto;
-  background:rgba(13,11,8,0.8);
-  border:1px solid rgba(196,147,42,0.2);
-  padding:40px;
-  text-align:left;
-  transition:border-color 0.3s;
-}
-.res-card:hover{border-color:rgba(196,147,42,0.5);}
-.res-card-label{
-  font-family:'DM Mono',monospace;
-  color:#C4932A;
-  font-size:9px;
-  letter-spacing:0.4em;
-}
-.res-card-title{
-  font-family:'Playfair Display',serif;
-  color:#F0EDE6;
-  font-size:20px;
-  margin-top:12px;
-}
-.res-card-body{
-  font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.6);
-  font-size:14px;
-  margin-top:12px;
-  line-height:1.8;
-}
-.res-card-cta{
+.vbtn{
   font-family:'DM Mono',monospace;
   color:#C4932A;
   font-size:10px;
   letter-spacing:0.3em;
-  margin-top:24px;
+  background:transparent;
+  border:1px solid rgba(196,147,42,0.3);
+  padding:12px 24px;
+  cursor:pointer;
+  transition:border-color 0.3s;
+}
+.vbtn:hover{border-color:#C4932A;}
+.resources-btn{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.4);
+  font-size:9px;
+  letter-spacing:0.3em;
+  margin-top:32px;
+  cursor:pointer;
+  display:inline-block;
+  transition:color 0.3s;
+}
+.resources-btn:hover{color:#C4932A;}
+
+/* RESOURCES POPUP */
+#res-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+#res-overlay.open{display:flex;}
+.res-popup{
+  position:relative;
+  max-width:500px;
+  width:100%;
+  padding:48px 40px;
+  text-align:left;
+}
+.res-close{
+  position:absolute;
+  top:16px;right:20px;
+  font-family:'DM Mono',monospace;
+  color:#F0EDE6;
+  font-size:20px;
+  cursor:pointer;
+  line-height:1;
+}
+.res-pop-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  margin-bottom:32px;
+}
+.res-pop-rule{
+  width:60px;
+  height:1px;
+  background:#C4932A;
+  margin-bottom:32px;
+}
+.res-item+.res-item{margin-top:40px;}
+.res-item-label{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.5);
+  font-size:9px;
+  letter-spacing:0.3em;
+}
+.res-item-title{
+  font-family:'Playfair Display',serif;
+  color:#F0EDE6;
+  font-size:18px;
+  margin-top:8px;
+}
+.res-item-body{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.6);
+  font-size:13px;
+  margin-top:8px;
+  line-height:1.7;
+}
+.res-item-cta{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.3em;
+  margin-top:16px;
   cursor:pointer;
   display:inline-block;
 }
@@ -195,7 +242,7 @@ footer{
   position:relative;
   z-index:10;
   background:#0A0F2E;
-  padding:24px;
+  padding:20px;
   text-align:center;
 }
 .footer-copy{
@@ -203,6 +250,7 @@ footer{
   color:rgba(240,237,230,0.25);
   font-size:10px;
   letter-spacing:0.15em;
+  white-space:nowrap;
 }
 
 /* MOBILE */
@@ -230,35 +278,38 @@ footer{
 
 <section id="featured">
   <div class="video-wrap">
-    <iframe src="https://www.youtube.com/embed/TqZWieebzC4" title="ETW Featured" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <p class="video-title">Machiavelli Wrote The Prince to Get a Job.<br>It Didn't Work.</p>
-    <div class="social-row">
-      <a href="https://youtube.com/@etw_history" target="_blank" rel="noopener" aria-label="YouTube">
-        <svg width="24" height="17" viewBox="0 0 20 14" fill="currentColor">
-          <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
-        </svg>
-      </a>
-      <a href="https://www.instagram.com/etw_history" target="_blank" rel="noopener" aria-label="Instagram">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <rect x="2" y="2" width="20" height="20" rx="5"/>
-          <circle cx="12" cy="12" r="4.2"/>
-          <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-        </svg>
-      </a>
+    <div class="video-frame">
+      <span class="recent-badge">RECENT</span>
+      <iframe src="https://www.youtube.com/embed/TqZWieebzC4" title="ETW Featured" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
+    <p class="video-title">Machiavelli Wrote The Prince to Get a Job.<br>It Didn't Work.</p>
+    <div class="video-buttons">
+      <button class="vbtn" onclick="window.open('https://youtube.com/@etw_history','_blank')">YOUTUBE &#x2192;</button>
+      <button class="vbtn" onclick="window.open('https://www.instagram.com/etw_history','_blank')">INSTAGRAM &#x2192;</button>
+    </div>
+    <span class="resources-btn" id="resources-btn" onclick="document.getElementById('res-overlay').classList.add('open')">RESOURCES &#x2192;</span>
   </div>
 </section>
 
-<section id="resources">
-  <p class="res-label">Resources</p>
-  <div class="res-rule"></div>
-  <div class="res-card">
-    <p class="res-card-label">BOOK</p>
-    <p class="res-card-title">The Prince — Niccolò Machiavelli</p>
-    <p class="res-card-body">The political survival manual that Machiavelli wrote to get his job back. It failed. What it reveals about power is timeless.</p>
-    <span class="res-card-cta" onclick="window.open('https://www.amazon.in/s?k=the+prince+machiavelli','_blank')">FIND ON AMAZON &#x2192;</span>
+<div id="res-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="res-popup">
+    <span class="res-close" onclick="document.getElementById('res-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="res-pop-label">Resources</p>
+    <div class="res-pop-rule"></div>
+    <div class="res-item">
+      <p class="res-item-label">NOTES</p>
+      <p class="res-item-title">The Prince — Analysis Notes</p>
+      <p class="res-item-body">Personal reading notes on what is useful and what is not from Machiavelli's Prince.</p>
+      <span class="res-item-cta" onclick="window.open('The_Prince_Analysis_Notes.pdf','_blank')">READ NOTES &#x2192;</span>
+    </div>
+    <div class="res-item">
+      <p class="res-item-label">BOOK</p>
+      <p class="res-item-title">The Prince — Niccolò Machiavelli</p>
+      <p class="res-item-body">The original text. Read it after the analysis notes for full context.</p>
+      <span class="res-item-cta" onclick="window.open('https://www.amazon.in/s?k=the+prince+machiavelli','_blank')">FIND ON AMAZON &#x2192;</span>
+    </div>
   </div>
-</section>
+</div>
 
 <footer>
   <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
@@ -277,8 +328,6 @@ footer{
   window.addEventListener('resize', resize);
   resize();
 
-  // Each monument drawn as gold line-art, anchored near center-bottom.
-  // s = scale unit relative to viewport.
   function base(){ return { x: W/2, y: H*0.72, s: Math.min(W,H)*0.16 }; }
 
   function pyramid(){
@@ -289,7 +338,6 @@ footer{
     ctx.lineTo(b.x - s*1.3, b.y);
     ctx.closePath();
     ctx.stroke();
-    // inner ridge
     ctx.beginPath();
     ctx.moveTo(b.x, b.y - s*1.4);
     ctx.lineTo(b.x - s*0.18, b.y);
@@ -299,21 +347,18 @@ footer{
   function parthenon(){
     var b = base(), s = b.s;
     var w = s*1.5, top = b.y - s*1.3;
-    // pediment
     ctx.beginPath();
     ctx.moveTo(b.x - w, top + s*0.45);
     ctx.lineTo(b.x, top);
     ctx.lineTo(b.x + w, top + s*0.45);
     ctx.closePath();
     ctx.stroke();
-    // architrave
     ctx.beginPath();
     ctx.moveTo(b.x - w, top + s*0.45);
     ctx.lineTo(b.x + w, top + s*0.45);
     ctx.moveTo(b.x - w, top + s*0.62);
     ctx.lineTo(b.x + w, top + s*0.62);
     ctx.stroke();
-    // columns
     var n = 6;
     for(var i=0;i<n;i++){
       var cx = b.x - w*0.82 + (i*(w*1.64)/(n-1));
@@ -322,7 +367,6 @@ footer{
       ctx.lineTo(cx, b.y);
       ctx.stroke();
     }
-    // base line
     ctx.beginPath();
     ctx.moveTo(b.x - w, b.y);
     ctx.lineTo(b.x + w, b.y);
@@ -332,14 +376,12 @@ footer{
   function colosseum(){
     var b = base(), s = b.s;
     var w = s*1.5, top = b.y - s*1.25;
-    // outer shell
     ctx.beginPath();
     ctx.moveTo(b.x - w, b.y);
     ctx.lineTo(b.x - w, top + s*0.4);
     ctx.quadraticCurveTo(b.x, top - s*0.25, b.x + w, top + s*0.4);
     ctx.lineTo(b.x + w, b.y);
     ctx.stroke();
-    // tiers of arches
     var tiers = 3;
     for(var t=0;t<tiers;t++){
       var ty = top + s*0.55 + t*s*0.4;
@@ -363,14 +405,12 @@ footer{
   function castle(){
     var b = base(), s = b.s;
     var w = s*0.55, top = b.y - s*1.6;
-    // tower body
     ctx.beginPath();
     ctx.moveTo(b.x - w, b.y);
     ctx.lineTo(b.x - w, top);
     ctx.lineTo(b.x + w, top);
     ctx.lineTo(b.x + w, b.y);
     ctx.stroke();
-    // crenellations
     var merl = 5;
     ctx.beginPath();
     for(var i=0;i<merl;i++){
@@ -382,25 +422,22 @@ footer{
       ctx.lineTo(mx + mw*0.5, top);
     }
     ctx.stroke();
-    // door
     ctx.beginPath();
     ctx.moveTo(b.x - s*0.18, b.y);
     ctx.lineTo(b.x - s*0.18, b.y - s*0.4);
     ctx.arc(b.x, b.y - s*0.4, s*0.18, Math.PI, 0, false);
     ctx.lineTo(b.x + s*0.18, b.y);
     ctx.stroke();
-    // window
     ctx.beginPath();
     ctx.arc(b.x, top + s*0.45, s*0.1, 0, Math.PI*2);
     ctx.stroke();
   }
 
   var MON = [pyramid, parthenon, colosseum, castle];
-  var HOLD = 8000;  // ms each monument is fully shown / transition window
+  var HOLD = 8000;
   var startT = null;
 
   function easeFade(p){
-    // p in [0,1]; fade in first 25%, hold, fade out last 25%
     if(p < 0.25) return p/0.25;
     if(p > 0.75) return (1-p)/0.25;
     return 1;
@@ -426,6 +463,11 @@ footer{
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
+
+  // ESC closes resources popup
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') document.getElementById('res-overlay').classList.remove('open');
+  });
 }());
 </script>
 </body>
