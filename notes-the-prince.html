@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Prince — Reading Notes | Explaining The World</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:#0A0F2E;
+  color:#F0EDE6;
+  overflow-x:hidden;
+  font-family:'Source Serif 4',serif;
+}
+
+/* NAV */
+#nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:rgba(10,15,46,0.85);
+  backdrop-filter:blur(6px);
+  padding:24px 56px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:16px;
+  letter-spacing:0.4em;
+  text-indent:0.4em;
+  text-decoration:none;
+}
+.nav-link{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(240,237,230,0.5);
+  letter-spacing:0.2em;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.nav-link:hover{color:#F0EDE6;}
+
+/* HERO */
+.hero{
+  position:relative;
+  z-index:10;
+  text-align:center;
+  padding:160px 32px 60px;
+}
+.hero-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+}
+.hero-rule{
+  width:80px;
+  height:1px;
+  background:#C4932A;
+  margin:16px auto;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(40px,8vw,52px);
+  letter-spacing:0.04em;
+  line-height:1.1;
+}
+.hero-sub{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(240,237,230,0.6);
+  font-size:16px;
+  margin-top:18px;
+}
+
+/* CONTENT */
+#content{
+  position:relative;
+  z-index:10;
+  max-width:720px;
+  margin:0 auto;
+  padding:80px 48px;
+}
+.intro-note{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.5);
+  font-size:12px;
+  letter-spacing:0.3em;
+  line-height:1.9;
+  margin-bottom:60px;
+}
+.sec-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:9px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  margin:60px 0 24px;
+}
+.sec-label.first{margin-top:0;}
+.sec-rule{
+  width:40px;
+  height:1px;
+  background:#C4932A;
+  margin-bottom:32px;
+}
+.body{
+  font-family:'Source Serif 4',serif;
+  color:#F0EDE6;
+  font-size:16px;
+  line-height:1.95;
+}
+.body + .body{margin-top:24px;}
+.sec-intro{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(240,237,230,0.5);
+  font-size:13px;
+  line-height:1.8;
+  margin-bottom:32px;
+}
+.point-title{
+  font-family:'Playfair Display',serif;
+  color:#F0EDE6;
+  font-size:17px;
+  margin-bottom:8px;
+}
+.point-text{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.7);
+  font-size:15px;
+  line-height:1.9;
+  margin-bottom:32px;
+}
+.closing{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(196,147,42,0.7);
+  font-size:15px;
+  margin-top:48px;
+  text-align:center;
+  line-height:1.8;
+}
+
+/* FOOTER */
+footer{
+  position:relative;
+  z-index:10;
+  background:#0A0F2E;
+  padding:20px;
+  text-align:center;
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.25);
+  font-size:10px;
+  letter-spacing:0.15em;
+  white-space:nowrap;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  #nav{padding:18px 24px;}
+  .hero{padding:130px 24px 48px;}
+  #content{padding:56px 24px;}
+  .intro-note{font-size:11px;letter-spacing:0.22em;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">ETW</a>
+  <a href="history.html" class="nav-link">History</a>
+</nav>
+
+<section class="hero">
+  <p class="hero-label">Reading Notes</p>
+  <div class="hero-rule"></div>
+  <h1 class="hero-title">The Prince</h1>
+  <p class="hero-sub">Niccolò Machiavelli — Personal Analysis</p>
+</section>
+
+<section id="content">
+
+  <p class="intro-note">These are personal reading notes — not a summary. What is useful. What is not. And why.</p>
+
+  <!-- SECTION 1 -->
+  <p class="sec-label first">Who Was Machiavelli</p>
+  <div class="sec-rule"></div>
+  <p class="body">Born in Florence, 1469. Died in Florence, 1527. He served as a diplomat for 18 years — observing power without ever holding it. He had the wisdom to write about power but not the skill to obtain it. He wrote the manual but failed the exam.</p>
+  <p class="body">He did not write The Prince to share wisdom. He wrote it as a job application — to impress Lorenzo de Medici and get back into power. It failed. He never regained his position. This is the first thing to understand: it was written by a man desperate to return to a table he had already lost.</p>
+
+  <!-- SECTION 2 -->
+  <p class="sec-label">What Is Not Useful Today</p>
+  <p class="sec-intro">The Prince was written for rulers of Italian city-states in the 1500s. Most of it describes situations that simply do not exist today.</p>
+
+  <p class="point-title">Acquiring Territory by Military Force</p>
+  <p class="point-text">When is the last time a country expanded its borders by military conquest and held it? Russia-Ukraine is the closest example in decades — and Russia has gained a fraction of Ukrainian territory at enormous cost. This chapter has no practical application today.</p>
+
+  <p class="point-title">The Prince Should Live in New Territory</p>
+  <p class="point-text">Modern nations are governed through institutions — parliaments, bureaucracies, courts. No president needs to physically relocate to a newly won state.</p>
+
+  <p class="point-title">Fear Over Love</p>
+  <p class="point-text">The most misused quote in the book. Machiavelli wrote this for a military commander ruling occupied territory — not a CEO or elected politician. Fear works only until your death. After Stalin died, the Soviet Union went through de-Stalinisation. Fear is an emotion. Respect is a behaviour. Fear ends when the threat ends. Respect lasts across generations.</p>
+
+  <!-- SECTION 3 -->
+  <p class="sec-label">What Is Timeless</p>
+
+  <p class="point-title">Confidence of the People Over Fortresses</p>
+  <p class="point-text">Do not spend money building walls to protect yourself from your own people. A leader who builds trust will have people who protect him even when an enemy comes. The Baltic states supported Hitler against Stalin because Stalin had destroyed their trust. Politics is not philosophy. It is mathematics of probability.</p>
+
+  <p class="point-title">New Favours Do Not Erase Old Injuries</p>
+  <p class="point-text">If you first hurt a person and then do something good for them, they will say thank you — but they will wait for the opportunity to take revenge. The injury stays in long-term memory. The gift goes into short-term memory.</p>
+
+  <p class="point-title">Strike Once, Completely</p>
+  <p class="point-text">If you must destroy a political enemy, do it completely in one action. An injured lion is far more dangerous than an uninjured one. A wounded enemy who survives will spend every moment planning revenge with double the motivation.</p>
+
+  <p class="point-title">Loyalty Is Situational, Not Personal</p>
+  <p class="point-text">People are loyal to situations, not to you personally. The Chinese Communists and Nationalists fought Japan together. The moment Japan was defeated, they fought each other. Never mistake a situational alliance for personal loyalty.</p>
+
+  <p class="point-title">Take Power Through the People</p>
+  <p class="point-text">The nobles will always want something in return — money, positions, power-sharing. The people ask only that you do not oppress them. Kim Jong-un rules through the nobles. If those nobles ever unite against him, he is finished.</p>
+
+  <p class="point-title">Never Change Things Suddenly</p>
+  <p class="point-text">People do not fear change. They fear sudden change. If you want to transform something, do it slowly, one step at a time. Leaders who announce revolutionary policies on day one always face the strongest resistance.</p>
+
+  <p class="point-title">Protect Your Image Above All Else</p>
+  <p class="point-text">The image must always be: the leader is good, the system around him is corrupt. When people believe the leader is corrupt, revolution becomes possible.</p>
+
+  <p class="point-title">Never Rely on People With No Stake</p>
+  <p class="point-text">A mercenary runs when losing because losing means nothing to him personally. Never build your organisation on people who have no stake in the outcome.</p>
+
+  <p class="point-title">Wait for the Right Moment</p>
+  <p class="point-text">Hitler's first attempt — the Beer Hall Putsch of 1923 — failed because conditions were not ready. He waited ten years. Patience is not passivity. It is waiting with preparation.</p>
+
+  <p class="point-title">Build a Circle That Tells You the Truth</p>
+  <p class="point-text">Flatterers are the most dangerous people around power. Build a small circle allowed to be brutally honest in private. Outside that circle, the public image of confidence must never break.</p>
+
+  <!-- SECTION 4 -->
+  <p class="sec-label">The Sinigaglia Trap</p>
+  <p class="body">This is the most important story in the book. Cesare Borgia had several powerful commanders who rebelled against him. He pretended to reconcile with them. Invited them to a meeting at Sinigaglia, promising friendship. When they arrived — unarmed, relaxed — he had them all strangled in one night. In one night, all his enemies were gone.</p>
+  <p class="body">The principle is not about violence. It is about decisiveness. An enemy who is half-removed is an enemy with nothing left to lose and maximum motivation to destroy you.</p>
+
+  <!-- SECTION 5 -->
+  <p class="sec-label">The Final Verdict</p>
+  <p class="body">The Prince is not a leadership manual. It is not a self-help book. It is a political survival manual written for one specific context that no longer exists.</p>
+  <p class="body">What you should remember: Machiavelli wrote this to get a job. He never got it. The timeless points are about human psychology — trust, loyalty, fear, image, timing. Building trust in the people is more durable than any fortress or army. An injured enemy is more dangerous than an untouched one.</p>
+
+  <p class="closing">Understanding a thing is more valuable than memorising it.</p>
+
+</section>
+
+<footer>
+  <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

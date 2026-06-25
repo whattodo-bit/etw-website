@@ -33,6 +33,7 @@ html,body{
   background:transparent;
   padding:28px 56px;
   display:flex;
+  justify-content:space-between;
   align-items:center;
 }
 .nav-logo{
@@ -44,6 +45,22 @@ html,body{
   text-indent:0.4em;
   text-decoration:none;
 }
+.nav-icons{
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+.nav-icon{
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:0;
+  display:flex;
+  align-items:center;
+  color:rgba(240,237,230,0.4);
+  transition:color 0.3s;
+}
+.nav-icon:hover{color:#C4932A;}
 
 /* HERO */
 .hero{
@@ -94,7 +111,7 @@ html,body{
 #featured{
   position:relative;
   z-index:10;
-  background:rgba(13,11,8,0.9);
+  background:rgba(10,15,46,0.85);
   padding:80px clamp(24px,8vw,120px);
   text-align:center;
 }
@@ -134,25 +151,6 @@ html,body{
   margin-top:24px;
   line-height:1.4;
 }
-.video-buttons{
-  display:flex;
-  justify-content:center;
-  gap:16px;
-  margin-top:28px;
-  flex-wrap:wrap;
-}
-.vbtn{
-  font-family:'DM Mono',monospace;
-  color:#C4932A;
-  font-size:10px;
-  letter-spacing:0.3em;
-  background:transparent;
-  border:1px solid rgba(196,147,42,0.3);
-  padding:12px 24px;
-  cursor:pointer;
-  transition:border-color 0.3s;
-}
-.vbtn:hover{border-color:#C4932A;}
 .resources-btn{
   font-family:'DM Mono',monospace;
   color:rgba(240,237,230,0.4);
@@ -179,9 +177,11 @@ html,body{
 #res-overlay.open{display:flex;}
 .res-popup{
   position:relative;
-  max-width:500px;
-  width:100%;
-  padding:48px 40px;
+  background:#0D0B08;
+  border:1px solid rgba(196,147,42,0.4);
+  max-width:480px;
+  width:90%;
+  padding:48px;
   text-align:left;
 }
 .res-close{
@@ -196,36 +196,42 @@ html,body{
 .res-pop-label{
   font-family:'DM Mono',monospace;
   color:#C4932A;
-  font-size:10px;
+  font-size:9px;
   letter-spacing:0.4em;
   text-transform:uppercase;
-  margin-bottom:32px;
 }
 .res-pop-rule{
   width:60px;
   height:1px;
   background:#C4932A;
-  margin-bottom:32px;
+  margin:16px 0 32px;
 }
-.res-item+.res-item{margin-top:40px;}
+.res-item{
+  border:1px solid rgba(196,147,42,0.2);
+  padding:24px;
+  margin-bottom:16px;
+  cursor:pointer;
+  transition:border-color 0.3s;
+}
+.res-item:hover{border-color:rgba(196,147,42,0.5);}
 .res-item-label{
   font-family:'DM Mono',monospace;
-  color:rgba(240,237,230,0.5);
+  color:#C4932A;
   font-size:9px;
   letter-spacing:0.3em;
 }
 .res-item-title{
   font-family:'Playfair Display',serif;
   color:#F0EDE6;
-  font-size:18px;
+  font-size:16px;
   margin-top:8px;
 }
 .res-item-body{
   font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.6);
+  color:rgba(240,237,230,0.5);
   font-size:13px;
   margin-top:8px;
-  line-height:1.7;
+  line-height:1.6;
 }
 .res-item-cta{
   font-family:'DM Mono',monospace;
@@ -236,6 +242,63 @@ html,body{
   cursor:pointer;
   display:inline-block;
 }
+
+/* INSTAGRAM POPUP */
+#ig-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+#ig-overlay.open{display:flex;}
+.ig-popup{
+  position:relative;
+  background:#0A0A0A;
+  border:1px solid #C4932A;
+  max-width:340px;
+  width:90%;
+  padding:40px 44px;
+  text-align:left;
+}
+.ig-close{
+  position:absolute;
+  top:14px;right:18px;
+  font-family:'DM Mono',monospace;
+  color:#F0EDE6;
+  font-size:18px;
+  cursor:pointer;
+  line-height:1;
+}
+.ig-pop-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+}
+.ig-pop-rule{
+  width:50px;
+  height:1px;
+  background:#C4932A;
+  margin:18px 0 8px;
+}
+.ig-option{
+  display:block;
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.85);
+  font-size:13px;
+  letter-spacing:0.25em;
+  text-decoration:none;
+  padding:16px 0;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  transition:color 0.3s;
+}
+.ig-option:last-child{border-bottom:none;}
+.ig-option:hover{color:#C4932A;}
 
 /* FOOTER */
 footer{
@@ -258,6 +321,7 @@ footer{
   #nav{padding:20px 24px;}
   .hero{padding:90px 24px 0;}
   .video-title{font-size:18px;}
+  .res-popup{padding:36px 28px;}
 }
 </style>
 </head>
@@ -267,6 +331,20 @@ footer{
 
 <nav id="nav">
   <a href="index.html" class="nav-logo">ETW</a>
+  <div class="nav-icons">
+    <button class="nav-icon" aria-label="YouTube" onclick="window.open('https://youtube.com/@etw_history','_blank')">
+      <svg width="22" height="16" viewBox="0 0 20 14" fill="currentColor">
+        <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
+      </svg>
+    </button>
+    <button class="nav-icon" aria-label="Instagram" onclick="document.getElementById('ig-overlay').classList.add('open')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/>
+      </svg>
+    </button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -283,11 +361,7 @@ footer{
       <iframe src="https://www.youtube.com/embed/TqZWieebzC4" title="ETW Featured" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="video-title">Machiavelli Wrote The Prince to Get a Job.<br>It Didn't Work.</p>
-    <div class="video-buttons">
-      <button class="vbtn" onclick="window.open('https://youtube.com/@etw_history','_blank')">YOUTUBE &#x2192;</button>
-      <button class="vbtn" onclick="window.open('https://www.instagram.com/etw_history','_blank')">INSTAGRAM &#x2192;</button>
-    </div>
-    <span class="resources-btn" id="resources-btn" onclick="document.getElementById('res-overlay').classList.add('open')">RESOURCES &#x2192;</span>
+    <span class="resources-btn" onclick="document.getElementById('res-overlay').classList.add('open')">RESOURCES &#x2192;</span>
   </div>
 </section>
 
@@ -296,18 +370,22 @@ footer{
     <span class="res-close" onclick="document.getElementById('res-overlay').classList.remove('open')">&#xD7;</span>
     <p class="res-pop-label">Resources</p>
     <div class="res-pop-rule"></div>
-    <div class="res-item">
+    <div class="res-item" onclick="window.location='notes-the-prince.html'">
       <p class="res-item-label">NOTES</p>
       <p class="res-item-title">The Prince — Analysis Notes</p>
       <p class="res-item-body">Personal reading notes on what is useful and what is not from Machiavelli's Prince.</p>
-      <span class="res-item-cta" onclick="window.open('The_Prince_Analysis_Notes.pdf','_blank')">READ NOTES &#x2192;</span>
+      <span class="res-item-cta">READ NOTES &#x2192;</span>
     </div>
-    <div class="res-item">
-      <p class="res-item-label">BOOK</p>
-      <p class="res-item-title">The Prince — Niccolò Machiavelli</p>
-      <p class="res-item-body">The original text. Read it after the analysis notes for full context.</p>
-      <span class="res-item-cta" onclick="window.open('https://www.amazon.in/s?k=the+prince+machiavelli','_blank')">FIND ON AMAZON &#x2192;</span>
-    </div>
+  </div>
+</div>
+
+<div id="ig-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="ig-popup">
+    <span class="ig-close" onclick="document.getElementById('ig-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="ig-pop-label">Instagram</p>
+    <div class="ig-pop-rule"></div>
+    <a class="ig-option" href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW &#x2192;</a>
+    <a class="ig-option" href="https://www.instagram.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
   </div>
 </div>
 
@@ -328,7 +406,8 @@ footer{
   window.addEventListener('resize', resize);
   resize();
 
-  function base(){ return { x: W/2, y: H*0.72, s: Math.min(W,H)*0.16 }; }
+  // 3x larger monuments
+  function base(){ return { x: W/2, y: H*0.72, s: Math.min(W,H)*0.48 }; }
 
   function pyramid(){
     var b = base(), s = b.s;
@@ -453,9 +532,10 @@ footer{
 
     ctx.clearRect(0,0,W,H);
 
-    var alpha = 0.07 * easeFade(p);
+    // More visible — alpha up to 0.15
+    var alpha = 0.15 * easeFade(p);
     ctx.strokeStyle = 'rgba(196,147,42,' + alpha.toFixed(3) + ')';
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 3;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
     MON[idx]();
@@ -464,9 +544,12 @@ footer{
   }
   requestAnimationFrame(frame);
 
-  // ESC closes resources popup
+  // ESC closes popups
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') document.getElementById('res-overlay').classList.remove('open');
+    if(e.key === 'Escape'){
+      document.getElementById('res-overlay').classList.remove('open');
+      document.getElementById('ig-overlay').classList.remove('open');
+    }
   });
 }());
 </script>

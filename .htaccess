@@ -1,2 +1,9 @@
 Options -Indexes
 DirectoryIndex index.html
+
+RewriteEngine On
+
+# Serve clean URLs without the .html extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^\.]+)$ $1.html [NC,L]

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FAQ — Explaining The World</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:#0A0F2E;
+  color:#F0EDE6;
+  overflow-x:hidden;
+  font-family:'Source Serif 4',serif;
+}
+
+/* NAV */
+#nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:transparent;
+  padding:28px 56px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:16px;
+  letter-spacing:0.4em;
+  text-indent:0.4em;
+  text-decoration:none;
+}
+.nav-link{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(240,237,230,0.5);
+  letter-spacing:0.2em;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.nav-link:hover{color:#F0EDE6;}
+
+/* HERO */
+.hero{
+  position:relative;
+  z-index:10;
+  min-height:48vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+  padding:120px 32px 0;
+}
+.hero-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+}
+.hero-rule{
+  width:80px;
+  height:1px;
+  background:#C4932A;
+  margin:18px auto;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(40px,6vw,64px);
+  letter-spacing:0.12em;
+  text-indent:0.12em;
+  line-height:1.1;
+  text-shadow:0 0 60px rgba(0,0,0,0.9);
+}
+
+/* FAQ LIST */
+#faq{
+  position:relative;
+  z-index:10;
+  max-width:720px;
+  margin:0 auto;
+  padding:60px 48px 100px;
+}
+.faq-item{
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:38px 0;
+}
+.faq-item:last-child{border-bottom:1px solid rgba(255,255,255,0.08);}
+.faq-q{
+  font-family:'Playfair Display',serif;
+  color:#F0EDE6;
+  font-size:20px;
+  line-height:1.4;
+}
+.faq-a{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.6);
+  font-size:15px;
+  line-height:1.9;
+  margin-top:16px;
+}
+
+/* FOOTER */
+footer{
+  position:relative;
+  z-index:10;
+  background:#0A0F2E;
+  padding:20px;
+  text-align:center;
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.25);
+  font-size:10px;
+  letter-spacing:0.15em;
+  white-space:nowrap;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  #nav{padding:20px 24px;}
+  .hero{padding:100px 24px 0;}
+  #faq{padding:48px 24px 72px;}
+  .faq-q{font-size:18px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo">ETW</a>
+  <a href="about.html" class="nav-link">About</a>
+</nav>
+
+<section class="hero">
+  <p class="hero-label">FAQ</p>
+  <div class="hero-rule"></div>
+  <h1 class="hero-title">Questions</h1>
+</section>
+
+<section id="faq">
+
+  <div class="faq-item">
+    <p class="faq-q">What is Explaining The World?</p>
+    <p class="faq-a">An independent project producing researched content for a global English-speaking audience — currently focused on history, expanding into other subjects with time.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q">Who is behind it?</p>
+    <p class="faq-a">One person, for now — reading, researching, writing, and producing every piece. This is a project, not an organisation.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q">What topics do you cover?</p>
+    <p class="faq-a">History first — empires, leaders, and the mechanics of power. Other subjects will follow as the project grows.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q">How is the content researched?</p>
+    <p class="faq-a">We go into the depth of every source and every book to find every detail that matters. This takes time. Nothing is brushed past.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q">How can I collaborate or get in touch?</p>
+    <p class="faq-a">See the Collaboration and Contact sections on the About page. Genuine, relevant messages are always welcome.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q">Why is the video quality not perfect?</p>
+    <p class="faq-a">Production quality improves with time and resources. The priority has always been the content — the research, the accuracy, the depth of analysis. A well-researched video with average production beats a visually perfect video with nothing to say. Quality of content comes first. Everything else follows.</p>
+  </div>
+
+</section>
+
+<footer>
+  <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>
