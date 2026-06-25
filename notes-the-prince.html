@@ -16,16 +16,16 @@ html,body{
   font-family:'Source Serif 4',serif;
 }
 
-/* NAV */
+/* NAV — same as index.html, ETW left only */
 #nav{
   position:fixed;
   top:0;left:0;right:0;
   z-index:100;
   background:rgba(10,15,46,0.85);
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
   padding:24px 56px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
 }
 .nav-logo{
@@ -37,15 +37,6 @@ html,body{
   text-indent:0.4em;
   text-decoration:none;
 }
-.nav-link{
-  font-family:'DM Mono',monospace;
-  font-size:11px;
-  color:rgba(240,237,230,0.5);
-  letter-spacing:0.2em;
-  text-decoration:none;
-  transition:color 0.3s;
-}
-.nav-link:hover{color:#F0EDE6;}
 
 /* HERO */
 .hero{
@@ -72,32 +63,32 @@ html,body{
   font-weight:700;
   color:#F0EDE6;
   font-size:clamp(40px,8vw,52px);
-  letter-spacing:0.04em;
+  letter-spacing:0.1em;
   line-height:1.1;
 }
 .hero-sub{
   font-family:'Source Serif 4',serif;
   font-style:italic;
   color:rgba(240,237,230,0.6);
-  font-size:16px;
-  margin-top:18px;
+  font-size:17px;
+  margin-top:12px;
+}
+.hero-intro{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.4);
+  font-size:14px;
+  line-height:1.85;
+  max-width:520px;
+  margin:16px auto 0;
 }
 
 /* CONTENT */
 #content{
   position:relative;
   z-index:10;
-  max-width:720px;
+  max-width:700px;
   margin:0 auto;
   padding:80px 48px;
-}
-.intro-note{
-  font-family:'DM Mono',monospace;
-  color:rgba(240,237,230,0.5);
-  font-size:12px;
-  letter-spacing:0.3em;
-  line-height:1.9;
-  margin-bottom:60px;
 }
 .sec-label{
   font-family:'DM Mono',monospace;
@@ -105,7 +96,7 @@ html,body{
   font-size:9px;
   letter-spacing:0.4em;
   text-transform:uppercase;
-  margin:60px 0 24px;
+  margin:60px 0 12px;
 }
 .sec-label.first{margin-top:0;}
 .sec-rule{
@@ -116,40 +107,57 @@ html,body{
 }
 .body{
   font-family:'Source Serif 4',serif;
-  color:#F0EDE6;
+  color:rgba(240,237,230,0.8);
   font-size:16px;
-  line-height:1.95;
+  line-height:2;
+  margin-bottom:24px;
 }
-.body + .body{margin-top:24px;}
-.sec-intro{
+.quote{
+  border-left:2px solid rgba(196,147,42,0.4);
+  padding-left:20px;
   font-family:'Source Serif 4',serif;
   font-style:italic;
-  color:rgba(240,237,230,0.5);
-  font-size:13px;
+  color:rgba(240,237,230,0.6);
+  font-size:15px;
   line-height:1.8;
-  margin-bottom:32px;
+  margin:24px 0;
+}
+.quote cite{
+  display:block;
+  font-style:normal;
+  color:rgba(240,237,230,0.4);
+  font-size:13px;
+  margin-top:8px;
 }
 .point-title{
   font-family:'Playfair Display',serif;
   color:#F0EDE6;
-  font-size:17px;
-  margin-bottom:8px;
+  font-size:18px;
+  margin:32px 0 8px;
 }
-.point-text{
-  font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.7);
-  font-size:15px;
-  line-height:1.9;
-  margin-bottom:32px;
+.timeline{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.5);
+  font-size:13px;
+  line-height:2;
+  margin:8px 0 24px;
 }
-.closing{
+.final-quote{
   font-family:'Source Serif 4',serif;
   font-style:italic;
-  color:rgba(196,147,42,0.7);
-  font-size:15px;
-  margin-top:48px;
+  color:rgba(196,147,42,0.8);
+  font-size:16px;
+  text-align:center;
+  line-height:1.6;
+  margin-top:60px;
+}
+.final-note{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.3);
+  font-size:10px;
   text-align:center;
   line-height:1.8;
+  margin-top:12px;
 }
 
 /* FOOTER */
@@ -173,7 +181,7 @@ footer{
   #nav{padding:18px 24px;}
   .hero{padding:130px 24px 48px;}
   #content{padding:56px 24px;}
-  .intro-note{font-size:11px;letter-spacing:0.22em;}
+  .timeline{font-size:12px;}
 }
 </style>
 </head>
@@ -181,83 +189,143 @@ footer{
 
 <nav id="nav">
   <a href="index.html" class="nav-logo">ETW</a>
-  <a href="history.html" class="nav-link">History</a>
 </nav>
 
 <section class="hero">
   <p class="hero-label">Reading Notes</p>
   <div class="hero-rule"></div>
   <h1 class="hero-title">The Prince</h1>
-  <p class="hero-sub">Niccolò Machiavelli — Personal Analysis</p>
+  <p class="hero-sub">Niccolò Machiavelli — A Personal Analysis</p>
+  <p class="hero-intro">These are personal reading notes — not a summary of the book. What is useful. What is not. And why. Written for the era of city-states and princes of 15th century Italy.</p>
 </section>
 
 <section id="content">
 
-  <p class="intro-note">These are personal reading notes — not a summary. What is useful. What is not. And why.</p>
-
   <!-- SECTION 1 -->
   <p class="sec-label first">Who Was Machiavelli</p>
   <div class="sec-rule"></div>
-  <p class="body">Born in Florence, 1469. Died in Florence, 1527. He served as a diplomat for 18 years — observing power without ever holding it. He had the wisdom to write about power but not the skill to obtain it. He wrote the manual but failed the exam.</p>
-  <p class="body">He did not write The Prince to share wisdom. He wrote it as a job application — to impress Lorenzo de Medici and get back into power. It failed. He never regained his position. This is the first thing to understand: it was written by a man desperate to return to a table he had already lost.</p>
+  <p class="body">Born in Florence, 1469. Died in Florence, 1527. His entire life was spent in one city, except for 18 years when he served as a diplomat for the Florentine Republic.</p>
+  <p class="body">He learned everything he knew about power by observing other rulers — not by holding power himself. He had the wisdom to write about power, but not the skill to obtain it. He wrote the manual but failed the exam.</p>
+
+  <p class="timeline">
+    1469 — Born in Florence<br>
+    1494 — Medici fall. Florence becomes a Republic. Machiavelli enters public service.<br>
+    1494–1512 — 18 years serving as diplomat<br>
+    1512 — Medici return. Machiavelli loses his post.<br>
+    1513 — Accused of conspiracy, imprisoned, tortured. Writes The Prince while exiled.<br>
+    1527 — Dies in Florence, never regaining office.
+  </p>
+
+  <p class="body">He did not write this book to share wisdom. He wrote it as a job application — to impress Lorenzo de Medici and get back into power. It failed. He never regained his position.</p>
+  <p class="body">This is the first thing to understand: it was written by a man desperate to return to a table he had already lost.</p>
+
+  <p class="quote">"Therefore my son, if you wish to please me and to bring success and honour to yourself, right and study, because others will help you if you help yourself."<cite>— Machiavelli, in a letter to his children</cite></p>
+
+  <p class="body">A man with wisdom about power, writing self-help letters to his children while he himself had none. This is Machiavelli.</p>
 
   <!-- SECTION 2 -->
   <p class="sec-label">What Is Not Useful Today</p>
-  <p class="sec-intro">The Prince was written for rulers of Italian city-states in the 1500s. Most of it describes situations that simply do not exist today.</p>
+  <div class="sec-rule"></div>
+  <p class="body">The Prince was written for rulers of Italian city-states in the 1500s — constant military conquest, no democracy, rulers who held power by force. Most of the book describes situations that simply do not exist today.</p>
 
   <p class="point-title">Acquiring Territory by Military Force</p>
-  <p class="point-text">When is the last time a country expanded its borders by military conquest and held it? Russia-Ukraine is the closest example in decades — and Russia has gained a fraction of Ukrainian territory at enormous cost. This chapter has no practical application today.</p>
+  <p class="quote">"All states, all powers, that have held and hold rule over men have been and are either republics or principalities."</p>
+  <p class="body">When is the last time a country expanded its borders by military conquest and held it? Russia-Ukraine is the closest example in decades — and Russia has gained a fraction of Ukrainian territory at enormous cost. This chapter has no practical application today.</p>
 
   <p class="point-title">The Prince Should Live in New Territory</p>
-  <p class="point-text">Modern nations are governed through institutions — parliaments, bureaucracies, courts. No president needs to physically relocate to a newly won state.</p>
+  <p class="quote">"It is far better for the prince to reside in a newly acquired territory."</p>
+  <p class="body">Modern nations are governed through institutions — parliaments, bureaucracies, courts. No president needs to physically relocate to a newly won state.</p>
 
-  <p class="point-title">Fear Over Love</p>
-  <p class="point-text">The most misused quote in the book. Machiavelli wrote this for a military commander ruling occupied territory — not a CEO or elected politician. Fear works only until your death. After Stalin died, the Soviet Union went through de-Stalinisation. Fear is an emotion. Respect is a behaviour. Fear ends when the threat ends. Respect lasts across generations.</p>
+  <p class="point-title">Destroy the Family of Previous Rulers</p>
+  <p class="quote">"It is enough to have destroyed the family of the prince who was ruling them."</p>
+  <p class="body">In the 1500s this meant execution. Today it means ending a political career. The literal instruction is irrelevant.</p>
+
+  <p class="point-title">Establishing Colonies in Conquered Land</p>
+  <p class="quote">"The other and better course is to send colonies to one or two places which may be as key to the state."</p>
+  <p class="body">Colonialism as described here does not exist. This chapter has no modern application.</p>
+
+  <p class="point-title">The Prince Must Know Military Geography</p>
+  <p class="quote">"A prince should know about localities — how mountains rise, the nature of rivers and marshes."</p>
+  <p class="body">Military strategy is now a separate profession. A politician studying terrain maps instead of economics is wasting time.</p>
+
+  <p class="point-title">Hereditary Principalities</p>
+  <p class="quote">"Principalities are either hereditary, in which the family has been long established, or they are new."</p>
+  <p class="body">There are no hereditary principalities in the modern democratic world where these mechanics apply.</p>
+
+  <p class="point-title">Fear Over Love — The Famous Quote</p>
+  <p class="quote">"It is better to be feared than loved, if you cannot be both."</p>
+  <p class="body">The most misused quote in the book. Every page that quotes this for business or leadership is wrong. Machiavelli wrote this for a military commander ruling occupied territory — not a CEO or elected politician.</p>
+  <p class="body">Fear works only until your death. After Stalin died, the Soviet Union went through de-Stalinisation. Fear is an emotion. Respect is a behaviour. Fear ends when the threat ends. Respect lasts across generations.</p>
+  <p class="body">The correct modern version: be feared by your enemies and trusted by your people. Machiavelli himself said if you cannot be both — meaning both is the ideal. Most people quoting this book skip that part.</p>
 
   <!-- SECTION 3 -->
   <p class="sec-label">What Is Timeless</p>
+  <div class="sec-rule"></div>
+  <p class="body">These are the points that have genuine value — either because they apply to modern politics, or because they reveal how power actually works at a psychological and structural level.</p>
 
   <p class="point-title">Confidence of the People Over Fortresses</p>
-  <p class="point-text">Do not spend money building walls to protect yourself from your own people. A leader who builds trust will have people who protect him even when an enemy comes. The Baltic states supported Hitler against Stalin because Stalin had destroyed their trust. Politics is not philosophy. It is mathematics of probability.</p>
+  <p class="quote">"It is far better to earn the confidence of the people than to rely on fortresses."</p>
+  <p class="body">Do not spend money building walls to protect yourself from your own people. A leader who builds trust will have people who protect him even when an enemy comes. The Baltic states supported Hitler against Stalin because Stalin had destroyed their trust.</p>
+  <p class="body">Politics is not philosophy. It is mathematics of probability.</p>
 
   <p class="point-title">New Favours Do Not Erase Old Injuries</p>
-  <p class="point-text">If you first hurt a person and then do something good for them, they will say thank you — but they will wait for the opportunity to take revenge. The injury stays in long-term memory. The gift goes into short-term memory.</p>
+  <p class="quote">"New favours will not cause great men to forget old injuries."</p>
+  <p class="body">If you first hurt a person and then do something good for them, they will say thank you — but they will wait for the opportunity to take revenge. The injury stays in long-term memory. The gift goes into short-term memory. Do not count on a person you have wronged.</p>
 
   <p class="point-title">Strike Once, Completely</p>
-  <p class="point-text">If you must destroy a political enemy, do it completely in one action. An injured lion is far more dangerous than an uninjured one. A wounded enemy who survives will spend every moment planning revenge with double the motivation.</p>
+  <p class="quote">"Cruelty well used is that which is done at a stroke."</p>
+  <p class="body">If you must destroy a political enemy, do it completely in one action. Half-measures are the most dangerous mistake. An injured lion is far more dangerous than an uninjured one. A wounded enemy who survives will spend every moment planning revenge with double the motivation.</p>
 
   <p class="point-title">Loyalty Is Situational, Not Personal</p>
-  <p class="point-text">People are loyal to situations, not to you personally. The Chinese Communists and Nationalists fought Japan together. The moment Japan was defeated, they fought each other. Never mistake a situational alliance for personal loyalty.</p>
+  <p class="quote">"Men are bound to you by the benefits they receive from you, not by ideology or affection."</p>
+  <p class="body">People are loyal to situations, not to you personally. The Chinese Communists and Nationalists fought Japan together. The moment Japan was defeated, they fought each other. Never mistake a situational alliance for personal loyalty.</p>
 
   <p class="point-title">Take Power Through the People</p>
-  <p class="point-text">The nobles will always want something in return — money, positions, power-sharing. The people ask only that you do not oppress them. Kim Jong-un rules through the nobles. If those nobles ever unite against him, he is finished.</p>
+  <p class="quote">"He who obtains sovereignty by the assistance of the nobles maintains himself with more difficulty than he who comes to power with the help of the people."</p>
+  <p class="body">The nobles will always want something in return — money, positions, power-sharing. The people ask only that you do not oppress them. Kim Jong-un rules through the nobles. If those nobles ever unite against him, he is finished.</p>
 
   <p class="point-title">Never Change Things Suddenly</p>
-  <p class="point-text">People do not fear change. They fear sudden change. If you want to transform something, do it slowly, one step at a time. Leaders who announce revolutionary policies on day one always face the strongest resistance.</p>
+  <p class="quote">"Neither their loss nor their taxes are altered, so that in very short time they will become entirely one body with the old principality."</p>
+  <p class="body">People do not fear change. They fear sudden change. Transform slowly, one step at a time. Leaders who announce revolutionary policies on day one always face the strongest resistance.</p>
 
   <p class="point-title">Protect Your Image Above All Else</p>
-  <p class="point-text">The image must always be: the leader is good, the system around him is corrupt. When people believe the leader is corrupt, revolution becomes possible.</p>
+  <p class="quote">"A ruler must present himself as one who cannot be questioned — not through propaganda, but through the glory of his actions."</p>
+  <p class="body">The image must always be: the leader is good, the system around him is corrupt. When people believe the leader is corrupt, revolution becomes possible.</p>
 
   <p class="point-title">Never Rely on People With No Stake</p>
-  <p class="point-text">A mercenary runs when losing because losing means nothing to him personally. Never build your organisation on people who have no stake in the outcome.</p>
+  <p class="quote">"Mercenaries and auxiliaries are useless and dangerous. They are disunited, ambitious, without discipline, unfaithful."</p>
+  <p class="body">Never build your organisation on people who have no stake in the outcome. A mercenary runs when losing because losing means nothing to him personally.</p>
 
   <p class="point-title">Wait for the Right Moment</p>
-  <p class="point-text">Hitler's first attempt — the Beer Hall Putsch of 1923 — failed because conditions were not ready. He waited ten years. Patience is not passivity. It is waiting with preparation.</p>
+  <p class="quote">"A prince must recognise the opportunity, and at once assemble their men."</p>
+  <p class="body">Hitler's first attempt to seize power — the Beer Hall Putsch of 1923 — failed because conditions were not ready. He waited ten years. Patience is not passivity. It is waiting with preparation.</p>
 
   <p class="point-title">Build a Circle That Tells You the Truth</p>
-  <p class="point-text">Flatterers are the most dangerous people around power. Build a small circle allowed to be brutally honest in private. Outside that circle, the public image of confidence must never break.</p>
+  <p class="quote">"A prince should allow his advisers to speak the truth — but only in private, and only when asked."</p>
+  <p class="body">Flatterers are the most dangerous people around power. They tell the leader what he wants to hear, so decisions are made on false information. Build a small circle allowed to be brutally honest in private. Outside that circle, the public image of confidence must never break.</p>
 
   <!-- SECTION 4 -->
   <p class="sec-label">The Sinigaglia Trap</p>
-  <p class="body">This is the most important story in the book. Cesare Borgia had several powerful commanders who rebelled against him. He pretended to reconcile with them. Invited them to a meeting at Sinigaglia, promising friendship. When they arrived — unarmed, relaxed — he had them all strangled in one night. In one night, all his enemies were gone.</p>
+  <div class="sec-rule"></div>
+  <p class="body">This is the most important story in the book.</p>
+  <p class="body">Cesare Borgia had several powerful commanders who rebelled against him, fearing he was becoming too powerful. He pretended to reconcile with them. Invited them to a meeting at Sinigaglia, promising friendship. He had already quietly positioned his army around the town so no one could escape.</p>
+  <p class="body">When they arrived — unarmed, relaxed, expecting a dinner — he had them all strangled in one night. In one night, all his enemies were gone.</p>
+
+  <p class="quote">"He who becomes master of a city accustomed to freedom and does not destroy it, may expect to be destroyed by it."</p>
+
   <p class="body">The principle is not about violence. It is about decisiveness. An enemy who is half-removed is an enemy with nothing left to lose and maximum motivation to destroy you.</p>
+  <p class="body">A leader who acts before the threat fully forms is always in a stronger position than one who reacts after the damage is done.</p>
 
   <!-- SECTION 5 -->
   <p class="sec-label">The Final Verdict</p>
+  <div class="sec-rule"></div>
   <p class="body">The Prince is not a leadership manual. It is not a self-help book. It is a political survival manual written for one specific context that no longer exists.</p>
-  <p class="body">What you should remember: Machiavelli wrote this to get a job. He never got it. The timeless points are about human psychology — trust, loyalty, fear, image, timing. Building trust in the people is more durable than any fortress or army. An injured enemy is more dangerous than an untouched one.</p>
+  <p class="body">Every page that quotes it for business, corporate life, or personal relationships is wrong.</p>
+  <p class="body">A few principles overlap with general human psychology — loyalty, sudden change, image. When people encounter these, they assume the whole book is universally applicable. One overlap does not mean the whole system translates.</p>
+  <p class="body">What you should take from this book: Machiavelli wrote it to get a job. He never got it. The timeless points are about human psychology — trust, loyalty, fear, image, timing. Building trust in the people is more durable than any fortress or army. An injured enemy is more dangerous than an untouched one.</p>
 
-  <p class="closing">Understanding a thing is more valuable than memorising it.</p>
+  <p class="final-quote">Understanding a thing is more valuable than memorising it.</p>
+  <p class="final-note">— These notes exist so that when you return to them, the meaning is already extracted. Not the words. What the words reveal.</p>
 
 </section>
 
