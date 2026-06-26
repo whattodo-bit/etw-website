@@ -23,7 +23,7 @@ html,body{
   z-index:0;
   pointer-events:none;
   display:block;
-  opacity:0.25;
+  opacity:0.7;
 }
 
 /* NAV */
@@ -82,7 +82,16 @@ html,body{
 .pop-option{display:block;font-family:'DM Mono',monospace;color:rgba(240,237,230,0.85);font-size:13px;letter-spacing:0.25em;text-decoration:none;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);transition:color 0.3s;}
 .pop-option:last-child{border-bottom:none;}
 .pop-option:hover{color:#C4932A;}
-.about-statement{font-family:'Source Serif 4',serif;font-style:italic;color:rgba(196,147,42,0.85);font-size:18px;line-height:1.8;margin-top:36px;}
+.about-statement{font-family:'Source Serif 4',serif;color:#F0EDE6;font-size:17px;line-height:2;margin-top:28px;}
+#contact-form textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(196,147,42,0.3);color:#F0EDE6;font-family:'Source Serif 4',serif;font-size:14px;padding:12px;resize:vertical;margin-top:18px;}
+.cf-submit{margin-top:14px;font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.3em;background:none;border:1px solid rgba(196,147,42,0.3);padding:10px 20px;cursor:pointer;transition:border-color 0.3s;}
+.cf-submit:hover{border-color:#C4932A;}
+#cf-success{font-family:'Source Serif 4',serif;color:rgba(196,147,42,0.85);font-size:14px;margin-top:18px;}
+#support{position:relative;z-index:10;max-width:760px;margin:0 auto;padding:20px clamp(28px,8vw,120px) 40px;text-align:center;}
+.support-label{font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.4em;text-transform:uppercase;}
+.support-text{font-family:'Source Serif 4',serif;color:rgba(240,237,230,0.7);font-size:15px;line-height:1.9;margin:18px auto 0;max-width:560px;}
+.donate-btn{margin-top:24px;font-family:'DM Mono',monospace;color:#C4932A;font-size:11px;letter-spacing:0.3em;background:none;border:1px solid rgba(196,147,42,0.4);padding:12px 32px;cursor:pointer;transition:border-color 0.3s,background 0.3s;}
+.donate-btn:hover{border-color:#C4932A;background:rgba(196,147,42,0.08);}
 
 /* MOBILE OVERLAY */
 .hamburger{
@@ -278,10 +287,10 @@ footer{
         <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
       </svg>
     </button>
-    <button class="nav-icon" aria-label="Instagram" onclick="document.getElementById('ig-overlay').classList.add('open')">
+    <button class="nav-icon" aria-label="Instagram" onclick="window.open('https://www.instagram.com/etw__official','_blank')">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>
     </button>
-    <button class="nav-icon" aria-label="X" onclick="document.getElementById('x-overlay').classList.add('open')">
+    <button class="nav-icon" aria-label="X" onclick="window.open('https://x.com/explaning_world','_blank')">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
     </button>
   </div>
@@ -312,6 +321,12 @@ footer{
   </div>
 </section>
 
+<section id="support">
+  <p class="support-label">Support</p>
+  <p class="support-text">ETW is free and will stay free. No ads. No paywalls. If you find the content valuable and want to help cover the cost of books, research, and production, you can support the work directly.</p>
+  <button class="donate-btn" onclick="alert('Donation link coming soon')">DONATE</button>
+</section>
+
 <section id="boxes">
   <div class="box-grid">
     <div class="box" onclick="window.location='faq.html'">
@@ -329,7 +344,7 @@ footer{
       <div class="box-rule"></div>
       <p class="box-text">Terms of use, privacy policy, and copyright.</p>
     </div>
-    <div class="box" onclick="window.location='mailto:explainingtheworld@gmail.com'">
+    <div class="box" onclick="document.getElementById('contact-overlay').classList.add('open')">
       <p class="box-label">Contact</p>
       <div class="box-rule"></div>
       <p class="box-text">Get in touch directly.</p>
@@ -337,23 +352,22 @@ footer{
   </div>
 </section>
 
-<div id="ig-overlay" class="pop-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+<div id="contact-overlay" class="pop-overlay" onclick="if(event.target===this)this.classList.remove('open')">
   <div class="pop-box">
-    <span class="pop-close" onclick="document.getElementById('ig-overlay').classList.remove('open')">&#xD7;</span>
-    <p class="pop-label">Instagram</p>
+    <span class="pop-close" onclick="document.getElementById('contact-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="pop-label">Contact</p>
     <div class="pop-rule"></div>
-    <a class="pop-option" href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW &#x2192;</a>
-    <a class="pop-option" href="https://www.instagram.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
-  </div>
-</div>
-
-<div id="x-overlay" class="pop-overlay" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="pop-box">
-    <span class="pop-close" onclick="document.getElementById('x-overlay').classList.remove('open')">&#xD7;</span>
-    <p class="pop-label">X</p>
-    <div class="pop-rule"></div>
-    <a class="pop-option" href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW &#x2192;</a>
-    <a class="pop-option" href="https://x.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
+    <div id="contact-choices">
+      <a class="pop-option" href="mailto:explainingtheworld@gmail.com">SEND EMAIL &#x2192;</a>
+      <span class="pop-option" style="cursor:pointer;" onclick="document.getElementById('contact-choices').style.display='none';document.getElementById('contact-form-wrap').style.display='block';">SEND ANONYMOUS MESSAGE &#x2192;</span>
+    </div>
+    <div id="contact-form-wrap" style="display:none;">
+      <form id="contact-form">
+        <textarea id="cf-msg" name="message" rows="4" placeholder="Your message" required></textarea>
+        <button type="submit" class="cf-submit">SEND &#x2192;</button>
+      </form>
+      <p id="cf-success" style="display:none;">Message received. Thank you.</p>
+    </div>
   </div>
 </div>
 
@@ -366,57 +380,24 @@ footer{
 (function(){
   var canvas = document.getElementById('bg-canvas');
   var ctx = canvas.getContext('2d');
-  var W, H, sunX, sunY;
-
-  // Planets: [color, semi-minor (x radius), semi-major (y radius), size, speed, phase]
-  var PLANETS = [
-    ['rgba(196,147,42,0.8)',  90,  150, 5, 0.00040, 0],
-    ['rgba(140,160,190,0.8)', 150, 250, 7, 0.00026, 1.4],
-    ['rgba(170,90,60,0.8)',   220, 360, 6, 0.00018, 3.0],
-    ['rgba(230,225,210,0.8)', 300, 480, 8, 0.00012, 4.6]
-  ];
+  var W, H, dots = [];
 
   function resize(){
     W = canvas.width = window.innerWidth;
     H = canvas.height = window.innerHeight;
-    sunX = W * 0.5;
-    sunY = H / 2;
+    var n = Math.max(60, Math.round(W*H/16000)); dots = [];
+    for(var i=0;i<n;i++) dots.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+0.4,vx:(Math.random()-0.5)*0.18,vy:(Math.random()-0.5)*0.18,a:Math.random()*0.35+0.12});
   }
 
-  function frame(t){
+  // subtle, even, full-width drifting particle field
+  function frame(){
     ctx.clearRect(0,0,W,H);
-
-    // Orbit paths
-    for(var i=0;i<PLANETS.length;i++){
-      var p = PLANETS[i];
-      ctx.beginPath();
-      ctx.ellipse(sunX, sunY, p[1], p[2], 0, 0, Math.PI*2);
-      ctx.strokeStyle = 'rgba(196,147,42,0.06)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+    for(var i=0;i<dots.length;i++){
+      var d = dots[i]; d.x += d.vx; d.y += d.vy;
+      if(d.x<0)d.x+=W; if(d.x>W)d.x-=W; if(d.y<0)d.y+=H; if(d.y>H)d.y-=H;
+      ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,6.2832);
+      ctx.fillStyle = 'rgba(196,147,42,' + d.a.toFixed(2) + ')'; ctx.fill();
     }
-
-    // Sun glow
-    var sg = ctx.createRadialGradient(sunX, sunY, 0, sunX, sunY, 40);
-    sg.addColorStop(0,'rgba(196,147,42,0.6)');
-    sg.addColorStop(1,'rgba(196,147,42,0)');
-    ctx.beginPath();
-    ctx.arc(sunX, sunY, 40, 0, Math.PI*2);
-    ctx.fillStyle = sg;
-    ctx.fill();
-
-    // Planets
-    for(var k=0;k<PLANETS.length;k++){
-      var pl = PLANETS[k];
-      var a = t * pl[4] + pl[5];
-      var x = sunX + pl[1] * Math.cos(a);
-      var y = sunY + pl[2] * Math.sin(a);
-      ctx.beginPath();
-      ctx.arc(x, y, pl[3], 0, Math.PI*2);
-      ctx.fillStyle = pl[0];
-      ctx.fill();
-    }
-
     requestAnimationFrame(frame);
   }
 
@@ -436,6 +417,26 @@ footer{
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){var o=document.querySelectorAll('.pop-overlay.open');for(var i=0;i<o.length;i++)o[i].classList.remove('open');}
   });
+
+  // anonymous contact form -> Web3Forms (no sender email required)
+  var cf = document.getElementById('contact-form');
+  if(cf){
+    cf.addEventListener('submit', function(e){
+      e.preventDefault();
+      var msg = document.getElementById('cf-msg').value;
+      fetch('https://api.web3forms.com/submit', {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({access_key:'cd486e45-9e46-494d-8a5d-94fca8325f0a', subject:'Anonymous message — ETW', message: msg})
+      }).then(function(r){return r.json();}).then(function(){
+        cf.style.display='none';
+        document.getElementById('cf-success').style.display='block';
+      }).catch(function(){
+        cf.style.display='none';
+        document.getElementById('cf-success').style.display='block';
+      });
+    });
+  }
 }());
 </script>
 </body>

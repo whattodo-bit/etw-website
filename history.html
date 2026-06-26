@@ -107,16 +107,16 @@ html,body{
   line-height:1.9;
 }
 
-/* FEATURED VIDEO */
+/* FEATURED VIDEO — compact */
 #featured{
   position:relative;
   z-index:10;
   background:transparent;
-  padding:80px clamp(24px,8vw,120px) 40px;
+  padding:60px clamp(24px,8vw,120px) 70px;
   text-align:center;
 }
 .video-wrap{
-  max-width:860px;
+  max-width:700px;
   margin:0 auto;
 }
 .video-frame{
@@ -148,24 +148,74 @@ html,body{
 .video-title{
   font-family:'Playfair Display',serif;
   color:#F0EDE6;
-  font-size:22px;
-  margin-top:24px;
+  font-size:20px;
+  margin-top:22px;
   line-height:1.4;
 }
+.resources-btn{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.3em;
+  border:1px solid rgba(196,147,42,0.3);
+  padding:10px 20px;
+  cursor:pointer;
+  display:inline-block;
+  margin-top:24px;
+  background:none;
+  transition:border-color 0.3s;
+}
+.resources-btn:hover{border-color:#C4932A;}
 
-/* RESOURCES — two inline subsections */
-#resources{
+/* RESOURCES POPUP */
+#res-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.92);
+  z-index:1000;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+#res-overlay.open{display:flex;}
+.res-popup{
   position:relative;
-  z-index:10;
-  width:100%;
-  max-width:760px;
-  margin:0 auto;
-  padding:0 clamp(24px,8vw,120px) 100px;
+  background:#0D0B08;
+  border:1px solid rgba(196,147,42,0.4);
+  max-width:480px;
+  width:90%;
+  padding:48px;
+  text-align:left;
+  max-height:90vh;
+  overflow-y:auto;
+}
+.res-close{
+  position:absolute;
+  top:16px;right:16px;
+  font-family:'DM Mono',monospace;
+  color:#F0EDE6;
+  font-size:18px;
+  cursor:pointer;
+  line-height:1;
+}
+.res-pop-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:9px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+}
+.res-pop-rule{
+  width:60px;
+  height:1px;
+  background:#C4932A;
+  margin:16px 0 28px;
 }
 .res-box{
-  background:rgba(13,11,8,0.8);
+  background:rgba(13,11,8,0.85);
   border:1px solid rgba(196,147,42,0.2);
-  padding:32px;
+  padding:24px;
   margin-bottom:16px;
   transition:border-color 0.3s;
 }
@@ -183,88 +233,22 @@ html,body{
   font-size:13px;
   line-height:1.7;
   margin-top:10px;
-  padding-bottom:20px;
-  border-bottom:1px solid rgba(196,147,42,0.12);
 }
 .res-card-title{
   font-family:'Playfair Display',serif;
   color:#F0EDE6;
-  font-size:18px;
-  margin-top:20px;
-}
-.res-card-note{
-  font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.5);
-  font-size:13px;
-  line-height:1.7;
-  margin-top:8px;
+  font-size:16px;
+  margin-top:14px;
 }
 .res-card-cta{
   font-family:'DM Mono',monospace;
   color:#C4932A;
   font-size:10px;
   letter-spacing:0.3em;
-  margin-top:16px;
+  margin-top:14px;
   cursor:pointer;
   display:inline-block;
 }
-
-/* INSTAGRAM POPUP */
-#ig-overlay{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  z-index:1000;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
-}
-#ig-overlay.open{display:flex;}
-.ig-popup{
-  position:relative;
-  background:#0A0A0A;
-  border:1px solid #C4932A;
-  max-width:340px;
-  width:90%;
-  padding:40px 44px;
-  text-align:left;
-}
-.ig-close{
-  position:absolute;
-  top:14px;right:18px;
-  font-family:'DM Mono',monospace;
-  color:#F0EDE6;
-  font-size:18px;
-  cursor:pointer;
-  line-height:1;
-}
-.ig-pop-label{
-  font-family:'DM Mono',monospace;
-  color:#C4932A;
-  font-size:10px;
-  letter-spacing:0.4em;
-  text-transform:uppercase;
-}
-.ig-pop-rule{
-  width:50px;
-  height:1px;
-  background:#C4932A;
-  margin:18px 0 8px;
-}
-.ig-option{
-  display:block;
-  font-family:'DM Mono',monospace;
-  color:rgba(240,237,230,0.85);
-  font-size:13px;
-  letter-spacing:0.25em;
-  text-decoration:none;
-  padding:16px 0;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  transition:color 0.3s;
-}
-.ig-option:last-child{border-bottom:none;}
-.ig-option:hover{color:#C4932A;}
 
 /* FOOTER */
 footer{
@@ -287,8 +271,7 @@ footer{
   #nav{padding:20px 24px;}
   .hero{padding:90px 24px 0;}
   .video-title{font-size:18px;}
-  #resources{padding:0 24px 72px;}
-  .res-box{padding:28px 24px;}
+  .res-popup{padding:36px 28px;}
 }
 </style>
 </head>
@@ -304,7 +287,7 @@ footer{
         <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
       </svg>
     </button>
-    <button class="nav-icon" aria-label="Instagram" onclick="document.getElementById('ig-overlay').classList.add('open')">
+    <button class="nav-icon" aria-label="Instagram" onclick="window.open('https://www.instagram.com/etw_history','_blank')">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="2" y="2" width="20" height="20" rx="5"/>
         <circle cx="12" cy="12" r="4"/>
@@ -333,31 +316,25 @@ footer{
       <iframe src="https://www.youtube.com/embed/TqZWieebzC4" title="ETW Featured" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="video-title">Machiavelli Wrote The Prince to Get a Job.<br>It Didn't Work.</p>
+    <span class="resources-btn" onclick="document.getElementById('res-overlay').classList.add('open')">RESOURCES &#x2192;</span>
   </div>
 </section>
 
-<section id="resources">
-  <div class="res-box">
-    <p class="res-grouplabel">Sources</p>
-    <p class="res-groupdesc">Books and material referenced in the production of this content.</p>
-    <p class="res-card-title">The Prince — Niccolò Machiavelli</p>
-    <p class="res-card-note">Primary source. Read in full.</p>
-  </div>
-  <div class="res-box">
-    <p class="res-grouplabel">Notes</p>
-    <p class="res-groupdesc">Analysis of what is useful, what is not, and why.</p>
-    <p class="res-card-title">The Prince — Analysis Notes</p>
-    <span class="res-card-cta" onclick="window.location='/notes/the-prince'">READ NOTES &#x2192;</span>
-  </div>
-</section>
-
-<div id="ig-overlay" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="ig-popup">
-    <span class="ig-close" onclick="document.getElementById('ig-overlay').classList.remove('open')">&#xD7;</span>
-    <p class="ig-pop-label">Instagram</p>
-    <div class="ig-pop-rule"></div>
-    <a class="ig-option" href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW &#x2192;</a>
-    <a class="ig-option" href="https://www.instagram.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
+<div id="res-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="res-popup">
+    <span class="res-close" onclick="document.getElementById('res-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="res-pop-label">Resources</p>
+    <div class="res-pop-rule"></div>
+    <div class="res-box">
+      <p class="res-grouplabel">Sources</p>
+      <p class="res-groupdesc">Books and materials referenced in production.</p>
+      <p class="res-card-title">The Prince — Niccolò Machiavelli</p>
+    </div>
+    <div class="res-box">
+      <p class="res-grouplabel">Notes</p>
+      <p class="res-card-title">The Prince — Analysis Notes</p>
+      <span class="res-card-cta" onclick="window.location='/notes/the-prince'">READ NOTES &#x2192;</span>
+    </div>
   </div>
 </div>
 
@@ -505,9 +482,9 @@ footer{
   var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;  // 8s hold, 4s crossfade
   var startT = null;
 
-  function frame(t){
-    if(startT === null) startT = t;
-    var el = t - startT;
+  function frame(now){
+    if(startT === null) startT = now;
+    var el = now - startT;
     var cycle = MON.length * SLOT;
     var lp = el % cycle;
     var idx = Math.floor(lp / SLOT);
@@ -525,9 +502,9 @@ footer{
   }
   requestAnimationFrame(frame);
 
-  // ESC closes the Instagram popup
+  // ESC closes the resources popup
   document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape') document.getElementById('ig-overlay').classList.remove('open');
+    if(e.key === 'Escape') document.getElementById('res-overlay').classList.remove('open');
   });
 }());
 </script>
