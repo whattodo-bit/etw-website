@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collaboration — Explaining The World</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{
+  background:#0A0F2E;
+  color:#F0EDE6;
+  overflow-x:hidden;
+  font-family:'Source Serif 4',serif;
+}
+
+/* NAV — same as about */
+#nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:100;
+  background:transparent;
+  padding:28px 56px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:rgba(240,237,230,0.9);
+  font-size:16px;
+  letter-spacing:0.4em;
+  text-indent:0.4em;
+  text-decoration:none;
+}
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:28px;
+}
+.nav-link{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(240,237,230,0.5);
+  letter-spacing:0.2em;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.nav-link:hover{color:#F0EDE6;}
+.nav-icon{
+  background:none;border:none;cursor:pointer;padding:0;
+  display:flex;align-items:center;
+  color:rgba(240,237,230,0.4);transition:color 0.3s;
+}
+.nav-icon:hover{color:#C4932A;}
+
+/* BACK */
+.back-wrap{padding:80px 48px 0;position:relative;z-index:10;}
+.back-btn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;}
+
+/* HERO */
+.hero{
+  position:relative;
+  z-index:10;
+  text-align:center;
+  padding:40px 32px 30px;
+}
+.hero-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:10px;
+  letter-spacing:0.5em;
+  text-transform:uppercase;
+}
+.hero-rule{
+  width:80px;
+  height:1px;
+  background:#C4932A;
+  margin:16px auto;
+}
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  color:#F0EDE6;
+  font-size:clamp(40px,8vw,56px);
+  letter-spacing:0.06em;
+  line-height:1.1;
+}
+.hero-intro{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.6);
+  font-size:15px;
+  line-height:1.9;
+  max-width:560px;
+  margin:22px auto 0;
+}
+
+/* SECTIONS */
+#collab{
+  position:relative;
+  z-index:10;
+  max-width:720px;
+  margin:0 auto;
+  padding:50px 48px 100px;
+}
+.sec-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:9px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  margin-bottom:16px;
+}
+.sec-rule{
+  width:40px;
+  height:1px;
+  background:#C4932A;
+  margin-bottom:24px;
+}
+.sec-body{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.7);
+  font-size:16px;
+  line-height:1.9;
+  margin-bottom:48px;
+}
+.sec-body a{color:#C4932A;text-decoration:none;border-bottom:1px solid rgba(196,147,42,0.3);}
+.sec-body a:hover{border-color:#C4932A;}
+
+/* FOOTER */
+footer{
+  position:relative;
+  z-index:10;
+  background:#0A0F2E;
+  padding:20px;
+  text-align:center;
+}
+.footer-copy{
+  font-family:'DM Mono',monospace;
+  color:rgba(240,237,230,0.25);
+  font-size:10px;
+  letter-spacing:0.15em;
+  white-space:nowrap;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+  #nav{padding:20px 24px;}
+  .nav-right{gap:18px;}
+  .back-wrap{padding:72px 24px 0;}
+  #collab{padding:40px 24px 72px;}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="nav-logo">ETW</a>
+  <div class="nav-right">
+    <a href="/history" class="nav-link">History</a>
+    <button class="nav-icon" aria-label="YouTube" onclick="window.open('https://youtube.com/@etw_official','_blank')">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="currentColor"><path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="Instagram" onclick="window.open('https://www.instagram.com/etw__official','_blank')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="X" onclick="window.open('https://x.com/explaning_world','_blank')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="back-wrap">
+  <span class="back-btn" onclick="history.back()">&#x2190; BACK</span>
+</div>
+
+<section class="hero">
+  <p class="hero-label">Collaboration</p>
+  <div class="hero-rule"></div>
+  <h1 class="hero-title">Work With Us</h1>
+  <p class="hero-intro">ETW is an independent project open to select collaboration. Not actively hiring. Registering interest for the future.</p>
+</section>
+
+<section id="collab">
+
+  <p class="sec-label">Creative</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">For editors, motion designers, illustrators, and narrators who hold themselves to a high standard and care about the craft. If you want to shape how ETW looks and sounds, register your interest at <a href="mailto:explainingtheworld@gmail.com">explainingtheworld@gmail.com</a>.</p>
+
+  <p class="sec-label">Research</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">For historians, researchers, and fact-checkers who can go deep into primary sources and hold accuracy above speed. To be considered for future research work, write to <a href="mailto:explainingtheworld@gmail.com">explainingtheworld@gmail.com</a>.</p>
+
+  <p class="sec-label">Brand</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">For partnerships that respect editorial independence — neutral, non-editorial, and aligned with the mission. For brand or institutional enquiries, contact <a href="mailto:explainingtheworld@gmail.com">explainingtheworld@gmail.com</a>.</p>
+
+</section>
+
+<footer>
+  <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -415,69 +415,15 @@ footer{
     ctx.moveTo(b.x - w, b.y);
     ctx.lineTo(b.x + w, b.y);
     ctx.stroke();
+    // subtle glow at the peak of the pediment
+    var gr = s*0.28, ratio = alpha/0.12;
+    var rg = ctx.createRadialGradient(b.x, top, 0, b.x, top, gr);
+    rg.addColorStop(0, 'rgba(196,147,42,' + (0.4*ratio).toFixed(3) + ')');
+    rg.addColorStop(1, 'rgba(196,147,42,0)');
+    ctx.beginPath(); ctx.arc(b.x, top, gr, 0, Math.PI*2); ctx.fillStyle = rg; ctx.fill();
   }
 
-  function colosseum(alpha){
-    var b = base(), s = b.s; setStroke(alpha);
-    var w = s*1.5, top = b.y - s*1.25;
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, b.y);
-    ctx.lineTo(b.x - w, top + s*0.4);
-    ctx.quadraticCurveTo(b.x, top - s*0.25, b.x + w, top + s*0.4);
-    ctx.lineTo(b.x + w, b.y);
-    ctx.stroke();
-    var tiers = 3;
-    for(var t=0;t<tiers;t++){
-      var ty = top + s*0.55 + t*s*0.4;
-      ctx.beginPath();
-      ctx.moveTo(b.x - w, ty);
-      ctx.lineTo(b.x + w, ty);
-      ctx.stroke();
-      for(var a=-3;a<=3;a++){
-        var ax = b.x + a*(w/3.4);
-        ctx.beginPath();
-        ctx.arc(ax, ty + s*0.18, s*0.12, Math.PI, 0, true);
-        ctx.stroke();
-      }
-    }
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, b.y);
-    ctx.lineTo(b.x + w, b.y);
-    ctx.stroke();
-  }
-
-  function castle(alpha){
-    var b = base(), s = b.s; setStroke(alpha);
-    var w = s*0.7, top = b.y - s*1.5;
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, b.y);
-    ctx.lineTo(b.x - w, top);
-    ctx.lineTo(b.x + w, top);
-    ctx.lineTo(b.x + w, b.y);
-    ctx.stroke();
-    var merl = 5;
-    ctx.beginPath();
-    for(var i=0;i<merl;i++){
-      var mx = b.x - w + i*(2*w/merl);
-      var mw = (2*w/merl);
-      ctx.moveTo(mx, top);
-      ctx.lineTo(mx, top - s*0.18);
-      ctx.lineTo(mx + mw*0.5, top - s*0.18);
-      ctx.lineTo(mx + mw*0.5, top);
-    }
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(b.x - s*0.18, b.y);
-    ctx.lineTo(b.x - s*0.18, b.y - s*0.4);
-    ctx.arc(b.x, b.y - s*0.4, s*0.18, Math.PI, 0, false);
-    ctx.lineTo(b.x + s*0.18, b.y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(b.x, top + s*0.45, s*0.1, 0, Math.PI*2);
-    ctx.stroke();
-  }
-
-  var MON = [pyramid, parthenon, colosseum, castle];
+  var MON = [pyramid, parthenon];
   var BASE_ALPHA = 0.12;
   var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;  // 8s hold, 4s crossfade
   var startT = null;
