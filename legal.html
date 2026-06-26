@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FAQ — Explaining The World</title>
+<title>Legal — Explaining The World</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -50,13 +50,8 @@ html,body{
 .hero{
   position:relative;
   z-index:10;
-  min-height:48vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
   text-align:center;
-  padding:120px 32px 0;
+  padding:140px 32px 40px;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -69,44 +64,45 @@ html,body{
   width:80px;
   height:1px;
   background:#C4932A;
-  margin:18px auto;
+  margin:16px auto;
 }
 .hero-title{
   font-family:'Playfair Display',serif;
   font-weight:700;
   color:#F0EDE6;
-  font-size:clamp(40px,6vw,64px);
-  letter-spacing:0.12em;
-  text-indent:0.12em;
+  font-size:clamp(40px,8vw,52px);
+  letter-spacing:0.08em;
   line-height:1.1;
-  text-shadow:0 0 60px rgba(0,0,0,0.9);
 }
 
-/* FAQ LIST */
-#faq{
+/* CONTENT */
+#legal{
   position:relative;
   z-index:10;
   max-width:720px;
   margin:0 auto;
   padding:60px 48px 100px;
 }
-.faq-item{
-  border-top:1px solid rgba(255,255,255,0.08);
-  padding:38px 0;
+.sec-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:9px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  margin-bottom:16px;
 }
-.faq-item:last-child{border-bottom:1px solid rgba(255,255,255,0.08);}
-.faq-q{
-  font-family:'Playfair Display',serif;
-  color:#F0EDE6;
-  font-size:20px;
-  line-height:1.4;
+.sec-rule{
+  width:40px;
+  height:1px;
+  background:#C4932A;
+  margin-bottom:24px;
 }
-.faq-a{
+.sec-body{
   font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.6);
-  font-size:15px;
+  color:rgba(240,237,230,0.7);
+  font-size:16px;
   line-height:1.9;
-  margin-top:16px;
+  margin-bottom:48px;
 }
 
 /* FOOTER */
@@ -128,9 +124,8 @@ footer{
 /* MOBILE */
 @media(max-width:768px){
   #nav{padding:20px 24px;}
-  .hero{padding:100px 24px 0;}
-  #faq{padding:48px 24px 72px;}
-  .faq-q{font-size:18px;}
+  .hero{padding:120px 24px 32px;}
+  #legal{padding:48px 24px 72px;}
 }
 </style>
 </head>
@@ -146,42 +141,28 @@ footer{
 </div>
 
 <section class="hero">
-  <p class="hero-label">FAQ</p>
+  <p class="hero-label">Legal</p>
   <div class="hero-rule"></div>
-  <h1 class="hero-title">Questions</h1>
+  <h1 class="hero-title">Legal</h1>
 </section>
 
-<section id="faq">
+<section id="legal">
 
-  <div class="faq-item">
-    <p class="faq-q">What is Explaining The World?</p>
-    <p class="faq-a">An independent project producing researched content for a global English-speaking audience — currently focused on history, with work underway on other subjects.</p>
-  </div>
+  <p class="sec-label">Copyright</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">&#169; 2026 Explaining The World. All rights reserved. All content published on explainingtheworld.com and ETW YouTube channels is the intellectual property of Explaining The World. Reproduction without prior written permission is prohibited.</p>
 
-  <div class="faq-item">
-    <p class="faq-q">Who is behind it?</p>
-    <p class="faq-a">This is an independent project, not an organisation. There is no team. Research, scripting, and production are handled by one person.</p>
-  </div>
+  <p class="sec-label">Privacy Policy</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">This website does not collect personal data beyond what is voluntarily submitted through contact forms. Submitted information is used solely for correspondence and is not shared with any third party. This site does not use tracking pixels or third-party analytics.</p>
 
-  <div class="faq-item">
-    <p class="faq-q">What topics do you cover?</p>
-    <p class="faq-a">History first — empires, leaders, and the mechanics of power. Other subjects will follow as the project grows.</p>
-  </div>
+  <p class="sec-label">Disclaimer</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">Content on ETW is produced for educational and informational purposes only. ETW does not represent any government, institution, or organisation. Historical analysis reflects interpretation of available sources and should not be taken as definitive academic scholarship. We try our best not to be biased towards any historical figure, nation, or ideology.</p>
 
-  <div class="faq-item">
-    <p class="faq-q">How is the content researched?</p>
-    <p class="faq-a">We go into the depth of every source and every book to find every detail that matters. This takes time. Nothing is brushed past.</p>
-  </div>
-
-  <div class="faq-item">
-    <p class="faq-q">How can I collaborate or get in touch?</p>
-    <p class="faq-a">See the Collaboration and Contact sections on the About page. Genuine, relevant messages are always welcome.</p>
-  </div>
-
-  <div class="faq-item">
-    <p class="faq-q">Why is the video quality not perfect?</p>
-    <p class="faq-a">Production quality improves with time and resources. The priority has always been the content — the research, the accuracy, the depth of analysis. A well-researched video with average production beats a visually perfect video with nothing to say. Quality of content comes first. Everything else follows.</p>
-  </div>
+  <p class="sec-label">Terms of Use</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">By accessing this website you agree not to reproduce, redistribute, or commercially exploit ETW content without prior written consent. ETW reserves the right to update these terms at any time without notice.</p>
 
 </section>
 
