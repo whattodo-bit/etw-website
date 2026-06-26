@@ -3,10 +3,12 @@ DirectoryIndex index.html
 
 RewriteEngine On
 
-# Clean URL for the notes article: /notes/the-prince -> notes/the-prince.html
-RewriteRule ^notes/the-prince/?$ notes/the-prince.html [NC,L]
-
-# Serve clean URLs without the .html extension (also covers nested paths)
+# Clean URL for nested notes pages: /notes/the-prince -> notes/the-prince.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^\.]+)$ $1.html [NC,L]
+RewriteRule ^notes/([^/]+)/?$ notes/$1.html [NC,L]
+
+# Clean URLs for top-level pages: /history -> history.html, /about -> about.html
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([^/]+)/?$ $1.html [NC,L]

@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 html,body{
   background:#0A0F2E;
   color:#F0EDE6;
@@ -35,8 +36,24 @@ html,body{
   background:transparent;
   padding:28px 56px;
   display:flex;
+  justify-content:space-between;
   align-items:center;
 }
+.nav-icons{display:flex;align-items:center;gap:22px;}
+.nav-link{font-family:'DM Mono',monospace;font-size:11px;color:rgba(240,237,230,0.5);letter-spacing:0.2em;text-decoration:none;transition:color 0.3s;}
+.nav-link:hover{color:#F0EDE6;}
+.nav-icon{background:none;border:none;cursor:pointer;padding:0;display:flex;align-items:center;color:rgba(240,237,230,0.4);transition:color 0.3s;}
+.nav-icon:hover{color:#C4932A;}
+/* SOCIAL POPUPS */
+.pop-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:24px;}
+.pop-overlay.open{display:flex;}
+.pop-box{position:relative;background:#0A0A0A;border:1px solid #C4932A;max-width:340px;width:90%;padding:40px 44px;text-align:left;}
+.pop-close{position:absolute;top:14px;right:18px;font-family:'DM Mono',monospace;color:#F0EDE6;font-size:18px;cursor:pointer;line-height:1;}
+.pop-label{font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.4em;text-transform:uppercase;}
+.pop-rule{width:50px;height:1px;background:#C4932A;margin:18px 0 8px;}
+.pop-option{display:block;font-family:'DM Mono',monospace;color:rgba(240,237,230,0.85);font-size:13px;letter-spacing:0.25em;text-decoration:none;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.06);transition:color 0.3s;}
+.pop-option:last-child{border-bottom:none;}
+.pop-option:hover{color:#C4932A;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -105,7 +122,10 @@ html,body{
   transition:border-color 0.4s;
 }
 .panel:hover{border-color:rgba(196,147,42,0.5);}
-#about{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);}
+#about{background:rgba(255,255,255,0.04);position:relative;overflow:hidden;}
+#about:hover{border-color:rgba(196,147,42,0.5);}
+#about>*:not(canvas){position:relative;z-index:1;}
+#about-particles{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
 #history{background:rgba(13,11,8,0.65);}
 
 .about-label{
@@ -215,7 +235,21 @@ footer{
 
 <canvas id="globe-canvas"></canvas>
 
-<nav id="nav"></nav>
+<nav id="nav">
+  <a href="index.html" class="nav-logo">ETW</a>
+  <div class="nav-icons">
+    <a href="#about" class="nav-link">About</a>
+    <button class="nav-icon" aria-label="YouTube" onclick="window.open('https://youtube.com/@etw_official','_blank')">
+      <svg width="22" height="16" viewBox="0 0 20 14" fill="currentColor"><path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="Instagram" onclick="document.getElementById('ig-overlay').classList.add('open')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="X" onclick="document.getElementById('x-overlay').classList.add('open')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </button>
+  </div>
+</nav>
 
 <section class="hero">
   <p class="hero-label">Explaining The World</p>
@@ -225,6 +259,7 @@ footer{
 
 <section class="panels">
   <div id="about" class="panel" onclick="window.location='about.html'">
+    <canvas id="about-particles"></canvas>
     <p class="about-label">About</p>
     <div class="about-rule"></div>
     <h2 class="about-title">EXPLAINING THE WORLD</h2>
@@ -239,6 +274,26 @@ footer{
     <span class="hist-cta">EXPLORE &#x2192;</span>
   </div>
 </section>
+
+<div id="ig-overlay" class="pop-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="pop-box">
+    <span class="pop-close" onclick="document.getElementById('ig-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="pop-label">Instagram</p>
+    <div class="pop-rule"></div>
+    <a class="pop-option" href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">ETW &#x2192;</a>
+    <a class="pop-option" href="https://www.instagram.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
+  </div>
+</div>
+
+<div id="x-overlay" class="pop-overlay" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="pop-box">
+    <span class="pop-close" onclick="document.getElementById('x-overlay').classList.remove('open')">&#xD7;</span>
+    <p class="pop-label">X</p>
+    <div class="pop-rule"></div>
+    <a class="pop-option" href="https://x.com/explaning_world" target="_blank" rel="noopener">ETW &#x2192;</a>
+    <a class="pop-option" href="https://x.com/etw_history" target="_blank" rel="noopener">History &#x2192;</a>
+  </div>
+</div>
 
 <footer>
   <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
@@ -365,6 +420,32 @@ footer{
   window.addEventListener('resize', resize);
   resize();
   requestAnimationFrame(frame);
+}());
+</script>
+
+<script>
+(function(){
+  // social popups — ESC closes any open one
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'){var o=document.querySelectorAll('.pop-overlay.open');for(var i=0;i<o.length;i++)o[i].classList.remove('open');}
+  });
+  // subtle, even, full-width particle field behind the about panel
+  var c=document.getElementById('about-particles'); if(!c) return;
+  var ctx=c.getContext('2d'), W,H,dots=[];
+  function init(){
+    W=c.width=c.offsetWidth; H=c.height=c.offsetHeight;
+    var n=Math.max(36,Math.round(W*H/14000)); dots=[];
+    for(var i=0;i<n;i++) dots.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,vx:(Math.random()-0.5)*0.2,vy:(Math.random()-0.5)*0.2,a:Math.random()*0.35+0.12});
+  }
+  function pframe(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<dots.length;i++){var d=dots[i];d.x+=d.vx;d.y+=d.vy;
+      if(d.x<0)d.x+=W;if(d.x>W)d.x-=W;if(d.y<0)d.y+=H;if(d.y>H)d.y-=H;
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,6.2832);ctx.fillStyle='rgba(196,147,42,'+d.a.toFixed(2)+')';ctx.fill();}
+    requestAnimationFrame(pframe);
+  }
+  window.addEventListener('resize',init);
+  setTimeout(function(){init();requestAnimationFrame(pframe);},80);
 }());
 </script>
 </body>

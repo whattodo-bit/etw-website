@@ -15,6 +15,7 @@ html,body{
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
 }
+#fx-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
 
 /* NAV */
 #nav{
@@ -136,12 +137,14 @@ footer{
 </head>
 <body>
 
+<canvas id="fx-canvas"></canvas>
+
 <nav id="nav">
   <a href="index.html" class="nav-logo">ETW</a>
   <a href="about.html" class="nav-link">About</a>
 </nav>
 
-<div style="padding: 24px 48px 0;">
+<div style="padding: 24px 48px 0;position:relative;z-index:10;">
   <span onclick="history.back()" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;">&#x2190; BACK</span>
 </div>
 
@@ -155,12 +158,12 @@ footer{
 
   <div class="faq-item">
     <p class="faq-q">What is Explaining The World?</p>
-    <p class="faq-a">An independent project producing researched content for a global English-speaking audience — currently focused on history, with work underway on other subjects.</p>
+    <p class="faq-a">An independent project producing researched content for a global English-speaking audience — currently focused on history, with work in progress on other subjects.</p>
   </div>
 
   <div class="faq-item">
     <p class="faq-q">Who is behind it?</p>
-    <p class="faq-a">This is an independent project, not an organisation. There is no team. Research, scripting, and production are handled by one person.</p>
+    <p class="faq-a">ETW is an independent project. No corporate structure. No sponsors. One standard — get it right.</p>
   </div>
 
   <div class="faq-item">
@@ -179,8 +182,8 @@ footer{
   </div>
 
   <div class="faq-item">
-    <p class="faq-q">Why is the video quality not perfect?</p>
-    <p class="faq-a">Production quality improves with time and resources. The priority has always been the content — the research, the accuracy, the depth of analysis. A well-researched video with average production beats a visually perfect video with nothing to say. Quality of content comes first. Everything else follows.</p>
+    <p class="faq-q">Why are ETW videos not like other established channels?</p>
+    <p class="faq-a">Production improves with time and resources. The priority has always been the content — the research, the accuracy, the depth. A well-researched video with average production beats a visually polished video with nothing to say. Content quality comes first. Everything else follows.</p>
   </div>
 
 </section>
@@ -188,6 +191,27 @@ footer{
 <footer>
   <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
 </footer>
+
+<script>
+(function(){
+  // subtle, even, full-width particle field — same as the index about section
+  var c=document.getElementById('fx-canvas'); if(!c) return;
+  var ctx=c.getContext('2d'), W,H,dots=[];
+  function init(){
+    W=c.width=window.innerWidth; H=c.height=window.innerHeight;
+    var n=Math.max(50,Math.round(W*H/16000)); dots=[];
+    for(var i=0;i<n;i++) dots.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,vx:(Math.random()-0.5)*0.18,vy:(Math.random()-0.5)*0.18,a:Math.random()*0.3+0.1});
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<dots.length;i++){var d=dots[i];d.x+=d.vx;d.y+=d.vy;
+      if(d.x<0)d.x+=W;if(d.x>W)d.x-=W;if(d.y<0)d.y+=H;if(d.y>H)d.y-=H;
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,6.2832);ctx.fillStyle='rgba(196,147,42,'+d.a.toFixed(2)+')';ctx.fill();}
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize',init); init(); requestAnimationFrame(frame);
+}());
+</script>
 
 </body>
 </html>
