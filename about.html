@@ -15,6 +15,7 @@ html,body{
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
 }
+body{min-height:100vh;display:flex;flex-direction:column;}
 
 #bg-canvas{
   position:fixed;
@@ -40,10 +41,10 @@ html,body{
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:rgba(240,237,230,0.9);
+  color:#C4932A;
   font-size:16px;
-  letter-spacing:0.4em;
-  text-indent:0.4em;
+  letter-spacing:0.35em;
+  text-indent:0.35em;
   text-decoration:none;
 }
 .nav-right{
@@ -101,7 +102,8 @@ html,body{
 .contact-back{display:inline-block;font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.3em;cursor:pointer;margin-bottom:20px;}
 .contact-disc-toggle{display:block;font-family:'DM Mono',monospace;color:rgba(240,237,230,0.5);font-size:10px;letter-spacing:0.2em;cursor:pointer;margin-bottom:10px;}
 .contact-disc-toggle:hover{color:#C4932A;}
-#contact-disclaimer{font-family:'Source Serif 4',serif;color:rgba(240,237,230,0.5);font-size:12px;line-height:1.7;margin-bottom:14px;}
+.contact-policy-link{display:block;margin-top:26px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;color:rgba(240,237,230,0.4);text-decoration:none;text-align:center;transition:color 0.3s;}
+.contact-policy-link:hover{color:#C4932A;}
 
 /* MOBILE OVERLAY */
 .hamburger{
@@ -254,23 +256,17 @@ html,body{
 footer{
   position:relative;
   z-index:10;
+  margin-top:auto;
   background:#0A0F2E;
-  padding:48px 56px;
+  padding:20px;
   text-align:center;
-}
-.footer-rule{
-  width:160px;
-  height:1px;
-  background:linear-gradient(to right,transparent,#C4932A,transparent);
-  margin:0 auto 24px;
-  display:block;
 }
 .footer-copy{
   font-family:'DM Mono',monospace;
   color:rgba(240,237,230,0.25);
   font-size:10px;
-  letter-spacing:0.2em;
-  line-height:1.9;
+  letter-spacing:0.15em;
+  white-space:nowrap;
 }
 
 /* MOBILE */
@@ -289,33 +285,8 @@ footer{
 <canvas id="bg-canvas"></canvas>
 
 <nav id="nav">
-  <a href="index.html" class="nav-logo">ETW</a>
-  <div class="nav-right">
-    <a href="history.html" class="nav-link">History</a>
-    <button class="yt-btn" onclick="window.open('https://youtube.com/@etw_official','_blank')" aria-label="YouTube">
-      <svg width="20" height="14" viewBox="0 0 20 14" fill="currentColor">
-        <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>
-      </svg>
-    </button>
-    <button class="nav-icon" aria-label="Instagram" onclick="window.open('https://www.instagram.com/etw__official','_blank')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>
-    </button>
-    <button class="nav-icon" aria-label="X" onclick="window.open('https://x.com/explaning_world','_blank')">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-    </button>
-  </div>
-  <button class="hamburger" id="hbg" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="/" class="nav-logo">ETW</a>
 </nav>
-
-<div id="mob-overlay">
-  <button class="mob-close" id="mob-close">&#x2715;</button>
-  <a href="history.html">History</a>
-  <a href="https://youtube.com/@etw_official" target="_blank" rel="noopener">YouTube</a>
-  <a href="https://www.instagram.com/etw__official" target="_blank" rel="noopener">Instagram</a>
-  <a href="https://x.com/explaning_world" target="_blank" rel="noopener">X</a>
-</div>
 
 <section class="hero">
   <p class="hero-label">About</p>
@@ -327,7 +298,6 @@ footer{
   <div class="about-inner">
     <p class="about-body">An independent project producing long-form content on history — with work in progress on other subjects and languages.</p>
     <p class="about-body">We go into the depth of every source to find every detail that matters. We do not brush past anything. This takes time.</p>
-    <p class="about-statement">ETW is an independent project. No corporate structure. No sponsors. One standard — get it right.</p>
   </div>
 </section>
 
@@ -339,17 +309,17 @@ footer{
 
 <section id="boxes">
   <div class="box-grid">
-    <div class="box" onclick="window.location='faq.html'">
+    <div class="box" onclick="window.location='/faq'">
       <p class="box-label">FAQ</p>
       <div class="box-rule"></div>
       <p class="box-text">Common questions about ETW.</p>
     </div>
-    <div class="box" onclick="window.location='collaboration.html'">
+    <div class="box" onclick="window.location='/collaboration'">
       <p class="box-label">Collaboration</p>
       <div class="box-rule"></div>
       <p class="box-text">Work with us or apply for a position.</p>
     </div>
-    <div class="box" onclick="window.location='legal.html'">
+    <div class="box" onclick="window.location='/legal'">
       <p class="box-label">Legal</p>
       <div class="box-rule"></div>
       <p class="box-text">Terms of use, privacy policy, and copyright.</p>
@@ -376,23 +346,21 @@ footer{
         <span class="contact-opt-title">SEND A MESSAGE &#x2192;</span>
         <span class="contact-opt-sub">Suggestions or one-way notes. No reply.</span>
       </span>
+      <a class="contact-policy-link" href="/contact-policy">How we handle messages &#x2192;</a>
     </div>
     <div id="contact-form-wrap" style="display:none;">
-      <span class="contact-back" onclick="document.getElementById('contact-form-wrap').style.display='none';document.getElementById('contact-choices').style.display='block';">&#x2190; BACK</span>
-      <span class="contact-disc-toggle" onclick="var d=document.getElementById('contact-disclaimer');d.style.display=d.style.display==='block'?'none':'block';">Please read before sending &#x2192;</span>
-      <p id="contact-disclaimer" style="display:none;">Messages are one-way. We may not reply. We read what is relevant when time permits. Do not send sensitive information — messages are not end-to-end encrypted.</p>
+      <span class="contact-back" onclick="document.getElementById('contact-form-wrap').style.display='none';document.getElementById('contact-choices').style.display='block';document.getElementById('cf-success').style.display='none';">&#x2190; BACK</span>
       <form id="contact-form">
         <textarea id="cf-msg" name="message" rows="4" placeholder="Your message" required></textarea>
         <button type="submit" class="cf-submit">SEND &#x2192;</button>
       </form>
-      <p id="cf-success" style="display:none;">Message received. Thank you.</p>
+      <p id="cf-success" style="display:none;"></p>
     </div>
   </div>
 </div>
 
 <footer>
-  <span class="footer-rule"></span>
-  <p class="footer-copy">&#169; 2026 EXPLAINING THE WORLD.<br>ALL RIGHTS RESERVED.</p>
+  <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
 </footer>
 
 <script>
@@ -430,35 +398,45 @@ footer{
   resize();
   requestAnimationFrame(frame);
 
-  // Hamburger
-  var hbg = document.getElementById('hbg');
-  var ov = document.getElementById('mob-overlay');
-  var mc = document.getElementById('mob-close');
-  hbg.addEventListener('click',function(){ov.classList.add('open');});
-  mc.addEventListener('click',function(){ov.classList.remove('open');});
-  ov.addEventListener('click',function(e){if(e.target===ov)ov.classList.remove('open');});
-
-  // social popups — ESC closes any open one
+  // popups — ESC closes any open one
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){var o=document.querySelectorAll('.pop-overlay.open');for(var i=0;i<o.length;i++)o[i].classList.remove('open');}
   });
 
-  // anonymous contact form -> Web3Forms (no sender email required)
+  // anonymous message form -> Web3Forms
   var cf = document.getElementById('contact-form');
   if(cf){
     cf.addEventListener('submit', function(e){
       e.preventDefault();
-      var msg = document.getElementById('cf-msg').value;
+      var msg = document.getElementById('cf-msg').value.trim();
+      if(!msg) return;
+      var btn = cf.querySelector('.cf-submit');
+      var note = document.getElementById('cf-success');
+      btn.disabled = true; btn.textContent = 'SENDING…';
+      note.style.display = 'none';
       fetch('https://api.web3forms.com/submit', {
         method:'POST',
         headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({access_key:'cd486e45-9e46-494d-8a5d-94fca8325f0a', subject:'Anonymous message — ETW', message: msg})
-      }).then(function(r){return r.json();}).then(function(){
-        cf.style.display='none';
-        document.getElementById('cf-success').style.display='block';
+        body: JSON.stringify({
+          access_key:'cd486e45-9e46-494d-8a5d-94fca8325f0a',
+          subject:'Anonymous message — ETW',
+          from_name:'ETW Website',
+          message: msg
+        })
+      }).then(function(r){ return r.json(); }).then(function(data){
+        if(data && data.success){
+          cf.style.display='none';
+          note.textContent = 'Message received. Thank you.';
+          note.style.display='block';
+        } else {
+          btn.disabled=false; btn.textContent='SEND →';
+          note.textContent = 'Could not send. Please try again later.';
+          note.style.display='block';
+        }
       }).catch(function(){
-        cf.style.display='none';
-        document.getElementById('cf-success').style.display='block';
+        btn.disabled=false; btn.textContent='SEND →';
+        note.textContent = 'Could not send. Please try again later.';
+        note.style.display='block';
       });
     });
   }

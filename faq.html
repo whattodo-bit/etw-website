@@ -15,6 +15,7 @@ html,body{
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
 }
+body{min-height:100vh;display:flex;flex-direction:column;}
 #fx-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
 
 /* NAV */
@@ -31,10 +32,10 @@ html,body{
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#F0EDE6;
+  color:#C4932A;
   font-size:16px;
-  letter-spacing:0.4em;
-  text-indent:0.4em;
+  letter-spacing:0.35em;
+  text-indent:0.35em;
   text-decoration:none;
 }
 .nav-link{
@@ -114,21 +115,27 @@ html,body{
   font-size:22px;
   line-height:1;
   flex-shrink:0;
+  transition:transform 0.35s ease;
 }
+.faq-item.open .faq-toggle{transform:rotate(45deg);}
 .faq-a{
   font-family:'Source Serif 4',serif;
   color:rgba(240,237,230,0.6);
   font-size:15px;
   line-height:1.9;
-  margin-top:16px;
-  display:none;
+  max-height:0;
+  margin-top:0;
+  opacity:0;
+  overflow:hidden;
+  transition:max-height 0.5s ease, opacity 0.4s ease, margin-top 0.4s ease;
 }
-.faq-item.open .faq-a{display:block;}
+.faq-item.open .faq-a{max-height:600px;margin-top:16px;opacity:1;}
 
 /* FOOTER */
 footer{
   position:relative;
   z-index:10;
+  margin-top:auto;
   background:#0A0F2E;
   padding:20px;
   text-align:center;
@@ -155,13 +162,9 @@ footer{
 <canvas id="fx-canvas"></canvas>
 
 <nav id="nav">
-  <a href="index.html" class="nav-logo">ETW</a>
-  <a href="about.html" class="nav-link">About</a>
+  <a href="/" class="nav-logo">ETW</a>
+  <a href="/about" class="nav-link">About</a>
 </nav>
-
-<div style="padding: 80px 48px 0;position:relative;z-index:10;">
-  <span onclick="history.back()" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;">&#x2190; BACK</span>
-</div>
 
 <section class="hero">
   <p class="hero-label">FAQ</p>
@@ -178,7 +181,7 @@ footer{
 
   <div class="faq-item">
     <p class="faq-q"><span class="faq-qtext">Who is behind it?</span><span class="faq-toggle">+</span></p>
-    <p class="faq-a">ETW is an independent project. No corporate structure. No sponsors. One standard — get it right.</p>
+    <p class="faq-a">ETW is an independent project focused on producing content of the highest quality it can manage.</p>
   </div>
 
   <div class="faq-item">
@@ -187,8 +190,13 @@ footer{
   </div>
 
   <div class="faq-item">
-    <p class="faq-q"><span class="faq-qtext">How is the content researched?</span><span class="faq-toggle">+</span></p>
-    <p class="faq-a">We go into the depth of every source and every book to find every detail that matters. This takes time. Nothing is brushed past.</p>
+    <p class="faq-q"><span class="faq-qtext">How is ETW content researched?</span><span class="faq-toggle">+</span></p>
+    <p class="faq-a">Each topic begins with research across multiple sources. Claims are cross-checked against other references before anything is read in depth. Important points are extracted, turned into notes, and verified again before publishing. Mistakes can still happen — when they do, we take full responsibility and correct them.</p>
+  </div>
+
+  <div class="faq-item">
+    <p class="faq-q"><span class="faq-qtext">How often do you publish?</span><span class="faq-toggle">+</span></p>
+    <p class="faq-a">There is no fixed schedule. Each video takes as long as the research demands. Depth and accuracy come before frequency.</p>
   </div>
 
   <div class="faq-item">
@@ -213,15 +221,19 @@ footer{
 </footer>
 
 <script>
-// FAQ accordion — collapsed by default, click toggles, +/- indicator
-document.querySelectorAll('.faq-q').forEach(function(q){
-  q.addEventListener('click', function(){
-    var item = q.parentNode;
-    item.classList.toggle('open');
-    var t = q.querySelector('.faq-toggle');
-    if(t) t.textContent = item.classList.contains('open') ? '−' : '+';
+// FAQ accordion — hover (~0.7s) auto-expands on desktop; tap toggles on touch.
+(function(){
+  var hoverable = window.matchMedia('(hover: hover)').matches;
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    var q = item.querySelector('.faq-q'), timer;
+    if(hoverable){
+      item.addEventListener('mouseenter', function(){ timer = setTimeout(function(){ item.classList.add('open'); }, 700); });
+      item.addEventListener('mouseleave', function(){ clearTimeout(timer); item.classList.remove('open'); });
+    } else {
+      q.addEventListener('click', function(){ item.classList.toggle('open'); });
+    }
   });
-});
+}());
 (function(){
   // subtle, even, full-width particle field — same drift as about.html
   var c=document.getElementById('fx-canvas'); if(!c) return;

@@ -15,6 +15,7 @@ html,body{
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
 }
+body{min-height:100vh;display:flex;flex-direction:column;}
 
 #mon-canvas{
   position:fixed;
@@ -39,10 +40,10 @@ html,body{
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#F0EDE6;
+  color:#C4932A;
   font-size:16px;
-  letter-spacing:0.4em;
-  text-indent:0.4em;
+  letter-spacing:0.35em;
+  text-indent:0.35em;
   text-decoration:none;
 }
 .nav-icons{
@@ -50,6 +51,15 @@ html,body{
   align-items:center;
   gap:24px;
 }
+.nav-link{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:rgba(240,237,230,0.5);
+  letter-spacing:0.2em;
+  text-decoration:none;
+  transition:color 0.3s;
+}
+.nav-link:hover{color:#F0EDE6;}
 .nav-icon{
   background:none;
   border:none;
@@ -254,6 +264,7 @@ html,body{
 footer{
   position:relative;
   z-index:10;
+  margin-top:auto;
   background:#0A0A0A;
   padding:20px;
   text-align:center;
@@ -280,8 +291,9 @@ footer{
 <canvas id="mon-canvas"></canvas>
 
 <nav id="nav">
-  <a href="index.html" class="nav-logo">ETW</a>
+  <a href="/" class="nav-logo">ETW</a>
   <div class="nav-icons">
+    <a href="/about" class="nav-link">About</a>
     <button class="nav-icon" aria-label="YouTube" onclick="window.open('https://youtube.com/@etw_history','_blank')">
       <svg width="22" height="16" viewBox="0 0 20 14" fill="currentColor">
         <path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/>

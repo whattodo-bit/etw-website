@@ -16,12 +16,13 @@ html,body{
   overflow-x:hidden;
   font-family:'Source Serif 4',serif;
 }
+body{min-height:100vh;display:flex;flex-direction:column;}
 #mininav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 32px;background:rgba(10,10,10,0.9);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid rgba(196,147,42,0.12);}
-.back-hist{font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.3em;cursor:pointer;}
+.mini-logo{font-family:'Playfair Display',serif;font-weight:700;color:#C4932A;font-size:15px;letter-spacing:0.3em;text-indent:0.3em;text-decoration:none;}
 .mini-links{display:flex;gap:24px;}
 .mini-links a{font-family:'DM Mono',monospace;color:#C4932A;font-size:9px;letter-spacing:0.3em;text-decoration:none;opacity:0.4;transition:opacity 0.3s;}
 .mini-links a.active,.mini-links a:hover{opacity:1;}
-@media(max-width:768px){#mininav{padding:12px 16px;}.mini-links{gap:13px;}.mini-links a{font-size:8px;letter-spacing:0.18em;}.back-hist{font-size:9px;letter-spacing:0.18em;}}
+@media(max-width:768px){#mininav{padding:12px 16px;}.mini-links{gap:13px;}.mini-links a{font-size:8px;letter-spacing:0.18em;}.mini-logo{font-size:13px;letter-spacing:0.22em;}}
 
 /* NAV — same as index.html, ETW left only */
 #nav{
@@ -174,9 +175,9 @@ html,body{
 footer{
   position:relative;
   z-index:10;
+  margin-top:auto;
   background:#0A0A0A;
-  border-top:1px solid rgba(196,147,42,0.1);
-  padding:24px;
+  padding:20px;
   text-align:center;
 }
 .footer-copy{
@@ -199,7 +200,7 @@ footer{
 <body>
 
 <nav id="mininav">
-  <span class="back-hist" onclick="window.location='/history'">&#x2190; BACK TO HISTORY</span>
+  <a href="/" class="mini-logo">ETW</a>
   <div class="mini-links">
     <a href="#intro">INTRO</a>
     <a href="#not-useful">NOT USEFUL</a>
@@ -339,8 +340,8 @@ footer{
   <p class="body">A few principles overlap with general human psychology — loyalty, sudden change, image. When people encounter these, they assume the whole book is universally applicable. One overlap does not mean the whole system translates.</p>
   <p class="body">What you should take from this book: Machiavelli wrote it to get a job. He never got it. The timeless points are about human psychology — trust, loyalty, fear, image, timing. Building trust in the people is more durable than any fortress or army. An injured enemy is more dangerous than an untouched one.</p>
 
-  <p class="final-quote">Knowledge is of no use without retention — understanding outlasts memorising.</p>
-  <p class="final-note">— a thought from the book worth keeping.</p>
+  <p class="final-quote">&ldquo;Knowledge comes of learning well retained,<br>unfruitful else.&rdquo;</p>
+  <p class="final-note">— Dante Alighieri</p>
 
 </section>
 

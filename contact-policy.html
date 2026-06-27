@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Legal — Explaining The World</title>
+<title>How We Handle Messages — Explaining The World</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Mono:wght@300;400&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   position:relative;
   z-index:10;
   text-align:center;
-  padding:140px 32px 40px;
+  padding:150px 32px 40px;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -71,40 +71,26 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   font-family:'Playfair Display',serif;
   font-weight:700;
   color:#F0EDE6;
-  font-size:clamp(40px,8vw,52px);
-  letter-spacing:0.08em;
-  line-height:1.1;
+  font-size:clamp(34px,7vw,48px);
+  letter-spacing:0.04em;
+  line-height:1.15;
 }
 
 /* CONTENT */
-#legal{
+#content{
   position:relative;
   z-index:10;
-  max-width:720px;
+  max-width:680px;
   margin:0 auto;
-  padding:60px 48px 100px;
+  padding:40px 48px 100px;
 }
-.sec-label{
-  font-family:'DM Mono',monospace;
-  color:#C4932A;
-  font-size:9px;
-  letter-spacing:0.4em;
-  text-transform:uppercase;
-  margin-bottom:16px;
-}
-.sec-rule{
-  width:40px;
-  height:1px;
-  background:#C4932A;
-  margin-bottom:24px;
-}
-.sec-body{
+.body{
   font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.7);
+  color:rgba(240,237,230,0.8);
   font-size:16px;
-  line-height:1.9;
-  margin-bottom:48px;
+  line-height:2;
 }
+.body + .body{margin-top:24px;}
 
 /* FOOTER */
 footer{
@@ -127,7 +113,7 @@ footer{
 @media(max-width:768px){
   #nav{padding:20px 24px;}
   .hero{padding:120px 24px 32px;}
-  #legal{padding:48px 24px 72px;}
+  #content{padding:32px 24px 72px;}
 }
 </style>
 </head>
@@ -139,29 +125,15 @@ footer{
 </nav>
 
 <section class="hero">
-  <p class="hero-label">Legal</p>
+  <p class="hero-label">Contact</p>
   <div class="hero-rule"></div>
-  <h1 class="hero-title">Legal</h1>
+  <h1 class="hero-title">How We Handle Messages</h1>
 </section>
 
-<section id="legal">
-
-  <p class="sec-label">Copyright</p>
-  <div class="sec-rule"></div>
-  <p class="sec-body">All content on this site and ETW channels belongs to Explaining The World. Please do not republish it as your own.</p>
-
-  <p class="sec-label">Privacy</p>
-  <div class="sec-rule"></div>
-  <p class="sec-body">We do not track you or sell data. If you send a message, our form provider may receive basic technical data like an IP address. We do not use it.</p>
-
-  <p class="sec-label">Content</p>
-  <div class="sec-rule"></div>
-  <p class="sec-body">Everything here is for education. Our analysis reflects our reading of sources, not final academic truth. We try not to be biased toward any figure or nation. Where we get something wrong, we fix it.</p>
-
-  <p class="sec-label">Donations</p>
-  <div class="sec-rule"></div>
-  <p class="sec-body">Donations are voluntary gifts that support research and production. They are non-refundable and give no editorial influence or ownership.</p>
-
+<section id="content">
+  <p class="body">When you email us, we read what comes in. We do not promise a reply. We respond when a message is relevant and time allows. Many messages will not receive a response, and that is not a reflection of their value.</p>
+  <p class="body">When you send a message through the form, it reaches us one way. We do not see your email address or how you sent it. Use it for suggestions or notes you do not need a reply to.</p>
+  <p class="body">We do not track you. We do not sell data. Messages are not encrypted end to end, so do not send anything sensitive.</p>
 </section>
 
 <footer>
