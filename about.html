@@ -361,10 +361,10 @@ footer{
       <a class="contact-policy-link" href="/contact-policy">How we handle messages &#x2192;</a>
     </div>
     <div id="contact-form-wrap" style="display:none;">
-      <span class="contact-back" onclick="document.getElementById('contact-form-wrap').style.display='none';document.getElementById('contact-choices').style.display='block';document.getElementById('cf-success').style.display='none';">&#x2190; BACK</span>
-      <form id="contact-form">
-        <textarea id="cf-msg" name="message" rows="4" placeholder="Your message" required></textarea>
-        <button type="submit" class="cf-submit">SEND &#x2192;</button>
+      <span class="contact-back" onclick="document.getElementById('contact-form-wrap').style.display='none';document.getElementById('contact-choices').style.display='block';document.getElementById('cf-success').style.display='none';document.getElementById('contact-form').style.display='';">&#x2190; BACK</span>
+      <form id="contact-form" onsubmit="return false;">
+        <textarea id="msg-text" rows="4" placeholder="Your message"></textarea>
+        <button type="button" class="cf-submit" onclick="sendMessage()">SEND &#x2192;</button>
       </form>
       <p id="cf-success" style="display:none;"></p>
     </div>
@@ -414,45 +414,41 @@ footer{
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){var o=document.querySelectorAll('.pop-overlay.open');for(var i=0;i<o.length;i++)o[i].classList.remove('open');}
   });
-
-  // anonymous message form -> Web3Forms
-  var cf = document.getElementById('contact-form');
-  if(cf){
-    cf.addEventListener('submit', function(e){
-      e.preventDefault();
-      var msg = document.getElementById('cf-msg').value.trim();
-      if(!msg) return;
-      var btn = cf.querySelector('.cf-submit');
-      var note = document.getElementById('cf-success');
-      btn.disabled = true; btn.textContent = 'SENDING…';
-      note.style.display = 'none';
-      fetch('https://api.web3forms.com/submit', {
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({
-          access_key:'cd486e45-9e46-494d-8a5d-94fca8325f0a',
-          subject:'Anonymous message — ETW',
-          from_name:'ETW Website',
-          message: msg
-        })
-      }).then(function(r){ return r.json(); }).then(function(data){
-        if(data && data.success){
-          cf.style.display='none';
-          note.textContent = 'Message received. Thank you.';
-          note.style.display='block';
-        } else {
-          btn.disabled=false; btn.textContent='SEND →';
-          note.textContent = 'Could not send. Please try again later.';
-          note.style.display='block';
-        }
-      }).catch(function(){
-        btn.disabled=false; btn.textContent='SEND →';
-        note.textContent = 'Could not send. Please try again later.';
-        note.style.display='block';
-      });
-    });
-  }
 }());
+
+// anonymous message form -> Formspree
+async function sendMessage() {
+  const text = document.getElementById('msg-text').value;
+  if (!text.trim()) {
+    alert('Please write a message first.');
+    return;
+  }
+  try {
+    const res = await fetch('https://formspree.io/f/mgojyvoy', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        source: 'ETW Anonymous Suggestion Box',
+        submitted_at: new Date().toISOString()
+      })
+    });
+    if (res.ok) {
+      document.getElementById('msg-text').value = '';
+      showMessageSuccess();
+    } else {
+      alert('Could not send. Please try again later.');
+    }
+  } catch (e) {
+    alert('Could not send. Please try again later.');
+  }
+}
+function showMessageSuccess() {
+  document.getElementById('contact-form').style.display = 'none';
+  var note = document.getElementById('cf-success');
+  note.textContent = 'Message received. Thank you.';
+  note.style.display = 'block';
+}
 </script>
 </body>
 </html>
