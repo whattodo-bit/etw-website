@@ -40,7 +40,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:rgba(255,255,255,0.15);
+  color:rgba(240,237,230,0.85);
   font-size:16px;
   letter-spacing:0.35em;
   text-indent:0.35em;
@@ -279,11 +279,11 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
-  #nav{padding:16px 20px;flex-wrap:nowrap;}
-  .nav-logo{font-size:13px;}
-  .nav-link{font-size:9px;letter-spacing:0.15em;}
+  #nav{padding:14px 18px;flex-wrap:nowrap;background:rgba(10,10,10,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+  .nav-logo{font-size:13px;letter-spacing:0.3em;}
+  .nav-link{font-size:9px;letter-spacing:0.1em;}
   .nav-icons{gap:16px;}
-  #nav svg{width:16px;height:16px;}
+  #nav svg{width:15px;height:15px;}
   .hero{padding:90px 24px 0;}
   .video-title{font-size:18px;}
   .res-popup{padding:36px 28px;}
@@ -422,7 +422,7 @@ footer{
     ctx.fillStyle = rg;
     ctx.fill();
 
-    rot += 0.01;
+    rot += 0.0015;   // ~60s per full rotation
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);
