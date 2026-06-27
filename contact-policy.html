@@ -16,6 +16,7 @@ html,body{
   font-family:'Source Serif 4',serif;
 }
 body{min-height:100vh;display:flex;flex-direction:column;}
+#fx-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block;}
 
 /* NAV */
 #nav{
@@ -31,7 +32,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#C4932A;
+  color:rgba(255,255,255,0.15);
   font-size:16px;
   letter-spacing:0.35em;
   text-indent:0.35em;
@@ -111,7 +112,10 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
-  #nav{padding:20px 24px;}
+  #nav{padding:16px 20px;flex-wrap:nowrap;}
+  .nav-logo{font-size:13px;}
+  .nav-link{font-size:9px;letter-spacing:0.15em;}
+  #nav svg{width:16px;height:16px;}
   .hero{padding:120px 24px 32px;}
   #content{padding:32px 24px 72px;}
 }
@@ -119,9 +123,10 @@ footer{
 </head>
 <body>
 
+<canvas id="fx-canvas"></canvas>
+
 <nav id="nav">
-  <a href="/" class="nav-logo">ETW</a>
-  <a href="/about" class="nav-link">About</a>
+  <a href="/about" class="nav-logo">ETW</a>
 </nav>
 
 <section class="hero">
@@ -131,14 +136,37 @@ footer{
 </section>
 
 <section id="content">
-  <p class="body">When you email us, we read what comes in. We do not promise a reply. We respond when a message is relevant and time allows. Many messages will not receive a response, and that is not a reflection of their value.</p>
-  <p class="body">When you send a message through the form, it reaches us one way. We do not see your email address or how you sent it. Use it for suggestions or notes you do not need a reply to.</p>
-  <p class="body">We do not track you. We do not sell data. Messages are not encrypted end to end, so do not send anything sensitive.</p>
+  <p class="body">When you email us, we try to read every message with the time and importance it deserves. We consider each message and each suggestion valuable. We do not promise a reply — but if your message is something we can respond to meaningfully, we will.</p>
+  <p class="body">If you want a response, use email. If you want to leave a suggestion or a note without expecting anything back, use the message form.</p>
+  <p class="body">We do not see your identity when you send a message through the form. Messages are one-way and we cannot reply to them.</p>
 </section>
 
 <footer>
   <p class="footer-copy">&#169; 2026 Explaining The World. All Rights Reserved.</p>
 </footer>
+
+<script>
+(function(){
+  var c=document.getElementById('fx-canvas'); if(!c) return;
+  var ctx=c.getContext('2d'), W,H,dots=[];
+  function init(){
+    W=c.width=window.innerWidth; H=c.height=window.innerHeight;
+    var n=Math.max(50,Math.round(W*H/16000)); dots=[];
+    for(var i=0;i<n;i++){
+      var ang=Math.random()*Math.PI*2, sp=0.15+Math.random()*0.35;
+      dots.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+0.4,vx:Math.cos(ang)*sp,vy:Math.sin(ang)*sp,a:Math.random()*0.3+0.1});
+    }
+  }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<dots.length;i++){var d=dots[i];d.x+=d.vx;d.y+=d.vy;
+      if(d.x<-2)d.x=W+2;if(d.x>W+2)d.x=-2;if(d.y<-2)d.y=H+2;if(d.y>H+2)d.y=-2;
+      ctx.beginPath();ctx.arc(d.x,d.y,d.r,0,6.2832);ctx.fillStyle='rgba(196,147,42,'+d.a.toFixed(2)+')';ctx.fill();}
+    requestAnimationFrame(frame);
+  }
+  window.addEventListener('resize',init); init(); requestAnimationFrame(frame);
+}());
+</script>
 
 </body>
 </html>

@@ -41,7 +41,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#C4932A;
+  color:rgba(255,255,255,0.15);
   font-size:16px;
   letter-spacing:0.35em;
   text-indent:0.35em;
@@ -271,9 +271,11 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
-  #nav{padding:20px 24px;}
-  .nav-right{display:none;}
-  .hamburger{display:flex;}
+  #nav{padding:16px 20px;flex-wrap:nowrap;}
+  .nav-logo{font-size:13px;}
+  .nav-right{gap:16px;}
+  .nav-link{font-size:9px;letter-spacing:0.15em;}
+  #nav svg{width:16px;height:16px;}
   #boxes{padding:60px 24px;}
   .box{padding:32px 28px;}
   footer{padding:32px 24px;}
@@ -286,6 +288,18 @@ footer{
 
 <nav id="nav">
   <a href="/" class="nav-logo">ETW</a>
+  <div class="nav-right">
+    <a href="/history" class="nav-link">History</a>
+    <button class="nav-icon" aria-label="YouTube" onclick="window.open('https://youtube.com/@etw_official','_blank')">
+      <svg width="20" height="14" viewBox="0 0 20 14" fill="currentColor"><path d="M19.543 2.186A2.507 2.507 0 0 0 17.783.502C16.233 0 10 0 10 0S3.767 0 2.217.502A2.507 2.507 0 0 0 .457 2.186C0 3.695 0 7 0 7s0 3.305.457 4.814a2.507 2.507 0 0 0 1.76 1.684C3.767 14 10 14 10 14s6.233 0 7.783-.502a2.507 2.507 0 0 0 1.76-1.684C20 10.305 20 7 20 7s0-3.305-.457-4.814zM7.955 9.968V4.032L13.182 7l-5.227 2.968z"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="Instagram" onclick="window.open('https://www.instagram.com/etw__official','_blank')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <button class="nav-icon" aria-label="X" onclick="window.open('https://x.com/explaning_world','_blank')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.66l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </button>
+  </div>
 </nav>
 
 <section class="hero">
@@ -340,11 +354,9 @@ footer{
     <div id="contact-choices">
       <a class="contact-opt" href="mailto:explainingtheworld@gmail.com">
         <span class="contact-opt-title">EMAIL US &#x2192;</span>
-        <span class="contact-opt-sub">For anything that needs a reply.</span>
       </a>
       <span class="contact-opt" style="cursor:pointer;" onclick="document.getElementById('contact-choices').style.display='none';document.getElementById('contact-form-wrap').style.display='block';">
         <span class="contact-opt-title">SEND A MESSAGE &#x2192;</span>
-        <span class="contact-opt-sub">Suggestions or one-way notes. No reply.</span>
       </span>
       <a class="contact-policy-link" href="/contact-policy">How we handle messages &#x2192;</a>
     </div>

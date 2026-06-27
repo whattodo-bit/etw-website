@@ -40,7 +40,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#C4932A;
+  color:rgba(255,255,255,0.15);
   font-size:16px;
   letter-spacing:0.35em;
   text-indent:0.35em;
@@ -279,7 +279,11 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
-  #nav{padding:20px 24px;}
+  #nav{padding:16px 20px;flex-wrap:nowrap;}
+  .nav-logo{font-size:13px;}
+  .nav-link{font-size:9px;letter-spacing:0.15em;}
+  .nav-icons{gap:16px;}
+  #nav svg{width:16px;height:16px;}
   .hero{padding:90px 24px 0;}
   .video-title{font-size:18px;}
   .res-popup{padding:36px 28px;}
@@ -367,95 +371,58 @@ footer{
   window.addEventListener('resize', resize);
   resize();
 
-  // Each monument fills ~60% of viewport height, centered. Gold line-art, stroke only.
-  function base(){ return { x: W/2, y: H*0.80, s: H*0.42 }; }
-  function setStroke(alpha){
-    ctx.strokeStyle = 'rgba(196,147,42,' + alpha.toFixed(3) + ')';
+  // A single pyramid rotating slowly on its vertical axis (orthographic, like the globe).
+  var rot = 0;
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+
+    var s = Math.min(W,H)*0.40;
+    var b = s*0.8, ph = s*1.5;            // base half-extent, pyramid height
+    var cx = W/2, cyc = H*0.66;           // projection centre
+    var phi = 0.35, cphi = Math.cos(phi), sphi = Math.sin(phi);  // slight camera tilt
+    var c = Math.cos(rot), si = Math.sin(rot);
+
+    function proj(x,y,z){
+      var x1 =  x*c + z*si;               // rotate about vertical axis
+      var z1 = -x*si + z*c;
+      var y2 =  y*cphi - z1*sphi;         // tilt so the base reads as a 3D rhombus
+      return { x: cx + x1, y: cyc - y2 };
+    }
+
+    var apex = proj(0, ph, 0);
+    var corners = [proj(b,0,b), proj(b,0,-b), proj(-b,0,-b), proj(-b,0,b)];
+
+    ctx.strokeStyle = 'rgba(196,147,42,0.14)';
     ctx.lineWidth = 2.5;
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-  }
 
-  function pyramid(alpha){
-    var b = base(), s = b.s; setStroke(alpha);
-    var apexX = b.x, apexY = b.y - s*1.4;
+    // base square
     ctx.beginPath();
-    ctx.moveTo(apexX, apexY);
-    ctx.lineTo(b.x + s*1.3, b.y);
-    ctx.lineTo(b.x - s*1.3, b.y);
+    ctx.moveTo(corners[0].x, corners[0].y);
+    for(var i=1;i<4;i++) ctx.lineTo(corners[i].x, corners[i].y);
     ctx.closePath();
     ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(apexX, apexY);
-    ctx.lineTo(b.x - s*0.18, b.y);
-    ctx.stroke();
-    // glowing tip at the apex
-    var gr = s*0.32, ratio = alpha/0.12;
-    var rg = ctx.createRadialGradient(apexX, apexY, 0, apexX, apexY, gr);
-    rg.addColorStop(0, 'rgba(196,147,42,' + (0.5*ratio).toFixed(3) + ')');
-    rg.addColorStop(1, 'rgba(196,147,42,0)');
-    ctx.beginPath();
-    ctx.arc(apexX, apexY, gr, 0, Math.PI*2);
-    ctx.fillStyle = rg;
-    ctx.fill();
-  }
 
-  function parthenon(alpha){
-    var b = base(), s = b.s; setStroke(alpha);
-    var w = s*1.5, top = b.y - s*1.3;
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, top + s*0.45);
-    ctx.lineTo(b.x, top);
-    ctx.lineTo(b.x + w, top + s*0.45);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, top + s*0.45);
-    ctx.lineTo(b.x + w, top + s*0.45);
-    ctx.moveTo(b.x - w, top + s*0.62);
-    ctx.lineTo(b.x + w, top + s*0.62);
-    ctx.stroke();
-    var n = 6;
-    for(var i=0;i<n;i++){
-      var cx = b.x - w*0.82 + (i*(w*1.64)/(n-1));
+    // apex to each base corner
+    for(var j=0;j<4;j++){
       ctx.beginPath();
-      ctx.moveTo(cx, top + s*0.62);
-      ctx.lineTo(cx, b.y);
+      ctx.moveTo(apex.x, apex.y);
+      ctx.lineTo(corners[j].x, corners[j].y);
       ctx.stroke();
     }
-    ctx.beginPath();
-    ctx.moveTo(b.x - w, b.y);
-    ctx.lineTo(b.x + w, b.y);
-    ctx.stroke();
-    // subtle glow at the peak of the pediment
-    var gr = s*0.28, ratio = alpha/0.12;
-    var rg = ctx.createRadialGradient(b.x, top, 0, b.x, top, gr);
-    rg.addColorStop(0, 'rgba(196,147,42,' + (0.4*ratio).toFixed(3) + ')');
+
+    // glowing apex
+    var gr = s*0.3;
+    var rg = ctx.createRadialGradient(apex.x, apex.y, 0, apex.x, apex.y, gr);
+    rg.addColorStop(0, 'rgba(196,147,42,0.5)');
     rg.addColorStop(1, 'rgba(196,147,42,0)');
-    ctx.beginPath(); ctx.arc(b.x, top, gr, 0, Math.PI*2); ctx.fillStyle = rg; ctx.fill();
-  }
+    ctx.beginPath();
+    ctx.arc(apex.x, apex.y, gr, 0, Math.PI*2);
+    ctx.fillStyle = rg;
+    ctx.fill();
 
-  var MON = [pyramid, parthenon];
-  var BASE_ALPHA = 0.12;
-  var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;  // 8s hold, 4s crossfade
-  var startT = null;
-
-  function frame(now){
-    if(startT === null) startT = now;
-    var el = now - startT;
-    var cycle = MON.length * SLOT;
-    var lp = el % cycle;
-    var idx = Math.floor(lp / SLOT);
-    var within = lp - idx*SLOT;
-
-    ctx.clearRect(0,0,W,H);
-    if(within < HOLD){
-      MON[idx](BASE_ALPHA);
-    } else {
-      var f = (within - HOLD) / FADE;          // 0 -> 1 crossfade
-      MON[idx](BASE_ALPHA * (1 - f));
-      MON[(idx + 1) % MON.length](BASE_ALPHA * f);
-    }
+    rot += 0.01;
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

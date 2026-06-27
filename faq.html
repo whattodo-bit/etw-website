@@ -32,7 +32,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
-  color:#C4932A;
+  color:rgba(255,255,255,0.15);
   font-size:16px;
   letter-spacing:0.35em;
   text-indent:0.35em;
@@ -150,7 +150,10 @@ footer{
 
 /* MOBILE */
 @media(max-width:768px){
-  #nav{padding:20px 24px;}
+  #nav{padding:16px 20px;flex-wrap:nowrap;}
+  .nav-logo{font-size:13px;}
+  .nav-link{font-size:9px;letter-spacing:0.15em;}
+  #nav svg{width:16px;height:16px;}
   .hero{padding:100px 24px 0;}
   #faq{padding:48px 24px 72px;}
   .faq-q{font-size:18px;}
@@ -181,7 +184,7 @@ footer{
 
   <div class="faq-item">
     <p class="faq-q"><span class="faq-qtext">Who is behind it?</span><span class="faq-toggle">+</span></p>
-    <p class="faq-a">ETW is an independent project focused on producing content of the highest quality it can manage.</p>
+    <p class="faq-a">ETW is an independent project. No corporate structure. No sponsors. One standard — quality.</p>
   </div>
 
   <div class="faq-item">
@@ -196,12 +199,12 @@ footer{
 
   <div class="faq-item">
     <p class="faq-q"><span class="faq-qtext">How often do you publish?</span><span class="faq-toggle">+</span></p>
-    <p class="faq-a">There is no fixed schedule. Each video takes as long as the research demands. Depth and accuracy come before frequency.</p>
+    <p class="faq-a">It depends on the topic. A focused video on a single book or event takes less time than a broad historical analysis. There is no fixed schedule — each video takes as long as the research demands.</p>
   </div>
 
   <div class="faq-item">
     <p class="faq-q"><span class="faq-qtext">How can I collaborate or get in touch?</span><span class="faq-toggle">+</span></p>
-    <p class="faq-a">See the Collaboration and Contact sections on the About page. Genuine, relevant messages are always welcome.</p>
+    <p class="faq-a">See the Collaboration and Contact sections in the About page.</p>
   </div>
 
   <div class="faq-item">
