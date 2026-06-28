@@ -204,11 +204,13 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   position:absolute;
   top:16px;right:16px;
   font-family:'DM Mono',monospace;
-  color:#F0EDE6;
+  color:rgba(240,237,230,0.6);
   font-size:18px;
   cursor:pointer;
   line-height:1;
+  transition:color 0.3s;
 }
+.res-close:hover{color:#C4932A;}
 .res-pop-label{
   font-family:'DM Mono',monospace;
   color:#C4932A;
@@ -371,7 +373,7 @@ footer{
   window.addEventListener('resize', resize);
   resize();
 
-  // Five 3D wireframe monuments rotating on the vertical axis, crossfading in sequence.
+  // Six 3D wireframe landmarks rotating on the vertical axis, crossfading in sequence.
   var phi = 0.32, cphi = Math.cos(phi), sphi = Math.sin(phi);
   var rot = 0, startT = null, cxg, cyg, Sg, cosR, sinR;
 
@@ -389,9 +391,9 @@ footer{
     var e = m.edges;
     for(var i=0;i<e.length;i++){ var a=P(e[i][0]), b=P(e[i][1]); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); }
     ctx.stroke();
-    var pk = P(m.peak), gr = Sg*0.55;
+    var pk = P(m.peak), gr = Sg*0.55, gc = (m.glow || 0.45) * (alpha/0.12);
     var rg = ctx.createRadialGradient(pk.x,pk.y,0,pk.x,pk.y,gr);
-    rg.addColorStop(0,'rgba(196,147,42,'+(alpha/0.12*0.45).toFixed(3)+')');
+    rg.addColorStop(0,'rgba(196,147,42,'+gc.toFixed(3)+')');
     rg.addColorStop(1,'rgba(196,147,42,0)');
     ctx.beginPath(); ctx.arc(pk.x,pk.y,gr,0,Math.PI*2); ctx.fillStyle=rg; ctx.fill();
   }
@@ -400,28 +402,15 @@ footer{
   function sq(y,h){ return [[h,y,h],[h,y,-h],[-h,y,-h],[-h,y,h]]; }
   function sqEdges(s){ var e=[]; for(var i=0;i<4;i++) e.push([s[i],s[(i+1)%4]]); return e; }
   function ring(rx,rz,y,N){ var e=[]; for(var i=0;i<N;i++){var a=i/N*6.2832,b=(i+1)/N*6.2832; e.push([[rx*Math.cos(a),y,rz*Math.sin(a)],[rx*Math.cos(b),y,rz*Math.sin(b)]]);} return e; }
+  function stack(s0,s1,e){ for(var i=0;i<4;i++) e.push([s0[i],s1[i]]); }
 
+  // 1. Egyptian Pyramid (glowing apex, strongest)
   var pyramid = (function(){
     var b=0.95,h=1.85, c=sq(0,b), apex=[0,h,0], e=sqEdges(c);
     for(var i=0;i<4;i++) e.push([apex,c[i]]);
-    return {edges:e, peak:apex};
+    return {edges:e, peak:apex, glow:0.62};
   })();
-  var parthenon = (function(){
-    var wx=1.15,wz=0.72,hc=1.15,hr=1.62, e=[];
-    var base=[[wx,0,wz],[wx,0,-wz],[-wx,0,-wz],[-wx,0,wz]];
-    var ent=[[wx,hc,wz],[wx,hc,-wz],[-wx,hc,-wz],[-wx,hc,wz]];
-    e=e.concat(sqEdges(base)).concat(sqEdges(ent));
-    for(var s=-1;s<=1;s+=2) for(var k=0;k<6;k++){ var x=-wx*0.85+k*(wx*1.7)/5; e.push([[x,0,s*wz],[x,hc,s*wz]]); }
-    var rl=[-wx,hr,0], rr=[wx,hr,0];
-    e.push([rl,rr],[rl,[-wx,hc,wz]],[rl,[-wx,hc,-wz]],[rr,[wx,hc,wz]],[rr,[wx,hc,-wz]]);
-    return {edges:e, peak:[0,hr,0]};
-  })();
-  var colosseum = (function(){
-    var rx=1.2,rz=0.85, e=[];
-    [0,0.5,1.0].forEach(function(y){ e=e.concat(ring(rx,rz,y,22)); });
-    for(var v=0;v<16;v++){ var a=v/16*6.2832; e.push([[rx*Math.cos(a),0,rz*Math.sin(a)],[rx*Math.cos(a),1.0,rz*Math.sin(a)]]); }
-    return {edges:e, peak:[0,1.0,0]};
-  })();
+  // 2. Eiffel Tower (lattice spire)
   var eiffel = (function(){
     var L=[[0,0.72],[0.55,0.42],[1.05,0.2],[1.5,0.09]], apex=[0,1.95,0], e=[];
     var S2=L.map(function(l){return sq(l[0],l[1]);});
@@ -430,25 +419,60 @@ footer{
     for(var i=0;i<4;i++){ e.push([S2[0][i],S2[1][(i+1)%4]]); e.push([S2[0][(i+1)%4],S2[1][i]]); }
     return {edges:e, peak:apex};
   })();
-  var pagoda = (function(){
-    var T=[[0.3,1.0],[0.8,0.8],[1.25,0.6],[1.65,0.4]], finial=[0,2.05,0], e=[];
-    for(var Lp=0;Lp<T.length;Lp++){
-      var s=sq(T[Lp][0],T[Lp][1]); e=e.concat(sqEdges(s));
-      var ctr=[0,T[Lp][0]+0.22,0];
-      for(var i=0;i<4;i++) e.push([s[i],ctr]);
+  // 3. Japanese Castle (Himeji-style tiered roofs on a stone base)
+  var japaneseCastle = (function(){
+    var e=[], b0=sq(0,1.2), b1=sq(0.35,0.95);
+    e=e.concat(sqEdges(b0)).concat(sqEdges(b1)); stack(b0,b1,e);
+    var T=[[0.55,1.0],[0.95,0.82],[1.32,0.64],[1.6,0.46]];
+    for(var L=0;L<T.length;L++){
+      var s=sq(T[L][0],T[L][1]); e=e.concat(sqEdges(s));
+      var ridge=[0,T[L][0]+0.2,0];
+      for(var i=0;i<4;i++) e.push([s[i],ridge]);
+      if(L<T.length-1) stack(sq(T[L][0],T[L][1]*0.8), sq(T[L+1][0],T[L+1][1]*0.8), e);
     }
-    for(var Lp2=0;Lp2<T.length-1;Lp2++) e.push([[0,T[Lp2][0]+0.22,0],[0,T[Lp2+1][0],0]]);
-    e.push([[0,T[T.length-1][0]+0.22,0],finial]);
+    var finial=[0,1.9,0];
+    e.push([[0,T[T.length-1][0]+0.2,0],finial]);
+    return {edges:e, peak:finial};
+  })();
+  // 4. Roman Colosseum (arched oval ring)
+  var colosseum = (function(){
+    var rx=1.2,rz=0.85, e=[];
+    [0,0.5,1.0].forEach(function(y){ e=e.concat(ring(rx,rz,y,22)); });
+    for(var v=0;v<16;v++){ var a=v/16*6.2832; e.push([[rx*Math.cos(a),0,rz*Math.sin(a)],[rx*Math.cos(a),1.0,rz*Math.sin(a)]]); }
+    return {edges:e, peak:[0,1.0,0]};
+  })();
+  // 5. Big Ben (clock tower with faces + pyramidal spire)
+  var bigben = (function(){
+    var e=[], hw=0.34, st=1.25;
+    var b0=sq(0,hw), bt=sq(st,hw); e=e.concat(sqEdges(b0)); stack(b0,bt,e);
+    var bw=0.4, ba=sq(0.95,bw), bb=sq(1.25,bw);
+    e=e.concat(sqEdges(ba)).concat(sqEdges(bb)); stack(ba,bb,e);
+    var cy=1.1, cr=0.16, NN=12;
+    [0.4,-0.4].forEach(function(zf){ for(var k=0;k<NN;k++){ var a=k/NN*6.2832,a2=(k+1)/NN*6.2832; e.push([[cr*Math.cos(a),cy+cr*Math.sin(a),zf],[cr*Math.cos(a2),cy+cr*Math.sin(a2),zf]]); } });
+    [0.4,-0.4].forEach(function(xf){ for(var k=0;k<NN;k++){ var a=k/NN*6.2832,a2=(k+1)/NN*6.2832; e.push([[xf,cy+cr*Math.sin(a),cr*Math.cos(a)],[xf,cy+cr*Math.sin(a2),cr*Math.cos(a2)]]); } });
+    var apex=[0,1.95,0];
+    for(var i=0;i<4;i++) e.push([bb[i],apex]);
+    return {edges:e, peak:apex};
+  })();
+  // 6. Empire State Building (stepped Art Deco tower + antenna)
+  var empire = (function(){
+    var e=[], steps=[[0,0.85,0.55],[0.85,1.35,0.42],[1.35,1.75,0.3],[1.75,1.95,0.18]];
+    for(var L=0;L<steps.length;L++){
+      var s0=sq(steps[L][0],steps[L][2]), s1=sq(steps[L][1],steps[L][2]);
+      e=e.concat(sqEdges(s0)).concat(sqEdges(s1)); stack(s0,s1,e);
+    }
+    var finial=[0,2.25,0];
+    e.push([[0,1.95,0],finial]);
     return {edges:e, peak:finial};
   })();
 
-  var MON = [pyramid, parthenon, colosseum, eiffel, pagoda];
+  var MON = [pyramid, eiffel, japaneseCastle, colosseum, bigben, empire];
   var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;   // 8s hold, 4s crossfade
 
   function frame(now){
     if(startT===null) startT=now;
     var el = now - startT;
-    cxg = W/2; cyg = H*0.65; Sg = Math.min(W,H)*0.28;
+    cxg = W/2; cyg = H*0.66; Sg = Math.min(W,H)*0.27;
     rot += 0.0021;                        // ~50s per full rotation
     cosR = Math.cos(rot); sinR = Math.sin(rot);
     var cycle = MON.length*SLOT, lp = el%cycle, idx = Math.floor(lp/SLOT), within = lp-idx*SLOT;

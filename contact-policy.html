@@ -50,6 +50,8 @@ body{min-height:100vh;display:flex;flex-direction:column;}
 .cp-back{position:relative;z-index:10;padding:96px 0 0 48px;}
 .cp-back span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;transition:color 0.3s;}
 .cp-back span:hover{color:#F0EDE6;}
+.cp-close{font-family:'DM Mono',monospace;color:rgba(240,237,230,0.6);font-size:20px;line-height:1;cursor:pointer;transition:color 0.3s;}
+.cp-close:hover{color:#C4932A;}
 
 /* HERO */
 .hero{
@@ -131,6 +133,7 @@ footer{
 
 <nav id="nav">
   <a href="/about" class="nav-logo">ETW</a>
+  <span class="cp-close" onclick="window.location='/about#contact'">&#xD7;</span>
 </nav>
 
 <div class="cp-back">
