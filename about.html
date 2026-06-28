@@ -414,6 +414,9 @@ footer{
   document.addEventListener('keydown',function(e){
     if(e.key==='Escape'){var o=document.querySelectorAll('.pop-overlay.open');for(var i=0;i<o.length;i++)o[i].classList.remove('open');}
   });
+
+  // open the contact popup when arrived via /about#contact (e.g. BACK from the policy page)
+  if(location.hash === '#contact'){ document.getElementById('contact-overlay').classList.add('open'); }
 }());
 
 // anonymous message form -> Formspree

@@ -346,10 +346,10 @@ footer{
       <p class="res-groupdesc">Books and materials referenced in production.</p>
       <p class="res-card-title">The Prince — Niccolò Machiavelli</p>
     </div>
-    <div class="res-box">
+    <div class="res-box" style="cursor:pointer;" onclick="window.location='/notes/the-prince'">
       <p class="res-grouplabel">Notes</p>
       <p class="res-card-title">The Prince — Analysis Notes</p>
-      <span class="res-card-cta" onclick="window.location='/notes/the-prince'">READ NOTES &#x2192;</span>
+      <span class="res-card-cta">READ NOTES &#x2192;</span>
     </div>
   </div>
 </div>
@@ -371,58 +371,95 @@ footer{
   window.addEventListener('resize', resize);
   resize();
 
-  // A single pyramid rotating slowly on its vertical axis (orthographic, like the globe).
-  var rot = 0;
-  function frame(){
-    ctx.clearRect(0,0,W,H);
+  // Five 3D wireframe monuments rotating on the vertical axis, crossfading in sequence.
+  var phi = 0.32, cphi = Math.cos(phi), sphi = Math.sin(phi);
+  var rot = 0, startT = null, cxg, cyg, Sg, cosR, sinR;
 
-    var s = Math.min(W,H)*0.40;
-    var b = s*0.8, ph = s*1.5;            // base half-extent, pyramid height
-    var cx = W/2, cyc = H*0.66;           // projection centre
-    var phi = 0.35, cphi = Math.cos(phi), sphi = Math.sin(phi);  // slight camera tilt
-    var c = Math.cos(rot), si = Math.sin(rot);
-
-    function proj(x,y,z){
-      var x1 =  x*c + z*si;               // rotate about vertical axis
-      var z1 = -x*si + z*c;
-      var y2 =  y*cphi - z1*sphi;         // tilt so the base reads as a 3D rhombus
-      return { x: cx + x1, y: cyc - y2 };
-    }
-
-    var apex = proj(0, ph, 0);
-    var corners = [proj(b,0,b), proj(b,0,-b), proj(-b,0,-b), proj(-b,0,b)];
-
-    ctx.strokeStyle = 'rgba(196,147,42,0.14)';
-    ctx.lineWidth = 2.5;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-
-    // base square
+  function P(p){
+    var x=p[0]*Sg, y=p[1]*Sg, z=p[2]*Sg;
+    var x1 =  x*cosR + z*sinR;     // rotate about vertical axis
+    var z1 = -x*sinR + z*cosR;
+    var y2 =  y*cphi - z1*sphi;    // slight tilt for 3D depth
+    return { x: cxg + x1, y: cyg - y2 };
+  }
+  function draw(m, alpha){
+    ctx.strokeStyle = 'rgba(196,147,42,' + alpha.toFixed(3) + ')';
+    ctx.lineWidth = 1.6; ctx.lineJoin='round'; ctx.lineCap='round';
     ctx.beginPath();
-    ctx.moveTo(corners[0].x, corners[0].y);
-    for(var i=1;i<4;i++) ctx.lineTo(corners[i].x, corners[i].y);
-    ctx.closePath();
+    var e = m.edges;
+    for(var i=0;i<e.length;i++){ var a=P(e[i][0]), b=P(e[i][1]); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); }
     ctx.stroke();
+    var pk = P(m.peak), gr = Sg*0.55;
+    var rg = ctx.createRadialGradient(pk.x,pk.y,0,pk.x,pk.y,gr);
+    rg.addColorStop(0,'rgba(196,147,42,'+(alpha/0.12*0.45).toFixed(3)+')');
+    rg.addColorStop(1,'rgba(196,147,42,0)');
+    ctx.beginPath(); ctx.arc(pk.x,pk.y,gr,0,Math.PI*2); ctx.fillStyle=rg; ctx.fill();
+  }
 
-    // apex to each base corner
-    for(var j=0;j<4;j++){
-      ctx.beginPath();
-      ctx.moveTo(apex.x, apex.y);
-      ctx.lineTo(corners[j].x, corners[j].y);
-      ctx.stroke();
+  // geometry helpers (normalized units; scaled by Sg at draw time)
+  function sq(y,h){ return [[h,y,h],[h,y,-h],[-h,y,-h],[-h,y,h]]; }
+  function sqEdges(s){ var e=[]; for(var i=0;i<4;i++) e.push([s[i],s[(i+1)%4]]); return e; }
+  function ring(rx,rz,y,N){ var e=[]; for(var i=0;i<N;i++){var a=i/N*6.2832,b=(i+1)/N*6.2832; e.push([[rx*Math.cos(a),y,rz*Math.sin(a)],[rx*Math.cos(b),y,rz*Math.sin(b)]]);} return e; }
+
+  var pyramid = (function(){
+    var b=0.95,h=1.85, c=sq(0,b), apex=[0,h,0], e=sqEdges(c);
+    for(var i=0;i<4;i++) e.push([apex,c[i]]);
+    return {edges:e, peak:apex};
+  })();
+  var parthenon = (function(){
+    var wx=1.15,wz=0.72,hc=1.15,hr=1.62, e=[];
+    var base=[[wx,0,wz],[wx,0,-wz],[-wx,0,-wz],[-wx,0,wz]];
+    var ent=[[wx,hc,wz],[wx,hc,-wz],[-wx,hc,-wz],[-wx,hc,wz]];
+    e=e.concat(sqEdges(base)).concat(sqEdges(ent));
+    for(var s=-1;s<=1;s+=2) for(var k=0;k<6;k++){ var x=-wx*0.85+k*(wx*1.7)/5; e.push([[x,0,s*wz],[x,hc,s*wz]]); }
+    var rl=[-wx,hr,0], rr=[wx,hr,0];
+    e.push([rl,rr],[rl,[-wx,hc,wz]],[rl,[-wx,hc,-wz]],[rr,[wx,hc,wz]],[rr,[wx,hc,-wz]]);
+    return {edges:e, peak:[0,hr,0]};
+  })();
+  var colosseum = (function(){
+    var rx=1.2,rz=0.85, e=[];
+    [0,0.5,1.0].forEach(function(y){ e=e.concat(ring(rx,rz,y,22)); });
+    for(var v=0;v<16;v++){ var a=v/16*6.2832; e.push([[rx*Math.cos(a),0,rz*Math.sin(a)],[rx*Math.cos(a),1.0,rz*Math.sin(a)]]); }
+    return {edges:e, peak:[0,1.0,0]};
+  })();
+  var eiffel = (function(){
+    var L=[[0,0.72],[0.55,0.42],[1.05,0.2],[1.5,0.09]], apex=[0,1.95,0], e=[];
+    var S2=L.map(function(l){return sq(l[0],l[1]);});
+    for(var i=0;i<S2.length;i++) e=e.concat(sqEdges(S2[i]));
+    for(var i=0;i<4;i++){ for(var k=0;k<S2.length-1;k++) e.push([S2[k][i],S2[k+1][i]]); e.push([S2[S2.length-1][i],apex]); }
+    for(var i=0;i<4;i++){ e.push([S2[0][i],S2[1][(i+1)%4]]); e.push([S2[0][(i+1)%4],S2[1][i]]); }
+    return {edges:e, peak:apex};
+  })();
+  var pagoda = (function(){
+    var T=[[0.3,1.0],[0.8,0.8],[1.25,0.6],[1.65,0.4]], finial=[0,2.05,0], e=[];
+    for(var Lp=0;Lp<T.length;Lp++){
+      var s=sq(T[Lp][0],T[Lp][1]); e=e.concat(sqEdges(s));
+      var ctr=[0,T[Lp][0]+0.22,0];
+      for(var i=0;i<4;i++) e.push([s[i],ctr]);
     }
+    for(var Lp2=0;Lp2<T.length-1;Lp2++) e.push([[0,T[Lp2][0]+0.22,0],[0,T[Lp2+1][0],0]]);
+    e.push([[0,T[T.length-1][0]+0.22,0],finial]);
+    return {edges:e, peak:finial};
+  })();
 
-    // glowing apex
-    var gr = s*0.3;
-    var rg = ctx.createRadialGradient(apex.x, apex.y, 0, apex.x, apex.y, gr);
-    rg.addColorStop(0, 'rgba(196,147,42,0.5)');
-    rg.addColorStop(1, 'rgba(196,147,42,0)');
-    ctx.beginPath();
-    ctx.arc(apex.x, apex.y, gr, 0, Math.PI*2);
-    ctx.fillStyle = rg;
-    ctx.fill();
+  var MON = [pyramid, parthenon, colosseum, eiffel, pagoda];
+  var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;   // 8s hold, 4s crossfade
 
-    rot += 0.0015;   // ~60s per full rotation
+  function frame(now){
+    if(startT===null) startT=now;
+    var el = now - startT;
+    cxg = W/2; cyg = H*0.65; Sg = Math.min(W,H)*0.28;
+    rot += 0.0021;                        // ~50s per full rotation
+    cosR = Math.cos(rot); sinR = Math.sin(rot);
+    var cycle = MON.length*SLOT, lp = el%cycle, idx = Math.floor(lp/SLOT), within = lp-idx*SLOT;
+    ctx.clearRect(0,0,W,H);
+    if(within < HOLD){
+      draw(MON[idx], 0.12);
+    } else {
+      var f = (within-HOLD)/FADE;
+      draw(MON[idx], 0.12*(1-f));
+      draw(MON[(idx+1)%MON.length], 0.12*f);
+    }
     requestAnimationFrame(frame);
   }
   requestAnimationFrame(frame);

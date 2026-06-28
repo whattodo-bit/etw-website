@@ -45,13 +45,16 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   text-indent:0.4em;
   text-decoration:none;
 }
+.notes-back{position:relative;z-index:10;padding:82px 0 0 32px;}
+.notes-back span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;transition:color 0.3s;}
+.notes-back span:hover{color:#F0EDE6;}
 
 /* HERO */
 .hero{
   position:relative;
   z-index:10;
   text-align:center;
-  padding:160px 32px 60px;
+  padding:30px 32px 60px;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -191,7 +194,8 @@ footer{
 /* MOBILE */
 @media(max-width:768px){
   #nav{padding:18px 24px;}
-  .hero{padding:130px 24px 48px;}
+  .notes-back{padding:70px 0 0 24px;}
+  .hero{padding:24px 24px 48px;}
   #content{padding:56px 24px;}
   .timeline{font-size:12px;}
 }
@@ -208,6 +212,10 @@ footer{
     <a href="#verdict">VERDICT</a>
   </div>
 </nav>
+
+<div class="notes-back">
+  <span onclick="window.location='/history'">&#x2190; BACK TO HISTORY</span>
+</div>
 
 <section class="hero">
   <p class="hero-label">Reading Notes</p>

@@ -47,13 +47,16 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   transition:color 0.3s;
 }
 .nav-link:hover{color:#F0EDE6;}
+.cp-back{position:relative;z-index:10;padding:96px 0 0 48px;}
+.cp-back span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;transition:color 0.3s;}
+.cp-back span:hover{color:#F0EDE6;}
 
 /* HERO */
 .hero{
   position:relative;
   z-index:10;
   text-align:center;
-  padding:150px 32px 40px;
+  padding:30px 32px 40px;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -116,7 +119,8 @@ footer{
   .nav-logo{font-size:13px;letter-spacing:0.3em;}
   .nav-link{font-size:9px;letter-spacing:0.1em;}
   #nav svg{width:15px;height:15px;}
-  .hero{padding:120px 24px 32px;}
+  .cp-back{padding:80px 0 0 24px;}
+  .hero{padding:24px 24px 32px;}
   #content{padding:32px 24px 72px;}
 }
 </style>
@@ -128,6 +132,10 @@ footer{
 <nav id="nav">
   <a href="/about" class="nav-logo">ETW</a>
 </nav>
+
+<div class="cp-back">
+  <span onclick="window.location='/about#contact'">&#x2190; BACK</span>
+</div>
 
 <section class="hero">
   <p class="hero-label">Contact</p>
