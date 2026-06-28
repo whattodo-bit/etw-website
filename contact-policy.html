@@ -47,9 +47,6 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   transition:color 0.3s;
 }
 .nav-link:hover{color:#F0EDE6;}
-.cp-back{position:relative;z-index:10;padding:96px 0 0 48px;}
-.cp-back span{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.3em;color:#C4932A;cursor:pointer;transition:color 0.3s;}
-.cp-back span:hover{color:#F0EDE6;}
 .cp-close{font-family:'DM Mono',monospace;color:rgba(240,237,230,0.6);font-size:20px;line-height:1;cursor:pointer;transition:color 0.3s;}
 .cp-close:hover{color:#C4932A;}
 
@@ -58,7 +55,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   position:relative;
   z-index:10;
   text-align:center;
-  padding:30px 32px 40px;
+  padding:140px 32px 40px;
 }
 .hero-label{
   font-family:'DM Mono',monospace;
@@ -77,7 +74,7 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   font-family:'Playfair Display',serif;
   font-weight:700;
   color:#F0EDE6;
-  font-size:clamp(34px,7vw,48px);
+  font-size:clamp(32px,7vw,42px);
   letter-spacing:0.04em;
   line-height:1.15;
 }
@@ -90,13 +87,43 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   margin:0 auto;
   padding:40px 48px 100px;
 }
-.body{
+.cp-open{
   font-family:'Source Serif 4',serif;
-  color:rgba(240,237,230,0.8);
+  color:rgba(240,237,230,0.7);
   font-size:16px;
   line-height:2;
+  margin:0 auto 48px;
 }
-.body + .body{margin-top:24px;}
+.sec-label{
+  font-family:'DM Mono',monospace;
+  color:#C4932A;
+  font-size:9px;
+  letter-spacing:0.4em;
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.sec-rule{
+  width:40px;
+  height:1px;
+  background:#C4932A;
+  margin-bottom:20px;
+}
+.sec-body{
+  font-family:'Source Serif 4',serif;
+  color:rgba(240,237,230,0.7);
+  font-size:16px;
+  line-height:2;
+  margin-bottom:48px;
+}
+.cp-final{
+  font-family:'Source Serif 4',serif;
+  font-style:italic;
+  color:rgba(196,147,42,0.8);
+  font-size:16px;
+  line-height:1.8;
+  text-align:center;
+  margin-top:60px;
+}
 
 /* FOOTER */
 footer{
@@ -121,8 +148,7 @@ footer{
   .nav-logo{font-size:13px;letter-spacing:0.3em;}
   .nav-link{font-size:9px;letter-spacing:0.1em;}
   #nav svg{width:15px;height:15px;}
-  .cp-back{padding:80px 0 0 24px;}
-  .hero{padding:24px 24px 32px;}
+  .hero{padding:120px 24px 32px;}
   #content{padding:32px 24px 72px;}
 }
 </style>
@@ -133,12 +159,8 @@ footer{
 
 <nav id="nav">
   <a href="/about" class="nav-logo">ETW</a>
-  <span class="cp-close" onclick="window.location='/about#contact'">&#xD7;</span>
+  <span class="cp-close" onclick="history.back()">&#xD7;</span>
 </nav>
-
-<div class="cp-back">
-  <span onclick="window.location='/about#contact'">&#x2190; BACK</span>
-</div>
 
 <section class="hero">
   <p class="hero-label">Contact</p>
@@ -147,9 +169,37 @@ footer{
 </section>
 
 <section id="content">
-  <p class="body">When you email us, we try to read every message with the time and importance it deserves. We consider each message and each suggestion valuable. We do not promise a reply — but if your message is something we can respond to meaningfully, we will.</p>
-  <p class="body">If you want a response, use email. If you want to leave a suggestion or a note without expecting anything back, use the message form.</p>
-  <p class="body">We do not see your identity when you send a message through the form. Messages are one-way and we cannot reply to them.</p>
+  <p class="cp-open">Messages matter to us. This page explains what happens after you send one — how we read it, what we prioritise, and what you can realistically expect in return.</p>
+
+  <p class="sec-label">We Read Everything</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">Every message sent to ETW — whether through the contact form or by email — is read. We do not use automated filters to discard messages, and we do not delegate reading to a third party. If you took the time to write, we take the time to read it.</p>
+
+  <p class="sec-label">We Do Not Promise a Reply</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">Volume makes individual responses to every message impossible. If your message is something we can respond to meaningfully — a correction, a specific question, a serious collaboration enquiry — we will. If we cannot, your message still reaches us and still matters.</p>
+
+  <p class="sec-label">Two Ways to Contact Us</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">There are two ways to reach ETW. The contact form is anonymous and one-way — we receive your message but have no way to reply. Use it for suggestions, corrections, topic ideas, or anything you want to say without needing a response. Email is for messages where a reply matters — collaboration enquiries, copyright requests, or specific factual questions. If you need a response, email is the only channel that makes one possible.</p>
+
+  <p class="sec-label">What We Prioritise</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">Not all messages receive the same urgency. Factual corrections are handled first — accuracy is the foundation of everything we do. Legal and copyright matters follow. Collaboration enquiries are held on file and revisited when positions open. Suggestions and topic ideas are read and noted. General messages are read but rarely replied to individually.</p>
+
+  <p class="sec-label">What We Do Not Respond To</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">We do not reply to unsolicited advertising pitches, sponsored content requests, link exchange proposals, or messages sent in bad faith. These are discarded without response.</p>
+
+  <p class="sec-label">Response Time</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">There is no fixed response time. ETW is a small independent operation. Responses may take days or weeks depending on what is in progress. If something is urgent, say so clearly in your message. If you have not heard back after a reasonable period, one follow-up is welcome.</p>
+
+  <p class="sec-label">Your Privacy</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">If you use the contact form, our form provider may process basic technical data for spam prevention. ETW does not store or share this. If you contact by email, your details are held only for as long as needed to handle your enquiry. See the Legal page for full details.</p>
+
+  <p class="cp-final">We read everything. We may not always reply — but nothing sent here disappears.</p>
 </section>
 
 <footer>
