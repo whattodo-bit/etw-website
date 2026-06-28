@@ -37,7 +37,9 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  transition:background 0.3s;
 }
+#nav.scrolled{background:rgba(10,15,46,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -206,6 +208,11 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   line-height:2;
 }
 .about-body+.about-body{margin-top:28px;}
+.about-more{max-height:0;overflow:hidden;transition:max-height 0.6s ease;}
+.about-more.open{max-height:1600px;}
+.about-more .about-body{margin-top:28px;}
+.about-readmore{display:inline-block;margin-top:28px;font-family:'DM Mono',monospace;color:#C4932A;font-size:10px;letter-spacing:0.3em;cursor:pointer;transition:color 0.3s;}
+.about-readmore:hover{color:#F0EDE6;}
 
 /* BOXES */
 #boxes{
@@ -308,6 +315,12 @@ footer{
   <div class="about-inner">
     <p class="about-body">An independent project producing long-form content on history — with work in progress on other subjects and languages.</p>
     <p class="about-body">We go into the depth of every source to find every detail that matters. We do not brush past anything. This takes time.</p>
+    <div class="about-more" id="about-more">
+      <p class="about-body">Explaining The World exists because most history content answers the wrong question. It tells you what happened. It rarely tells you why the people involved made the decisions they made — and almost never asks what those decisions reveal about power, strategy, and human nature.</p>
+      <p class="about-body">The lens here is consistent: every topic is examined through the question of power. How it is acquired. How it is held. What mistakes end it. This is not a dramatic framing — it is simply the most honest way to read history. Behind every empire, every war, and every collapse is a set of decisions made by people under pressure. Those decisions are what ETW is built to examine.</p>
+      <p class="about-body">The methodology is straightforward: read the primary sources, cross-check the claims, extract what is accurate and what matters, and present it in a way that is clear without being simplified. We do not sensationalise. We do not editorialize beyond what the sources support. We do not publish until a topic is ready.</p>
+    </div>
+    <span class="about-readmore" id="about-readmore" onclick="toggleAboutMore()">READ MORE &#x2192;</span>
   </div>
 </section>
 
@@ -342,7 +355,7 @@ footer{
     <p class="pop-label">Contact</p>
     <div class="pop-rule"></div>
     <div id="contact-choices">
-      <a class="contact-opt" href="mailto:explainingtheworld@gmail.com">
+      <a class="contact-opt" href="mailto:contact@explainingtheworld.com">
         <span class="contact-opt-title">EMAIL US &#x2192;</span>
       </a>
       <span class="contact-opt" style="cursor:pointer;" onclick="document.getElementById('contact-choices').style.display='none';document.getElementById('contact-form-wrap').style.display='block';">
@@ -407,7 +420,20 @@ footer{
 
   // open the contact popup when arrived via /about#contact (e.g. BACK from the policy page)
   if(location.hash === '#contact'){ document.getElementById('contact-overlay').classList.add('open'); }
+
+  // scroll-aware navbar
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.pageYOffset > 80); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 }());
+
+// about text expand / collapse
+function toggleAboutMore(){
+  var m = document.getElementById('about-more');
+  var link = document.getElementById('about-readmore');
+  var open = m.classList.toggle('open');
+  link.innerHTML = open ? 'READ LESS ←' : 'READ MORE →';
+}
 
 // anonymous message form -> Formspree
 async function sendMessage() {

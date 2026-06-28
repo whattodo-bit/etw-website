@@ -36,7 +36,9 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  transition:background 0.3s;
 }
+#nav.scrolled{background:rgba(10,10,10,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -176,6 +178,19 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   transition:border-color 0.3s;
 }
 .resources-btn:hover{border-color:#C4932A;}
+
+/* EMAIL SUBSCRIPTION */
+.sub-sep{width:100%;max-width:700px;height:1px;background:rgba(196,147,42,0.15);margin:40px auto 0;}
+#subscribe{background:transparent;padding:40px 0;text-align:center;}
+.sub-label{font-family:'DM Mono',monospace;color:rgba(240,237,230,0.5);font-size:9px;letter-spacing:0.4em;margin-bottom:16px;}
+.sub-text{font-family:'Source Serif 4',serif;color:rgba(240,237,230,0.6);font-size:15px;line-height:1.6;margin-bottom:24px;}
+#sub-form{display:flex;justify-content:center;flex-wrap:wrap;}
+#sub-email{background:rgba(255,255,255,0.04);border:1px solid rgba(196,147,42,0.3);padding:12px 20px;color:#F0EDE6;font-family:'Source Serif 4',serif;font-size:14px;width:260px;outline:none;transition:border-color 0.3s;}
+#sub-email:focus{border-color:rgba(196,147,42,0.7);}
+#sub-email::placeholder{color:rgba(240,237,230,0.35);}
+.sub-btn{background:transparent;border:1px solid rgba(196,147,42,0.4);border-left:none;color:#C4932A;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.3em;padding:12px 24px;cursor:pointer;transition:border-color 0.3s;}
+.sub-btn:hover{border-color:#C4932A;}
+#sub-result{font-family:'Source Serif 4',serif;font-style:italic;color:#C4932A;font-size:15px;margin-top:8px;display:none;}
 
 /* RESOURCES POPUP */
 #res-overlay{
@@ -334,6 +349,18 @@ footer{
       <iframe src="https://www.youtube.com/embed/TqZWieebzC4" title="ETW Featured" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <p class="video-title">Machiavelli Wrote The Prince to Get a Job.<br>It Didn't Work.</p>
+
+    <div class="sub-sep"></div>
+    <div id="subscribe">
+      <p class="sub-label">Stay Informed</p>
+      <p class="sub-text">When the next piece is ready,<br>we send it once.</p>
+      <form id="sub-form" onsubmit="return false;">
+        <input type="email" id="sub-email" placeholder="your@email.com">
+        <button type="button" class="sub-btn" onclick="notifyMe()">NOTIFY ME</button>
+      </form>
+      <p id="sub-result"></p>
+    </div>
+
     <span class="resources-btn" onclick="document.getElementById('res-overlay').classList.add('open')">RESOURCES &#x2192;</span>
   </div>
 </section>
@@ -344,12 +371,13 @@ footer{
     <p class="res-pop-label">Resources</p>
     <div class="res-pop-rule"></div>
     <div class="res-box">
-      <p class="res-grouplabel">Sources</p>
-      <p class="res-groupdesc">Books and materials referenced in production.</p>
+      <p class="res-grouplabel">References</p>
+      <p class="res-groupdesc">What we read to make this.</p>
       <p class="res-card-title">The Prince — Niccolò Machiavelli</p>
     </div>
     <div class="res-box" style="cursor:pointer;" onclick="window.location='/notes/the-prince'">
       <p class="res-grouplabel">Notes</p>
+      <p class="res-groupdesc">Our analysis of what is useful, what is not, and why.</p>
       <p class="res-card-title">The Prince — Analysis Notes</p>
       <span class="res-card-cta">READ NOTES &#x2192;</span>
     </div>
@@ -465,15 +493,74 @@ footer{
     e.push([[0,1.95,0],finial]);
     return {edges:e, peak:finial};
   })();
+  // Greek Parthenon (columned temple)
+  var parthenon = (function(){
+    var wx=1.15,wz=0.72,hc=1.15,hr=1.62, e=[];
+    var base=[[wx,0,wz],[wx,0,-wz],[-wx,0,-wz],[-wx,0,wz]];
+    var ent=[[wx,hc,wz],[wx,hc,-wz],[-wx,hc,-wz],[-wx,hc,wz]];
+    e=e.concat(sqEdges(base)).concat(sqEdges(ent));
+    for(var s=-1;s<=1;s+=2) for(var k=0;k<6;k++){ var x=-wx*0.85+k*(wx*1.7)/5; e.push([[x,0,s*wz],[x,hc,s*wz]]); }
+    var rl=[-wx,hr,0], rr=[wx,hr,0];
+    e.push([rl,rr],[rl,[-wx,hc,wz]],[rl,[-wx,hc,-wz]],[rr,[wx,hc,wz]],[rr,[wx,hc,-wz]]);
+    return {edges:e, peak:[0,hr,0]};
+  })();
+  // Chinese Imperial Wall / Watchtower
+  var chineseWall = (function(){
+    var e=[], w=1.3, d=0.32, wh=0.5;
+    var b0=[[w,0,d],[w,0,-d],[-w,0,-d],[-w,0,d]];
+    var b1=[[w,wh,d],[w,wh,-d],[-w,wh,-d],[-w,wh,d]];
+    e=e.concat(sqEdges(b0)).concat(sqEdges(b1)); stack(b0,b1,e);
+    for(var s=-1;s<=1;s+=2){ for(var k=0;k<9;k+=2){ var x=-w+k*(2*w/9), x2=-w+(k+1)*(2*w/9); e.push([[x,wh,s*d],[x,wh+0.11,s*d]],[[x,wh+0.11,s*d],[x2,wh+0.11,s*d]],[[x2,wh+0.11,s*d],[x2,wh,s*d]]); } }
+    var tw=0.45, t0=sq(wh,tw), t1=sq(1.35,tw);
+    e=e.concat(sqEdges(t0)).concat(sqEdges(t1)); stack(t0,t1,e);
+    var roof=sq(1.35,tw*1.3); e=e.concat(sqEdges(roof));
+    var peak=[0,1.72,0];
+    for(var i=0;i<4;i++) e.push([roof[i],peak]);
+    return {edges:e, peak:peak};
+  })();
+  // Medieval European Castle (tower keep with corner turrets)
+  var medievalCastle = (function(){
+    var e=[], kw=0.65, kh=1.45;
+    var k0=sq(0,kw), k1=sq(kh,kw);
+    e=e.concat(sqEdges(k0)).concat(sqEdges(k1)); stack(k0,k1,e);
+    for(var s=-1;s<=1;s+=2){ for(var k=0;k<5;k+=2){ var x=-kw+(k+0.4)*(2*kw/5), x2=x+(2*kw/5)*0.6; e.push([[x,kh,s*kw],[x,kh+0.13,s*kw]],[[x,kh+0.13,s*kw],[x2,kh+0.13,s*kw]],[[x2,kh+0.13,s*kw],[x2,kh,s*kw]]); } }
+    var tw=0.16, th=1.7, off=kw;
+    [[off,off],[off,-off],[-off,-off],[-off,off]].forEach(function(c){
+      var cx=c[0], cz=c[1];
+      var u0=[[cx+tw,0,cz+tw],[cx+tw,0,cz-tw],[cx-tw,0,cz-tw],[cx-tw,0,cz+tw]];
+      var u1=u0.map(function(p){return [p[0],th,p[2]];});
+      e=e.concat(sqEdges(u1)); stack(u0,u1,e);
+      var ap=[cx,th+0.28,cz];
+      for(var i=0;i<4;i++) e.push([u1[i],ap]);
+    });
+    return {edges:e, peak:[0,kh+0.1,0]};
+  })();
+  // US Capitol (domed building)
+  var capitol = (function(){
+    var e=[], w=1.3, d=0.7, bh=0.5;
+    var b0=[[w,0,d],[w,0,-d],[-w,0,-d],[-w,0,d]];
+    var b1=[[w,bh,d],[w,bh,-d],[-w,bh,-d],[-w,bh,d]];
+    e=e.concat(sqEdges(b0)).concat(sqEdges(b1)); stack(b0,b1,e);
+    var dr=0.45, dy0=bh, dy1=bh+0.45;
+    e=e.concat(ring(dr,dr,dy0,18)).concat(ring(dr,dr,dy1,18));
+    for(var v=0;v<12;v++){ var a=v/12*6.2832; e.push([[dr*Math.cos(a),dy0,dr*Math.sin(a)],[dr*Math.cos(a),dy1,dr*Math.sin(a)]]); }
+    var dbase=dy1, dh=0.55, DN=5;
+    for(var L=1;L<=DN;L++){ var t=L/DN, ry=dbase+dh*Math.sin(t*1.5708), rr=dr*Math.cos(t*1.5708); if(rr>0.03) e=e.concat(ring(rr,rr,ry,16)); }
+    for(var m=0;m<8;m++){ var aa=m/8*6.2832, prev=null; for(var L2=0;L2<=DN;L2++){ var t2=L2/DN, ry2=dbase+dh*Math.sin(t2*1.5708), rr2=dr*Math.cos(t2*1.5708), pt=[rr2*Math.cos(aa),ry2,rr2*Math.sin(aa)]; if(prev) e.push([prev,pt]); prev=pt; } }
+    var top=dbase+dh, finial=[0,top+0.22,0];
+    e.push([[0,top,0],finial]);
+    return {edges:e, peak:finial};
+  })();
 
-  var MON = [pyramid, eiffel, japaneseCastle, colosseum, bigben, empire];
-  var HOLD = 8000, FADE = 4000, SLOT = HOLD + FADE;   // 8s hold, 4s crossfade
+  // ancient -> modern
+  var MON = [pyramid, parthenon, colosseum, chineseWall, japaneseCastle, medievalCastle, eiffel, bigben, empire, capitol];
+  var HOLD = 60000, FADE = 6000, SLOT = HOLD + FADE;   // 60s hold, 6s crossfade
 
   function frame(now){
     if(startT===null) startT=now;
     var el = now - startT;
     cxg = W/2; cyg = H*0.66; Sg = Math.min(W,H)*0.27;
-    rot += 0.0021;                        // ~50s per full rotation
+    rot += 0.001164;                      // 90s per full rotation
     cosR = Math.cos(rot); sinR = Math.sin(rot);
     var cycle = MON.length*SLOT, lp = el%cycle, idx = Math.floor(lp/SLOT), within = lp-idx*SLOT;
     ctx.clearRect(0,0,W,H);
@@ -492,7 +579,37 @@ footer{
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape') document.getElementById('res-overlay').classList.remove('open');
   });
+
+  // scroll-aware navbar
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.pageYOffset > 80); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 }());
+
+// email subscription -> Formspree
+function notifyMe(){
+  var email = document.getElementById('sub-email').value.trim();
+  var res = document.getElementById('sub-result');
+  var form = document.getElementById('sub-form');
+  if(!email || email.indexOf('@') < 1){ alert('Please enter a valid email.'); return; }
+  fetch('https://formspree.io/f/mgojyvoy', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, source: 'ETW History — notify me', submitted_at: new Date().toISOString() })
+  }).then(function(r){
+    if(r.ok){
+      form.style.display = 'none';
+      res.textContent = 'Noted. We will reach out when the next piece is ready.';
+      res.style.display = 'block';
+    } else {
+      res.textContent = 'Could not submit. Please try again.';
+      res.style.display = 'block';
+    }
+  }).catch(function(){
+    res.textContent = 'Could not submit. Please try again.';
+    res.style.display = 'block';
+  });
+}
 </script>
 </body>
 </html>

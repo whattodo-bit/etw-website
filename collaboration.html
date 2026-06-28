@@ -28,7 +28,9 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  transition:background 0.3s;
 }
+#nav.scrolled{background:rgba(10,15,46,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -207,7 +209,7 @@ footer{
   <div class="sec-rule"></div>
   <p class="sec-body">Send your expression of interest through the contact form. Include which area you are applying for (Creative, Research, or Brand), a short description of your background and relevant experience, examples of your work or a portfolio link, and what specifically draws you to ETW. We read every submission. Due to volume, we are not always able to respond individually, but we retain all expressions of interest on file and follow up when positions become available.</p>
 
-  <p class="collab-note"><a href="mailto:explainingtheworld@gmail.com">Get in touch &#x2192;</a></p>
+  <p class="collab-note"><a href="mailto:contact@explainingtheworld.com">Get in touch &#x2192;</a></p>
 
   <p class="sec-label" style="margin-top:48px;">Contributor Terms</p>
   <div class="sec-rule"></div>
@@ -243,6 +245,9 @@ footer{
     requestAnimationFrame(frame);
   }
   window.addEventListener('resize',init); init(); requestAnimationFrame(frame);
+  var nav=document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.pageYOffset>80); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 }());
 </script>
 

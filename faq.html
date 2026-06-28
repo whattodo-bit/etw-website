@@ -28,7 +28,9 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  transition:background 0.3s;
 }
+#nav.scrolled{background:rgba(10,15,46,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -280,6 +282,9 @@ footer{
     requestAnimationFrame(frame);
   }
   window.addEventListener('resize',init); init(); requestAnimationFrame(frame);
+  var nav=document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.pageYOffset>80); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 }());
 </script>
 

@@ -28,7 +28,9 @@ body{min-height:100vh;display:flex;flex-direction:column;}
   display:flex;
   justify-content:space-between;
   align-items:center;
+  transition:background 0.3s;
 }
+#nav.scrolled{background:rgba(10,15,46,0.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .nav-logo{
   font-family:'Playfair Display',serif;
   font-weight:700;
@@ -174,7 +176,7 @@ footer{
 
   <p class="sec-label">Privacy</p>
   <div class="sec-rule"></div>
-  <p class="sec-body">ETW does not track you, profile you, or sell your data. This site operates without user accounts, advertising networks, or third-party analytics. If you submit a message through our contact form, our form provider may process basic technical data — such as your IP address — solely for spam prevention. This data is not stored, sold, or used for any other purpose by ETW. If you access ETW content through third-party platforms such as YouTube, their own privacy policies apply independently.</p>
+  <p class="sec-body">ETW does not track you, profile you, or sell your data. This site operates without user accounts, advertising networks, or third-party analytics. Basic technical data may be processed to prevent spam. This data is not stored or used by ETW for any other purpose. If you access ETW content through third-party platforms such as YouTube, their own privacy policies apply independently.</p>
 
   <p class="sec-label">Cookies</p>
   <div class="sec-rule"></div>
@@ -183,6 +185,10 @@ footer{
   <p class="sec-label">Disclaimer</p>
   <div class="sec-rule"></div>
   <p class="sec-body">All content produced by Explaining The World is for educational and informational purposes only. It does not constitute academic, legal, medical, or financial advice. Our analysis reflects our reading and interpretation of available historical sources and is not presented as final academic truth. ETW makes every effort to ensure accuracy. Where errors are identified, they are corrected. We are not liable for decisions made based on the content on this site or our channels.</p>
+
+  <p class="sec-label">Prohibited Communications</p>
+  <div class="sec-rule"></div>
+  <p class="sec-body">ETW does not engage with and will not respond to the following: harassment, threats, or abusive communications of any kind; demands to remove factually accurate historical content without valid legal basis; unsolicited commercial proposals or advertising pitches; requests to alter content for political, personal, or commercial reasons; or anonymous accusations made without evidence. Any communications containing threats or illegal content will be reported to the relevant authorities without prior notice.</p>
 
   <p class="sec-label">External Links</p>
   <div class="sec-rule"></div>
@@ -222,6 +228,9 @@ footer{
     requestAnimationFrame(frame);
   }
   window.addEventListener('resize',init); init(); requestAnimationFrame(frame);
+  var nav=document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.pageYOffset>80); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
 }());
 </script>
 
